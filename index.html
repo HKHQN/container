@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Chở Hàng - Thông Tin Chi Tiết</title>
+    <meta name="description" content="Thông tin về tác dụng và vai trò của container chở hàng trong logistics và thương mại toàn cầu.">
+    
+    <!-- Favicon (tùy chọn, bạn có thể thay bằng icon của mình) -->
+    <link rel="icon" href="https://container.bo0tot.org/favicon.ico" type="image/x-icon">
+    
+    <style>
+        /* Reset cơ bản và làm cho trang responsive */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        main {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Iframe responsive - quan trọng nhất */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Tỷ lệ 16:9 (có thể điều chỉnh) */
+            height: 0;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #333;
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+        
+        /* Responsive điều chỉnh cho mobile */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            main {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tác Dụng Của Container Chở Hàng</h1>
+        <p>Thông tin chi tiết về vai trò quan trọng của container trong logistics hiện đại</p>
+    </header>
+
+    <main>
+        <!-- Nhúng trang dev.html một cách responsive -->
+        <div class="iframe-container">
+            <iframe src="https://container.bo0tot.org/dev.html" 
+                    title="Thông tin chi tiết về container chở hàng"
+                    allowfullscreen
+                    loading="lazy">
+            </iframe>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Container Information. Trang được nhúng từ container.bo0tot.org</p>
+    </footer>
+</body>
+</html>
