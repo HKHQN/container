@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Container Quán Net</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/lapgia57-netizen/gohome/main/favicon.ico" type="image/x-icon">
+  <style>
+    body { margin:0; font-family: system-ui; background:#0d1117; color:#c9d1d9; }
+    .header { background:#010409; padding:20px; text-align:center; border-bottom:3px solid #f85149; }
+    h1 { margin:0; color:#f85149; }
+    .container { display:flex; height:calc(100vh - 100px); }
+    .sidebar { width:35%; background:#161b22; border-right:1px solid #30363d; overflow:auto; }
+    .content { width:65%; padding:20px; overflow:auto; }
+    .tree ul { padding-left:20px; margin:5px 0; list-style:none; }
+    .tree li { padding:6px; cursor:pointer; border-radius:6px; }
+    .tree li:hover { background:#30363d; }
+    .tree .folder::before { content:"📁 "; }
+    .tree .file::before { content:"📄 "; }
+    .search { width:100%; padding:12px; background:#0d1117; border:1px solid #30363d; color:white; box-sizing:border-box; }
+    #file-content { background:#0d1117; padding:20px; border-radius:8px; min-height:100%; }
+    .online-count { position:fixed; bottom:10px; right:10px; background:#238636; color:white; padding:10px 15px; border-radius:50px; font-weight:bold; }
+    .refresh { font-size:12px; color:#8b949e; text-align:center; margin-top:10px; }
+    .instructions { background:#21262d; padding:15px; border-radius:8px; margin:10px 0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Container – Quán Net HKHQN</h1>
+    <p>Đang có <span id="online">0</span> anh em trong quán • Click file để mở tab mới • Auto cập nhật mỗi 2 phút</p>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <input type="text" class="search" id="search" placeholder="Tìm file, nick, tin nhắn..."/>
+      <div class="tree" id="tree">Đang load repo...</div>
+    </div>
+    <div class="content">
+      <div id="file-content">
+        <h2>🖥️ Bảng điều khiển Explorer</h2>
+        <div class="instructions">
+          <strong>Chức năng mới:</strong><br>
+          - <strong>File .html:</strong> Mở tab mới tại <code>https://container.bo0tot.org/[tên-file]</code> (render trực tiếp trên domain quán net).<br>
+          - <strong>File khác:</strong> Mở raw content tại GitHub trong tab mới (xem nhanh Markdown/text).<br>
+          <br>
+          <strong>Mẹo quán net:</strong> Tạo file <code>online/nick-cua-ban.html</code> với nội dung "đang cày rank" → click nó sẽ mở trang cá nhân đẹp trên domain!
+        </div>
+        <p><em>Chọn file từ cây bên trái để mở tab mới nhé!</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="online-count">Online: <span id="online2">0</span></div>
+  <div class="refresh">Cập nhật lần cuối: <span id="time"></span></div>
+
+  <script>
+    // === ĐÃ CẬP NHẬT: repo mới, domain mới, và sửa lỗi duplicate file
+    const owner = "HKHQN";
+    const repo = "container";
+    const api = `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
+    const customDomain = "https://container.bo0tot.org/";
+
+    async function loadRepo() {
+      try {
+        const res = await fetch(api);
+        const data = await res.json();
+        const files = data.tree.filter(f => f.type === "blob");
+        const onlineCount = files.filter(f => f.path.startsWith("online/")).length;
+        document.getElementById("online").textContent = onlineCount;
+        document.getElementById("online2").textContent = onlineCount;
+
+        renderTree(files);  // Chỉ truyền blobs để tránh xử lý tree riêng
+        updateTime();
+      } catch (e) {
+        document.getElementById("tree").innerHTML = "Lỗi kết nối GitHub API :( <br>Repo có public không bro?";
+        console.error(e);
+      }
+    }
+
+    function renderTree(blobs) {
+      const ul = document.createElement("ul");
+      const folders = {};
+
+      blobs.forEach(item => {
+        const parts = item.path.split('/');
+        let currentUl = ul;
+
+        // Xây dựng folders
+        for (let i = 0; i < parts.length - 1; i++) {
+          const folderPath = parts.slice(0, i + 1).join('/');
+          if (!folders[folderPath]) {
+            const folderLi = document.createElement("li");
+            folderLi.className = "folder";
+            folderLi.textContent = parts[i] + "/";
+            folderLi.onclick = (e) => {
+              e.stopPropagation();
+              toggleFolder(folderLi);
+            };
+
+            const subUl = document.createElement("ul");
+            subUl.style.display = "none"; // collapsed mặc định
+            folderLi.appendChild(subUl);
+
+            folders[folderPath] = { li: folderLi, ul: subUl };
+
+            if (i === 0) {
+              ul.appendChild(folderLi);
+            } else {
+              const parentPath = parts.slice(0, i).join('/');
+              folders[parentPath].ul.appendChild(folderLi);
+            }
+          }
+          currentUl = folders[folderPath].ul;
+        }
+
+        // Thêm file vào currentUl phù hợp
+        const li = document.createElement("li");
+        li.className = "file";
+        li.textContent = parts[parts.length - 1];
+        li.title = item.path;
+        li.onclick = (e) => {
+          e.stopPropagation();
+          openFileInNewTab(item.path);
+        };
+        currentUl.appendChild(li);
+      });
+
+      const container = document.getElementById("tree");
+      container.innerHTML = "";
+      container.appendChild(ul);
+    }
+
+    function openFileInNewTab(path) {
+      let url;
+      if (path.endsWith('.html')) {
+        url = customDomain + path;
+      } else {
+        url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`;
+      }
+      window.open(url, '_blank');
+    }
+
+    function toggleFolder(li) {
+      const ul = li.querySelector("ul");
+      if (ul) ul.style.display = ul.style.display === "none" ? "block" : "none";
+    }
+
+    function updateTime() {
+      document.getElementById("time").textContent = new Date().toLocaleString("vi-VN");
+    }
+
+    // Load lần đầu + auto refresh mỗi 2 phút
+    loadRepo();
+    setInterval(loadRepo, 120000);
+
+    // Tìm kiếm nhanh (cải thiện: tìm theo full path trong title)
+    document.getElementById("search").addEventListener("input", (e) => {
+      const term = e.target.value.toLowerCase();
+      document.querySelectorAll(".file, .folder").forEach(el => {
+        const text = el.textContent.toLowerCase();
+        const title = (el.title || "").toLowerCase();
+        el.style.display = (text.includes(term) || title.includes(term)) ? "" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
