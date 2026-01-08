@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Giấc Ngủ Ngắn Kiểu Danh Họa - Tỷ Lệ Vàng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #0f0f0f;
+      --color-text: #e0e0e0;
+      --color-accent: #d4af37;     /* Vàng ánh kim - tỷ lệ vàng */
+      --color-gold-dark: #b8972e;
+      --color-card: #1a1a1a;
+      --radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      color: var(--color-accent);
+      margin-bottom: 0.2em;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-top: 0.5em;
+      font-weight: 300;
+    }
+
+    .section {
+      background: var(--color-card);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 32px;
+      border: 1px solid rgba(212, 175, 55, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--color-accent);
+      font-size: 2.1rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+      padding-bottom: 0.6rem;
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 80px;
+      height: 3px;
+      background: var(--color-accent);
+      border-radius: 3px;
+    }
+
+    h3 {
+      color: #f0e6d2;
+      font-size: 1.4rem;
+      margin: 1.8rem 0 1rem;
+    }
+
+    p, li {
+      color: #d0d0d0;
+      font-size: 1.05rem;
+      margin-bottom: 1.1em;
+    }
+
+    ul, ol {
+      padding-left: 1.8em;
+      margin: 1.2em 0;
+    }
+
+    li {
+      margin-bottom: 0.8em;
+    }
+
+    .highlight {
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+
+    .warning {
+      background: rgba(220, 53, 69, 0.12);
+      border-left: 4px solid #dc3545;
+      padding: 16px 20px;
+      margin: 1.5em 0;
+      border-radius: 6px;
+    }
+
+    .question {
+      font-style: italic;
+      color: #bbb;
+      font-size: 1.15rem;
+      text-align: center;
+      margin: 3rem 0 1.5rem;
+      padding: 20px;
+      border-top: 1px solid rgba(212,175,55,0.2);
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+    }
+
+    @media (max-width: 640px) {
+      .section { padding: 24px; }
+      h1 { font-size: 3rem; }
+      h2 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>Giấc Ngủ Ngắn Kiểu Danh Họa</h1>
+    <div class="subtitle">Tỷ lệ vàng & sự sáng tạo đỉnh cao</div>
+  </header>
+
+  <div class="section">
+    <h2>Giới thiệu</h2>
+    <p>Giấc ngủ ngắn hiệu quả kiểu "danh họa" thường được nhắc đến với hai huyền thoại nghệ thuật: <span class="highlight">Leonardo da Vinci</span> và <span class="highlight">Salvador Dalí</span>.</p>
+    <p>Hai cách ngủ này được cho là đã giúp họ duy trì sự sáng tạo phi thường trong suốt cuộc đời, và thường gắn liền với khái niệm <strong>"tỷ lệ vàng"</strong> – con số ≈ 1.618 mà cả hai bậc thầy đều sử dụng rất nhiều trong tác phẩm của mình.</p>
+  </div>
+
+  <div class="section">
+    <h2>1. Leonardo da Vinci – Uberman (Ngủ đa pha cực đoan)</h2>
+    <p><strong>Cách thức truyền miệng phổ biến:</strong> Ngủ 20 phút cứ mỗi 4 giờ → Tổng cộng chỉ khoảng <strong>2 giờ/ngày</strong> (6 giấc nap × 20 phút).</p>
+
+    <h3>Tại sao gọi là "tỷ lệ vàng"?</h3>
+    <ul>
+      <li>Tỷ lệ 20 phút ngủ / 4 giờ thức ≈ 1:12 (không chính xác 1.618)</li>
+      <li>Quan trọng hơn: Leonardo là bậc thầy sử dụng <strong>tỷ lệ vàng</strong> trong hội họa, kiến trúc, giải phẫu... nên người ta "gán" luôn giấc ngủ của ông cũng mang tính hoàn hảo, tỷ lệ vàng để tạo cảm giác huyền thoại.</li>
+    </ul>
+
+    <h3>Hiệu quả thực tế?</h3>
+    <p>Rất khó thích nghi (thường mất 2–4 tuần, thậm chí vài tháng).</p>
+    <p>Nếu thành công: tỉnh táo cao, sáng tạo dâng trào, thời gian thức tăng vọt.</p>
+    <p class="warning"><strong>Cảnh báo:</strong> Hầu hết chuyên gia giấc ngủ hiện đại <strong>không khuyến khích</strong> vì dễ gây thiếu ngủ mãn tính, suy giảm nhận thức dài hạn.</p>
+  </div>
+
+  <div class="section">
+    <h2>2. Salvador Dalí – Micro-nap siêu ngắn (Hypnagogic nap)</h2>
+    <p>Cách làm rất đơn giản nhưng cực kỳ hiệu quả:</p>
+    <ol>
+      <li>Ngồi trên ghế, tay thả lỏng, giữ một vật nặng (Dalí dùng chìa khóa kim loại).</li>
+      <li>Khi vừa thiếp đi (giai đoạn <strong>hypnagogia</strong> – nửa tỉnh nửa mơ), vật rơi "cạch" → đánh thức ngay.</li>
+      <li>Toàn bộ giấc nap chỉ kéo dài <strong>10–30 giây đến vài phút</strong>.</li>
+    </ol>
+
+    <h3>Tại sao cực kỳ hiệu quả?</h3>
+    <p>Bạn chạm đúng <strong>giai đoạn sáng tạo nhất của não</strong> (hypnagogia) – nơi ý tưởng kỳ lạ, kết nối bất ngờ xuất hiện.</p>
+    <p>Nghiên cứu 2021–2025 xác nhận: micro-nap kiểu này cải thiện khả năng giải quyết vấn đề sáng tạo rõ rệt mà <strong>không gây mệt mỏi</strong>.</p>
+  </div>
+
+  <div class="section">
+    <h2>Cách áp dụng thực tế năm 2026 (an toàn & hiệu quả)</h2>
+    <ul>
+      <li><strong>Power nap cơ bản</strong> (dễ nhất): 15–25 phút vào khoảng 1–3h chiều.</li>
+      <li><strong>Micro-nap kiểu Dalí</strong> (đỉnh cao sáng tạo): 5–10 phút, dùng chìa khóa/đồng xu, 2–3 lần/ngày khi cần ý tưởng.</li>
+      <li><strong>Everyman 3</strong> (nâng cao): Ngủ core 3 tiếng đêm + 3 nap 20 phút ban ngày → Tổng ~4 tiếng.</li>
+    </ul>
+
+    <div class="warning">
+      <strong>Lưu ý quan trọng:</strong><br>
+      Đa số chuyên gia khuyên người bình thường nên giữ 7–9 tiếng ngủ monophasic. Chỉ thử polyphasic/micro-nap khi bạn thực sự khỏe, không lái xe, không làm việc nguy hiểm, và theo dõi sức khỏe ít nhất 1–2 tháng.
+    </div>
+  </div>
+
+  <div class="question">
+    Bạn muốn thử kiểu nào trước?<br>
+    Micro-nap kiểu Dalí (dễ và "nghệ sĩ" nhất) hay muốn hướng dẫn chi tiết hơn về Uberman của Leonardo?
+  </div>
+
+</div>
+
+</body>
+</html>
