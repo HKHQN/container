@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Văn hay chẳng luận đọc dài</title>
+  <style>
+    :root {
+      --primary: #2c5282;
+      --primary-dark: #1a365d;
+      --accent: #c05621;
+      --text: #2d3748;
+      --light: #f7fafc;
+      --gray: #718096;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, BlinkMacOSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+      background-color: var(--light);
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 2.1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .content {
+      padding: 2.5rem 2.5rem 3rem;
+    }
+    
+    h2, h3 {
+      color: var(--primary);
+      margin: 2rem 0 1rem;
+      font-weight: 700;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      border-left: 5px solid var(--accent);
+      padding-left: 1rem;
+    }
+    
+    .quote {
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--primary);
+      text-align: center;
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      background: rgba(44, 82, 130, 0.08);
+      border-radius: 12px;
+      border: 2px dashed var(--accent);
+      position: relative;
+    }
+    
+    .quote::before,
+    .quote::after {
+      content: '“';
+      font-size: 4rem;
+      color: var(--accent);
+      opacity: 0.3;
+      position: absolute;
+    }
+    
+    .quote::before { top: -10px; left: 10px; }
+    .quote::after { bottom: -30px; right: 10px; transform: rotate(180deg); }
+    
+    .highlight {
+      background: rgba(192, 86, 33, 0.1);
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    
+    ul {
+      list-style: none;
+      margin: 1.2rem 0;
+    }
+    
+    ul li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 0.9rem;
+    }
+    
+    ul li::before {
+      content: "➤";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #f0f9ff;
+      border-left: 5px solid var(--primary);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-style: italic;
+    }
+    
+    .cta {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: linear-gradient(to right, #ebf4ff, #e6fffa);
+      border-radius: 12px;
+    }
+    
+    .cta p {
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+      color: var(--primary);
+    }
+    
+    @media (max-width: 768px) {
+      .content { padding: 2rem 1.5rem; }
+      .header h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Văn hay chẳng luận đọc dài</h1>
+      <p>Chỉ vài dòng đầu đã biết chất lượng</p>
+    </div>
+    
+    <div class="content">
+      <h2>Câu nói kinh điển trong văn học Việt Nam</h2>
+      
+      <div class="quote">
+        Văn hay chẳng luận đọc dài, vừa mở đầu bài đã biết văn hay.<br>
+        <small>(Có nơi ghi: Văn hay chẳng nệ đọc dài, mới mở đầu bài đã biết văn hay)</small>
+      </div>
+      
+      <p>Đây là một trong những câu nhận xét <span class="highlight">sâu sắc nhất</span> về nghệ thuật viết văn nghị luận, đặc biệt là giá trị của phần mở bài.</p>
+      
+      <h3>Ý nghĩa cốt lõi</h3>
+      <p>Một bài văn thực sự hay <span class="highlight">không cần dài dòng</span>. Chỉ cần đọc phần mở đầu (thường chỉ 5–10 dòng), người đọc/giáo viên đã có thể cảm nhận ngay:</p>
+      
+      <ul>
+        <li>Tác giả có tư duy sắc sảo không?</li>
+        <li>Ngôn từ có chọn lọc, gợi cảm không?</li>
+        <li>Cách tiếp cận vấn đề có mới mẻ, thông minh không?</li>
+        <li>Có khí chất, có “chất văn” hay chỉ là những câu sáo rỗng?</li>
+      </ul>
+      
+      <h3>Tại sao mở bài lại “quyết định” đến vậy?</h3>
+      <p>Người xưa và cả các thầy cô chấm thi ngày nay đều công nhận:</p>
+      <p class="highlight" style="text-align:center; font-size:1.2rem; margin:1.5rem 0;">
+        Mở bài giống như cái bắt tay đầu tiên → ấn tượng ban đầu rất khó thay đổi.
+      </p>
+      
+      <h3>Dấu hiệu của một mở bài “đỉnh cao”</h3>
+      <ul>
+        <li>Ngắn gọn nhưng đủ ý (không lan man)</li>
+        <li>Có câu dẫn dắt thông minh, trích dẫn tinh tế (không lạm dụng)</li>
+        <li>Giọng văn có hồn, có cá tính riêng</li>
+        <li>Đi thẳng vào vấn đề một cách tự nhiên</li>
+        <li>Tạo cảm giác “muốn đọc tiếp” ngay lập tức</li>
+      </ul>
+      
+      <h3>Ví dụ mở bài “chất” từng được điểm cao</h3>
+      
+      <div class="example">
+        “Trong kho tàng văn học Việt Nam, có những trang viết chỉ cần đọc vài dòng đầu đã khiến lòng người rung động, như thể linh hồn tác giả vừa chạm nhẹ vào tim ta. Đó chính là sức mạnh của những mở bài biết cách ‘nắm thóp’ người đọc.”
+      </div>
+      
+      <div class="example" style="margin-top:1.5rem;">
+        “Văn học không phải là những gì đẹp đẽ nhất đời, mà là những gì chân thật nhất đời. Và cái chân thật ấy, Quang Dũng đã gửi gắm trọn vẹn trong Tây Tiến.”
+      </div>
+      
+      <div class="cta">
+        <p>Bạn đang luyện thi hay chỉ đơn giản muốn viết văn “chất” hơn?</p>
+        <p style="font-weight:600; color:#c05621;">
+          Nếu muốn, mình có thể gợi ý thêm vài công thức mở bài “đỉnh cao” cho từng dạng đề nghị luận văn học hiện nay nhé!
+        </p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
