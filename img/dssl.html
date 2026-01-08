@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đặc Sản Lạng Sơn - Hương Vị Núi Rừng</title>
+  <style>
+    :root {
+      --primary: #c41e3a;     /* Màu đỏ đặc trưng xứ Lạng */
+      --secondary: #2e7d32;   /* Xanh lá núi rừng */
+      --light-bg: #fffaf0;
+      --dark-text: #333;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f1e9;
+      color: var(--dark-text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(to bottom, #c41e3a, #8b0000);
+      color: white;
+      border-radius: 0 0 20px 20px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.8rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    }
+    .intro {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    .specialty {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      margin: 30px 0;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .specialty:hover {
+      transform: translateY(-8px);
+    }
+    .specialty-header {
+      background: var(--primary);
+      color: white;
+      padding: 15px 20px;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    .content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .description {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .gallery img {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    .other {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      margin-top: 40px;
+      border-left: 6px solid var(--secondary);
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      .gallery img { max-width: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Đặc Sản Lạng Sơn</h1>
+    <p class="intro">Hương vị núi rừng đậm đà – Kết hợp ẩm thực dân tộc và nguyên liệu vùng biên giới</p>
+  </header>
+
+  <div class="container">
+
+    <div class="specialty">
+      <div class="specialty-header">1. Vịt quay & Lợn quay Lạng Sơn</div>
+      <div class="content">
+        <p class="description">
+          Hai "ông hoàng" ẩm thực xứ Lạng! Tẩm ướp lá mắc mật đặc trưng, quay vàng giòn, da rụm giòn, thịt mềm ngọt. Ăn kèm xôi hoặc bánh chưng đen là tuyệt vời!
+        </p>
+        <div class="gallery">
+          <img src="https://luquaygavit.com/wp-content/uploads/2023/07/cach-lam-vit-quay-lang-son-1.jpg" alt="Vịt quay Lạng Sơn giòn tan">
+          <img src="https://statics.vinpearl.com/vit-quay-lang-son-08_1631418331.jpg" alt="Vịt quay Lạng Sơn ngon miệng">
+          <img src="https://i2.ex-cdn.com/crystalbay.com/files/content/2025/01/23/quan-vit-quay-lang-son-5-1535.jpg" alt="Vịt quay Lạng Sơn hấp dẫn">
+          <img src="https://heoquayphuloc.com/upload/filemanage/6e2628.jpg" alt="Lợn quay Lạng Sơn nguyên con da giòn">
+          <img src="https://i.ytimg.com/vi/j_FLzmuT4Qo/maxresdefault.jpg" alt="Lợn quay Lạng Sơn ngon quên lối về">
+        </div>
+      </div>
+    </div>
+
+    <div class="specialty">
+      <div class="specialty-header">2. Na Chi Lăng (Na Đồng Bành)</div>
+      <div class="content">
+        <p class="description">
+          Loại na ngon nhất vùng, quả to, múi dày, ngọt thanh, thơm đặc trưng. Đặc sản trái cây nổi tiếng huyện Chi Lăng, mua về làm quà cực kỳ được ưa chuộng!
+        </p>
+        <div class="gallery">
+          <img src="https://biggreen.com.vn/data/product/na%20chi%20l%C4%83ng%20l%E1%BA%A1ng%20s%C6%A1n.jpg" alt="Na Chi Lăng chín mọng">
+          <img src="https://langngheviet.com.vn/stores/news_dataimages/2024/082024/12/09/na-chi-lang-120240812093054.jpg?rt=20240812094452" alt="Na Chi Lăng tươi ngon">
+          <img src="https://nntm.langson.gov.vn/api/user-blob/736d6172-742d-7472-6163-650000000000/2024/09/28/quana3.jpg" alt="Na Chi Lăng combo tươi">
+        </div>
+      </div>
+    </div>
+
+    <div class="specialty">
+      <div class="specialty-header">3. Hạt dẻ Trùng Khánh</div>
+      <div class="content">
+        <p class="description">
+          Hạt dẻ to, bùi, béo ngậy từ huyện Trùng Khánh. Rang lên ăn vặt hoặc chế biến món ngon, là món "quà quê" được yêu thích nhất!
+        </p>
+        <div class="gallery">
+          <img src="https://poliva.vn/wp-content/uploads/2020/03/hat-de-trung-khanh-5.jpg" alt="Hạt dẻ Trùng Khánh thơm bùi">
+          <img src="https://bizweb.dktcdn.net/100/387/361/files/5-f7727d21-716f-4e0f-a3fd-cbcfe87d0c1f.jpg?v=1665487341383" alt="Hạt dẻ Trùng Khánh rang vàng">
+        </div>
+      </div>
+    </div>
+
+    <div class="specialty">
+      <div class="specialty-header">4. Bánh cuốn trứng Lạng Sơn</div>
+      <div class="content">
+        <p class="description">
+          Bánh mỏng tang, nhân thịt băm, chan nước chấm và đặc biệt có trứng gà rơi vào giữa khi tráng. Ăn nóng giòn, thơm phức – biểu tượng ẩm thực thành phố Lạng Sơn!
+        </p>
+        <div class="gallery">
+          <img src="https://mediabls.mediatech.vn/upload/image/202112/medium/136755_BC2.jpg" alt="Bánh cuốn trứng Lạng Sơn hấp dẫn">
+          <img src="https://statics.vinpearl.com/banh-cuon-trung-lang-son-07_1631016998.jpg" alt="Bánh cuốn trứng nóng hổi">
+          <img src="https://congnghieptieudung.vn/Content/images/tin%20t%E1%BB%A9c/V%C4%83n%20h%C3%B3a%20-%20x%C3%A3%20h%E1%BB%99i/%E1%BA%A3nh%201(10).jpg" alt="Bánh cuốn trứng thần thánh xứ Lạng">
+        </div>
+      </div>
+    </div>
+
+    <div class="specialty">
+      <div class="specialty-header">5. Mật ong rừng Lạng Sơn</div>
+      <div class="content">
+        <p class="description">
+          Mật ong nguyên chất từ rừng núi, màu vàng óng, thơm nồng, vị ngọt thanh. Rất tốt cho sức khỏe và là món quà biếu ý nghĩa nhất!
+        </p>
+        <div class="gallery">
+          <img src="https://nhansamthinhphat.com/storage/uploads/2024/product/images/San-Pham-Suc-Khoe/mat-ong-ruoi-tu-nhien-nguyen-chat-01.jpg" alt="Mật ong rừng trong vắt">
+        </div>
+      </div>
+    </div>
+
+    <div class="other">
+      <h2>Còn nhiều đặc sản đáng thử khác:</h2>
+      <p>Khâu nhục (thịt kho tàu kiểu Tày), lạp sườn, bánh cao sằng, xôi lá cẩm, phở chua, rau rừng (bò khai, cải ngồng)...</p>
+      <p><strong>Nếu đến Lạng Sơn, nhất định phải thử các món quay và trái cây tươi nhé!</strong></p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Bạn thích đặc sản nào nhất trong số này? Hãy comment nhé! 🍖🍯🍞</p>
+  </footer>
+
+</body>
+</html>
