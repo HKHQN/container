@@ -1,165 +1,468 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Container Quán Net</title>
+  <title>Container Chain • Explorer</title>
   <link rel="icon" href="https://raw.githubusercontent.com/lapgia57-netizen/gohome/main/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
-    body { margin:0; font-family: system-ui; background:#0d1117; color:#c9d1d9; }
-    .header { background:#010409; padding:20px; text-align:center; border-bottom:3px solid #f85149; }
-    h1 { margin:0; color:#f85149; }
-    .container { display:flex; height:calc(100vh - 100px); }
-    .sidebar { width:35%; background:#161b22; border-right:1px solid #30363d; overflow:auto; }
-    .content { width:65%; padding:20px; overflow:auto; }
-    .tree ul { padding-left:20px; margin:5px 0; list-style:none; }
-    .tree li { padding:6px; cursor:pointer; border-radius:6px; }
-    .tree li:hover { background:#30363d; }
-    .tree .folder::before { content:"📁 "; }
-    .tree .file::before { content:"📄 "; }
-    .search { width:100%; padding:12px; background:#0d1117; border:1px solid #30363d; color:white; box-sizing:border-box; }
-    #file-content { background:#0d1117; padding:20px; border-radius:8px; min-height:100%; }
-    .online-count { position:fixed; bottom:10px; right:10px; background:#238636; color:white; padding:10px 15px; border-radius:50px; font-weight:bold; }
-    .refresh { font-size:12px; color:#8b949e; text-align:center; margin-top:10px; }
-    .instructions { background:#21262d; padding:15px; border-radius:8px; margin:10px 0; }
+    :root {
+      --bg: #0a0e17;
+      --surface: #111827;
+      --surface-hover: #1a2235;
+      --surface-active: #1e2a44;
+      --text: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --accent: #7c3aed;
+      --accent-glow: rgba(124, 58, 237, 0.28);
+      --accent-secondary: #06b6d4;
+      --border: #1e293b;
+      --online-bg: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0a0e17 0%, #0f1626 100%);
+      padding: 1.1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.5rem, 4vw, 1.9rem);
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .stat-item strong { color: var(--accent); }
+
+    .container {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      height: calc(100vh - 68px);
+    }
+
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 1.25rem 0;
+    }
+
+    .content {
+      overflow-y: auto;
+      padding: 2rem;
+      background: linear-gradient(to bottom, var(--bg), #0c1321);
+    }
+
+    .search {
+      width: 100%;
+      padding: 0.9rem 1.1rem;
+      margin: 0 0 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.96rem;
+      transition: all 0.25s ease;
+    }
+
+    .search:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-glow);
+      background: var(--surface-active);
+    }
+
+    /* Tree view */
+    .tree { padding: 0 0.6rem; }
+    .tree ul { list-style: none; padding-left: 1.4rem; }
+    .tree li {
+      padding: 0.5rem 0.9rem;
+      margin: 0.15rem 0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tree li:hover { background: var(--surface-hover); }
+    .tree li.active { background: var(--surface-active); color: white; }
+
+    .tree .folder {
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+    .tree .folder::before {
+      content: "▸ ";
+      display: inline-block;
+      width: 1.3em;
+      color: var(--accent-secondary);
+      transition: transform 0.25s ease;
+    }
+    .tree .folder.open::before { transform: rotate(90deg); }
+
+    .tree .file::before {
+      content: "◆ ";
+      color: var(--accent);
+      margin-right: 0.3rem;
+    }
+
+    /* Real-time panels */
+    .realtime-panel {
+      background: rgba(17, 24, 39, 0.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem;
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .realtime-panel:hover { transform: translateY(-2px); }
+
+    .panel-title {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .pulse {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 var(--accent-glow);
+      animation: pulse 2.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.55); }
+      70% { box-shadow: 0 0 0 12px rgba(124,58,237,0); }
+      100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+    }
+
+    .event-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.91rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .event-item:hover { color: var(--text); background: rgba(124,58,237,0.08); }
+
+    .event-item:last-child { border-bottom: none; }
+    .event-item .hash { 
+      color: var(--accent); 
+      font-family: 'JetBrains Mono', monospace; 
+      letter-spacing: 0.5px;
+    }
+    .event-item .time { 
+      color: var(--text-secondary); 
+      font-size: 0.82rem; 
+      white-space: nowrap;
+    }
+
+    #file-content {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2.2rem;
+      border: 1px solid var(--border);
+      min-height: 55vh;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+      line-height: 1.65;
+    }
+
+    .online-count {
+      position: fixed;
+      bottom: 20px;
+      right: 24px;
+      background: var(--online-bg);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: 0 6px 22px rgba(16,185,129,0.4);
+      z-index: 100;
+    }
+
+    .last-update {
+      position: fixed;
+      bottom: 20px;
+      left: 24px;
+      color: var(--text-secondary);
+      font-size: 0.84rem;
+      z-index: 100;
+    }
+
+    .loading {
+      color: var(--accent-secondary);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      .container { grid-template-columns: 1fr; height: auto; }
+      .sidebar { max-height: 45vh; border-right: none; border-bottom: 1px solid var(--border); }
+      .content { padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>Container – Quán Net HKHQN</h1>
-    <p>Đang có <span id="online">0</span> anh em trong quán • Click file để mở tab mới • Auto cập nhật mỗi 2 phút</p>
+    <h1>Container Chain • Explorer</h1>
+    <div class="stats">
+      <span>Online pages: <strong id="online">0</strong></span>
+      <span>• Sync mỗi <strong>30s</strong></span>
+    </div>
   </div>
 
   <div class="container">
     <div class="sidebar">
-      <input type="text" class="search" id="search" placeholder="Tìm file, nick, tin nhắn..."/>
-      <div class="tree" id="tree">Đang load repo...</div>
+      <input type="text" class="search" id="search" placeholder="Tìm file / hash / đường dẫn..."/>
+      <div class="tree" id="tree">
+        <div class="loading">Đang đồng bộ cấu trúc chain...</div>
+      </div>
     </div>
+
     <div class="content">
-      <div id="file-content">
-        <h2>🖥️ Bảng điều khiển Explorer</h2>
-        <div class="instructions">
-          <strong>Chức năng mới:</strong><br>
-          - <strong>File .html:</strong> Mở tab mới tại <code>https://container.bo0tot.org/[tên-file]</code> (render trực tiếp trên domain quán net).<br>
-          - <strong>File khác:</strong> Mở raw content tại GitHub trong tab mới (xem nhanh Markdown/text).<br>
-          <br>
-          <strong>Mẹo quán net:</strong> Tạo file <code>online/nick-cua-ban.html</code> với nội dung "đang cày rank" → click nó sẽ mở trang cá nhân đẹp trên domain!
+      <div class="realtime-panel">
+        <div class="panel-title">
+          <span class="pulse"></span>
+          Latest Blocks (Files)
         </div>
-        <p><em>Chọn file từ cây bên trái để mở tab mới nhé!</em></p>
+        <div id="latest-blocks">Đang tải...</div>
+      </div>
+
+      <div class="realtime-panel">
+        <div class="panel-title">
+          <span class="pulse"></span>
+          Latest Transactions (Uploads)
+        </div>
+        <div id="latest-txs">Đang tải...</div>
+      </div>
+
+      <div id="file-content">
+        <h2 style="margin-bottom:1.3rem; color:var(--accent);">Chào mừng đến Container Chain</h2>
+        <div style="background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.25); border-radius:10px; padding:1.6rem; margin:1.6rem 0; line-height:1.7;">
+          <strong>Hướng dẫn nhanh:</strong><br>
+          • File <strong>.html</strong> → Deploy ngay: <code>https://container.bo0tot.org/[tên-file]</code><br>
+          • File khác → Xem raw: <code>https://raw.githubusercontent.com/HKHQN/container/main/[đường-dẫn]</code><br><br>
+          <strong>Web3 tip:</strong> Upload file .html vào thư mục <code>online/</code> → Mint trang cá nhân miễn phí trên chain!
+        </div>
+        <p style="color:var(--text-secondary); margin-top:2.5rem; text-align:center;">
+          ← Chọn file/folder bên trái hoặc xem hoạt động real-time
+        </p>
       </div>
     </div>
   </div>
 
-  <div class="online-count">Online: <span id="online2">0</span></div>
-  <div class="refresh">Cập nhật lần cuối: <span id="time"></span></div>
+  <div class="online-count">Chain Online: <span id="online2">0</span></div>
+  <div class="last-update">Last sync: <span id="time">—</span></div>
 
   <script>
-    // === ĐÃ CẬP NHẬT: repo mới, domain mới, và sửa lỗi duplicate file
-    const owner = "HKHQN";
-    const repo = "container";
-    const api = `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
-    const customDomain = "https://container.bo0tot.org/";
+    const CUSTOM_DOMAIN = "https://container.bo0tot.org/";
+    const RAW_BASE = "https://raw.githubusercontent.com/HKHQN/container/main/";
+    const API_URL = "https://api.github.com/repos/HKHQN/container/git/trees/main?recursive=1";
+    const HIDDEN_FILES = ['dev.html', 'index.html', 'CNAME', 'README.md' , 'LICENSE'];
 
-    async function loadRepo() {
+    let allFiles = [];
+    let lastSyncTime = new Date();
+
+    async function loadData() {
+      const treeEl = document.getElementById("tree");
       try {
-        const res = await fetch(api);
+        treeEl.innerHTML = '<div class="loading">Đang đồng bộ chain...</div>';
+
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error(`GitHub API: ${res.status} ${res.statusText}`);
+        
         const data = await res.json();
-        const files = data.tree.filter(f => f.type === "blob");
-        const onlineCount = files.filter(f => f.path.startsWith("online/")).length;
+        if (data.message) throw new Error(data.message);
+
+        allFiles = data.tree
+          .filter(f => f.type === "blob")
+          .filter(f => !HIDDEN_FILES.includes(f.path.split('/').pop()));
+
+        const onlineCount = allFiles.filter(f => f.path.startsWith("online/")).length;
+
         document.getElementById("online").textContent = onlineCount;
         document.getElementById("online2").textContent = onlineCount;
 
-        renderTree(files);  // Chỉ truyền blobs để tránh xử lý tree riêng
+        renderTree(allFiles);
+        renderRealTimePanels(allFiles);
         updateTime();
+
       } catch (e) {
-        document.getElementById("tree").innerHTML = "Lỗi kết nối GitHub API :( <br>Repo có public không bro?";
+        treeEl.innerHTML = `<div style="color:var(--danger);padding:1.5rem;">
+          Lỗi đồng bộ • ${e.message}<br>
+          <small>Thử lại sau 30s hoặc kiểm tra repo</small>
+        </div>`;
         console.error(e);
       }
     }
 
-    function renderTree(blobs) {
-      const ul = document.createElement("ul");
-      const folders = {};
-
-      blobs.forEach(item => {
-        const parts = item.path.split('/');
-        let currentUl = ul;
-
-        // Xây dựng folders
-        for (let i = 0; i < parts.length - 1; i++) {
-          const folderPath = parts.slice(0, i + 1).join('/');
-          if (!folders[folderPath]) {
-            const folderLi = document.createElement("li");
-            folderLi.className = "folder";
-            folderLi.textContent = parts[i] + "/";
-            folderLi.onclick = (e) => {
-              e.stopPropagation();
-              toggleFolder(folderLi);
-            };
-
-            const subUl = document.createElement("ul");
-            subUl.style.display = "none"; // collapsed mặc định
-            folderLi.appendChild(subUl);
-
-            folders[folderPath] = { li: folderLi, ul: subUl };
-
-            if (i === 0) {
-              ul.appendChild(folderLi);
-            } else {
-              const parentPath = parts.slice(0, i).join('/');
-              folders[parentPath].ul.appendChild(folderLi);
-            }
-          }
-          currentUl = folders[folderPath].ul;
-        }
-
-        // Thêm file vào currentUl phù hợp
-        const li = document.createElement("li");
-        li.className = "file";
-        li.textContent = parts[parts.length - 1];
-        li.title = item.path;
-        li.onclick = (e) => {
-          e.stopPropagation();
-          openFileInNewTab(item.path);
-        };
-        currentUl.appendChild(li);
-      });
-
+    function renderTree(files) {
       const container = document.getElementById("tree");
       container.innerHTML = "";
-      container.appendChild(ul);
-    }
 
-    function openFileInNewTab(path) {
-      let url;
-      if (path.endsWith('.html')) {
-        url = customDomain + path;
+      const rootUl = document.createElement("ul");
+      const folders = {};
+
+      files.forEach(file => {
+        const parts = file.path.split('/');
+        const filename = parts.pop();
+        let current = rootUl;
+
+        parts.forEach((dir, i) => {
+          const pathSoFar = parts.slice(0, i+1).join('/');
+          if (!folders[pathSoFar]) {
+            const li = document.createElement("li");
+            li.className = "folder";
+            li.textContent = dir;
+            li.onclick = (e) => { e.stopPropagation(); toggleFolder(li); };
+            const ul = document.createElement("ul");
+            ul.style.display = "none";
+            li.appendChild(ul);
+            current.appendChild(li);
+            folders[pathSoFar] = ul;
+            current = ul;
+          } else {
+            current = folders[pathSoFar];
+          }
+        });
+
+        const li = document.createElement("li");
+        li.className = "file";
+        li.textContent = filename;
+        li.title = file.path;
+        li.onclick = () => openFile(file.path);
+        current.appendChild(li);
+      });
+
+      if (rootUl.children.length === 0) {
+        container.innerHTML = '<div class="loading" style="color:#f59e0b;">Chưa có file nào trên chain</div>';
       } else {
-        url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`;
+        container.appendChild(rootUl);
       }
-      window.open(url, '_blank');
     }
 
     function toggleFolder(li) {
+      li.classList.toggle("open");
       const ul = li.querySelector("ul");
-      if (ul) ul.style.display = ul.style.display === "none" ? "block" : "none";
+      ul.style.display = ul.style.display === "none" || !ul.style.display ? "block" : "none";
+    }
+
+    function openFile(path) {
+      const url = path.endsWith('.html') || path.endsWith('.htm')
+        ? CUSTOM_DOMAIN + path
+        : RAW_BASE + path;
+      window.open(url, '_blank');
+    }
+
+    function getFakeRelativeTime() {
+      // Vì GitHub tree không có commit time → giả lập để real-time feel
+      const minutes = Math.floor(Math.random() * 240);
+      if (minutes < 1) return "vừa xong";
+      if (minutes < 60) return `${minutes} phút trước`;
+      const hours = Math.floor(minutes / 60);
+      return `${hours} giờ trước`;
+    }
+
+    function renderRealTimePanels(files) {
+      const sorted = [...files].sort((a,b) => b.path.localeCompare(a.path));
+
+      // Latest Blocks
+      const blocksHtml = sorted.slice(0, 10).map(f => {
+        const name = f.path.split('/').pop();
+        return `
+          <div class="event-item">
+            <span><span class="hash">${name.slice(0,14)}${name.length>14?'...':''}</span></span>
+            <span class="time">${getFakeRelativeTime()}</span>
+          </div>`;
+      }).join('');
+
+      // Latest Txs (uploads)
+      const txsHtml = sorted.slice(10, 20).map(f => {
+        const name = f.path.split('/').pop();
+        return `
+          <div class="event-item">
+            <span>Upload → <span class="hash">${name.slice(0,18)}${name.length>18?'...':''}</span></span>
+            <span class="time">${getFakeRelativeTime()}</span>
+          </div>`;
+      }).join('');
+
+      document.getElementById("latest-blocks").innerHTML = blocksHtml || "Chưa có block nào";
+      document.getElementById("latest-txs").innerHTML = txsHtml || "Chưa có upload mới";
     }
 
     function updateTime() {
-      document.getElementById("time").textContent = new Date().toLocaleString("vi-VN");
+      document.getElementById("time").textContent = 
+        new Date().toLocaleString("vi-VN", { 
+          dateStyle: "short", 
+          timeStyle: "medium" 
+        });
     }
 
-    // Load lần đầu + auto refresh mỗi 2 phút
-    loadRepo();
-    setInterval(loadRepo, 120000);
+    // Khởi chạy
+    loadData();
+    setInterval(loadData, 30000);
 
-    // Tìm kiếm nhanh (cải thiện: tìm theo full path trong title)
+    // Search
     document.getElementById("search").addEventListener("input", (e) => {
-      const term = e.target.value.toLowerCase();
-      document.querySelectorAll(".file, .folder").forEach(el => {
-        const text = el.textContent.toLowerCase();
-        const title = (el.title || "").toLowerCase();
-        el.style.display = (text.includes(term) || title.includes(term)) ? "" : "none";
+      const term = e.target.value.toLowerCase().trim();
+      if (!term) {
+        document.querySelectorAll(".tree li").forEach(el => el.style.display = "");
+        return;
+      }
+
+      document.querySelectorAll(".tree li").forEach(el => {
+        const text = (el.textContent + (el.title || "")).toLowerCase();
+        el.style.display = text.includes(term) ? "" : "none";
       });
     });
   </script>
