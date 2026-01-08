@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Container Chain • Explorer</title>
@@ -19,7 +18,7 @@
       --text: #e2e8f0;
       --text-secondary: #94a3b8;
       --accent: #7c3aed;
-      --accent-glow: rgba(124, 58, 237, 0.28);
+      --accent-glow: rgba(124, 58, 237, 0.3);
       --accent-secondary: #06b6d4;
       --border: #1e293b;
       --online-bg: #10b981;
@@ -27,97 +26,116 @@
       --danger: #ef4444;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100dvh;
+      overflow-x: hidden;
     }
 
     .header {
       background: linear-gradient(135deg, #0a0e17 0%, #0f1626 100%);
-      padding: 1.1rem 2rem;
+      padding: 0.9rem 1.2rem;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 0.8rem;
       flex-wrap: wrap;
-      gap: 1rem;
     }
 
     h1 {
       font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(1.5rem, 4vw, 1.9rem);
+      font-size: clamp(1.35rem, 5vw, 1.7rem);
       font-weight: 700;
       background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: -1px;
+      letter-spacing: -0.8px;
     }
 
     .stats {
       display: flex;
-      gap: 1.5rem;
-      font-size: 0.92rem;
+      gap: 1rem;
+      font-size: 0.82rem;
       white-space: nowrap;
     }
 
     .stat-item strong { color: var(--accent); }
 
-    .container {
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      height: calc(100vh - 68px);
+    .main-layout {
+      display: flex;
+      flex-direction: column;
+      height: calc(100dvh - 56px);
     }
 
     .sidebar {
       background: var(--surface);
-      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       overflow-y: auto;
-      padding: 1.25rem 0;
+      padding: 1rem 0;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 960px) {
+      .main-layout {
+        flex-direction: row;
+      }
+      .sidebar {
+        width: 340px;
+        border-bottom: none;
+        border-right: 1px solid var(--border);
+      }
     }
 
     .content {
+      flex: 1;
       overflow-y: auto;
-      padding: 2rem;
+      padding: 1.2rem;
       background: linear-gradient(to bottom, var(--bg), #0c1321);
     }
 
+    /* Search */
     .search {
       width: 100%;
-      padding: 0.9rem 1.1rem;
-      margin: 0 0 1.5rem;
-      background: var(--surface);
+      padding: 0.8rem 1rem;
+      margin: 0 0 1.2rem;
+      background: var(--surface-active);
       border: 1px solid var(--border);
       border-radius: 10px;
       color: var(--text);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.96rem;
-      transition: all 0.25s ease;
+      font-size: 0.94rem;
+      transition: all 0.2s ease;
     }
 
     .search:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 0 4px var(--accent-glow);
-      background: var(--surface-active);
+      box-shadow: 0 0 0 3px var(--accent-glow);
     }
 
     /* Tree view */
-    .tree { padding: 0 0.6rem; }
-    .tree ul { list-style: none; padding-left: 1.4rem; }
+    .tree { padding: 0 0.5rem; }
+    .tree ul { list-style: none; padding-left: 1.2rem; }
     .tree li {
-      padding: 0.5rem 0.9rem;
-      margin: 0.15rem 0;
-      border-radius: 8px;
+      padding: 0.45rem 0.8rem;
+      margin: 0.12rem 0;
+      border-radius: 7px;
       cursor: pointer;
-      transition: all 0.18s ease;
+      transition: all 0.16s ease;
       user-select: none;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
+      font-size: 0.93rem;
     }
 
     .tree li:hover { background: var(--surface-hover); }
@@ -130,142 +148,156 @@
     .tree .folder::before {
       content: "▸ ";
       display: inline-block;
-      width: 1.3em;
+      width: 1.2em;
       color: var(--accent-secondary);
-      transition: transform 0.25s ease;
+      transition: transform 0.22s ease;
     }
     .tree .folder.open::before { transform: rotate(90deg); }
 
     .tree .file::before {
       content: "◆ ";
       color: var(--accent);
-      margin-right: 0.3rem;
+      margin-right: 0.25rem;
+    }
+
+    /* Loading spinner */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 50vh;
+      color: var(--accent-secondary);
+      gap: 1rem;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 5px solid rgba(124,58,237,0.2);
+      border-top: 5px solid var(--accent);
+      border-radius: 50%;
+      animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* Real-time panels */
     .realtime-panel {
-      background: rgba(17, 24, 39, 0.75);
+      background: rgba(17,24,39,0.7);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.4rem;
-      margin-bottom: 2rem;
-      transition: transform 0.3s ease;
+      border-radius: 10px;
+      padding: 1.1rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.25s ease;
     }
 
-    .realtime-panel:hover { transform: translateY(-2px); }
+    .realtime-panel:hover { transform: translateY(-1px); }
 
     .panel-title {
-      font-size: 1.18rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: var(--accent);
-      margin-bottom: 1.1rem;
+      margin-bottom: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 0.7rem;
+      gap: 0.6rem;
     }
 
     .pulse {
-      width: 10px;
-      height: 10px;
+      width: 9px;
+      height: 9px;
       background: var(--accent);
       border-radius: 50%;
       box-shadow: 0 0 0 0 var(--accent-glow);
-      animation: pulse 2.2s infinite;
+      animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.55); }
-      70% { box-shadow: 0 0 0 12px rgba(124,58,237,0); }
+      0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(124,58,237,0); }
       100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
     }
 
     .event-item {
-      padding: 0.8rem 0;
+      padding: 0.7rem 0;
       border-bottom: 1px solid var(--border);
-      font-size: 0.91rem;
+      font-size: 0.88rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: var(--text-secondary);
-      transition: all 0.2s;
     }
 
-    .event-item:hover { color: var(--text); background: rgba(124,58,237,0.08); }
+    .event-item:hover { color: var(--text); background: rgba(124,58,237,0.07); }
 
     .event-item:last-child { border-bottom: none; }
-    .event-item .hash { 
+
+    .hash { 
       color: var(--accent); 
       font-family: 'JetBrains Mono', monospace; 
-      letter-spacing: 0.5px;
     }
-    .event-item .time { 
+
+    .time { 
       color: var(--text-secondary); 
-      font-size: 0.82rem; 
+      font-size: 0.8rem; 
       white-space: nowrap;
     }
 
-    #file-content {
-      background: var(--surface);
-      border-radius: 12px;
-      padding: 2.2rem;
-      border: 1px solid var(--border);
-      min-height: 55vh;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
-      line-height: 1.65;
+    /* Bottom fixed info */
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10,14,23,0.85);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      z-index: 100;
     }
 
     .online-count {
-      position: fixed;
-      bottom: 20px;
-      right: 24px;
       background: var(--online-bg);
       color: white;
-      padding: 0.7rem 1.5rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
       font-weight: 700;
-      box-shadow: 0 6px 22px rgba(16,185,129,0.4);
-      z-index: 100;
+      box-shadow: 0 3px 10px rgba(16,185,129,0.35);
     }
 
-    .last-update {
-      position: fixed;
-      bottom: 20px;
-      left: 24px;
-      color: var(--text-secondary);
-      font-size: 0.84rem;
-      z-index: 100;
-    }
-
-    .loading {
-      color: var(--accent-secondary);
-      font-style: italic;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    @media (max-width: 960px) {
-      .container { grid-template-columns: 1fr; height: auto; }
-      .sidebar { max-height: 45vh; border-right: none; border-bottom: 1px solid var(--border); }
-      .content { padding: 1.5rem; }
+    @media (max-width: 480px) {
+      .content { padding: 0.9rem; }
+      .realtime-panel { padding: 0.9rem; }
     }
   </style>
 </head>
 <body>
+
   <div class="header">
-    <h1>Container Chain • Explorer</h1>
+    <h1>Container Chain</h1>
     <div class="stats">
-      <span>Online pages: <strong id="online">0</strong></span>
-      <span>• Sync mỗi <strong>30s</strong></span>
+      <span>Online: <strong id="online">0</strong></span>
+      <span>• 30s</span>
     </div>
   </div>
 
-  <div class="container">
+  <div class="main-layout">
     <div class="sidebar">
-      <input type="text" class="search" id="search" placeholder="Tìm file / hash / đường dẫn..."/>
+      <input type="text" class="search" id="search" placeholder="Tìm file / hash / path..."/>
       <div class="tree" id="tree">
-        <div class="loading">Đang đồng bộ cấu trúc chain...</div>
+        <div class="loading-container">
+          <div class="spinner"></div>
+          <div>Đang đồng bộ chain...</div>
+        </div>
       </div>
     </div>
 
@@ -273,7 +305,7 @@
       <div class="realtime-panel">
         <div class="panel-title">
           <span class="pulse"></span>
-          Latest Blocks (Files)
+          Latest Blocks
         </div>
         <div id="latest-blocks">Đang tải...</div>
       </div>
@@ -281,45 +313,31 @@
       <div class="realtime-panel">
         <div class="panel-title">
           <span class="pulse"></span>
-          Latest Transactions (Uploads)
+          Latest Uploads
         </div>
         <div id="latest-txs">Đang tải...</div>
-      </div>
-
-      <div id="file-content">
-        <h2 style="margin-bottom:1.3rem; color:var(--accent);">Chào mừng đến Container Chain</h2>
-        <div style="background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.25); border-radius:10px; padding:1.6rem; margin:1.6rem 0; line-height:1.7;">
-          <strong>Hướng dẫn nhanh:</strong><br>
-          • File <strong>.html</strong> → Deploy ngay: <code>https://container.bo0tot.org/[tên-file]</code><br>
-          • File khác → Xem raw: <code>https://raw.githubusercontent.com/HKHQN/container/main/[đường-dẫn]</code><br><br>
-          <strong>Web3 tip:</strong> Upload file .html vào thư mục <code>online/</code> → Mint trang cá nhân miễn phí trên chain!
-        </div>
-        <p style="color:var(--text-secondary); margin-top:2.5rem; text-align:center;">
-          ← Chọn file/folder bên trái hoặc xem hoạt động real-time
-        </p>
       </div>
     </div>
   </div>
 
-  <div class="online-count">Chain Online: <span id="online2">0</span></div>
-  <div class="last-update">Last sync: <span id="time">—</span></div>
+  <div class="status-bar">
+    <div>Last sync: <span id="time">—</span></div>
+    <div class="online-count">Chain Online: <span id="online2">0</span></div>
+  </div>
 
   <script>
     const CUSTOM_DOMAIN = "https://container.bo0tot.org/";
     const RAW_BASE = "https://raw.githubusercontent.com/HKHQN/container/main/";
     const API_URL = "https://api.github.com/repos/HKHQN/container/git/trees/main?recursive=1";
-    const HIDDEN_FILES = ['dev.html', 'index.html', 'CNAME', 'README.md' , 'LICENSE'];
+    const HIDDEN_FILES = ['dev.html', 'index.html', 'CNAME', 'README.md', 'LICENSE'];
 
     let allFiles = [];
-    let lastSyncTime = new Date();
 
     async function loadData() {
       const treeEl = document.getElementById("tree");
       try {
-        treeEl.innerHTML = '<div class="loading">Đang đồng bộ chain...</div>';
-
         const res = await fetch(API_URL);
-        if (!res.ok) throw new Error(`GitHub API: ${res.status} ${res.statusText}`);
+        if (!res.ok) throw new Error(`GitHub API: ${res.status}`);
         
         const data = await res.json();
         if (data.message) throw new Error(data.message);
@@ -338,11 +356,9 @@
         updateTime();
 
       } catch (e) {
-        treeEl.innerHTML = `<div style="color:var(--danger);padding:1.5rem;">
-          Lỗi đồng bộ • ${e.message}<br>
-          <small>Thử lại sau 30s hoặc kiểm tra repo</small>
+        treeEl.innerHTML = `<div style="color:var(--danger);padding:1.5rem;text-align:center;">
+          Lỗi: ${e.message}<br><small>Thử lại sau 30s</small>
         </div>`;
-        console.error(e);
       }
     }
 
@@ -384,17 +400,13 @@
         current.appendChild(li);
       });
 
-      if (rootUl.children.length === 0) {
-        container.innerHTML = '<div class="loading" style="color:#f59e0b;">Chưa có file nào trên chain</div>';
-      } else {
-        container.appendChild(rootUl);
-      }
+      container.appendChild(rootUl);
     }
 
     function toggleFolder(li) {
       li.classList.toggle("open");
       const ul = li.querySelector("ul");
-      ul.style.display = ul.style.display === "none" || !ul.style.display ? "block" : "none";
+      ul.style.display = ul.style.display === "none" ? "block" : "none";
     }
 
     function openFile(path) {
@@ -405,64 +417,45 @@
     }
 
     function getFakeRelativeTime() {
-      // Vì GitHub tree không có commit time → giả lập để real-time feel
-      const minutes = Math.floor(Math.random() * 240);
-      if (minutes < 1) return "vừa xong";
-      if (minutes < 60) return `${minutes} phút trước`;
+      const minutes = Math.floor(Math.random() * 180) + 1;
+      if (minutes < 60) return `${minutes} phút`;
       const hours = Math.floor(minutes / 60);
-      return `${hours} giờ trước`;
+      return `${hours} giờ`;
     }
 
     function renderRealTimePanels(files) {
       const sorted = [...files].sort((a,b) => b.path.localeCompare(a.path));
 
-      // Latest Blocks
-      const blocksHtml = sorted.slice(0, 10).map(f => {
-        const name = f.path.split('/').pop();
-        return `
-          <div class="event-item">
-            <span><span class="hash">${name.slice(0,14)}${name.length>14?'...':''}</span></span>
-            <span class="time">${getFakeRelativeTime()}</span>
-          </div>`;
-      }).join('');
+      document.getElementById("latest-blocks").innerHTML = sorted.slice(0, 8).map(f => `
+        <div class="event-item">
+          <span><span class="hash">${f.path.split('/').pop().slice(0,16)}${f.path.length>16?'...':''}</span></span>
+          <span class="time">${getFakeRelativeTime()} trước</span>
+        </div>
+      `).join('') || "Chưa có block";
 
-      // Latest Txs (uploads)
-      const txsHtml = sorted.slice(10, 20).map(f => {
-        const name = f.path.split('/').pop();
-        return `
-          <div class="event-item">
-            <span>Upload → <span class="hash">${name.slice(0,18)}${name.length>18?'...':''}</span></span>
-            <span class="time">${getFakeRelativeTime()}</span>
-          </div>`;
-      }).join('');
-
-      document.getElementById("latest-blocks").innerHTML = blocksHtml || "Chưa có block nào";
-      document.getElementById("latest-txs").innerHTML = txsHtml || "Chưa có upload mới";
+      document.getElementById("latest-txs").innerHTML = sorted.slice(8, 16).map(f => `
+        <div class="event-item">
+          <span>Upload → <span class="hash">${f.path.split('/').pop().slice(0,20)}${f.path.length>20?'...':''}</span></span>
+          <span class="time">${getFakeRelativeTime()} trước</span>
+        </div>
+      `).join('') || "Chưa có upload mới";
     }
 
     function updateTime() {
       document.getElementById("time").textContent = 
-        new Date().toLocaleString("vi-VN", { 
-          dateStyle: "short", 
-          timeStyle: "medium" 
-        });
+        new Date().toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "medium" });
     }
 
     // Khởi chạy
     loadData();
     setInterval(loadData, 30000);
 
-    // Search
+    // Tìm kiếm
     document.getElementById("search").addEventListener("input", (e) => {
       const term = e.target.value.toLowerCase().trim();
-      if (!term) {
-        document.querySelectorAll(".tree li").forEach(el => el.style.display = "");
-        return;
-      }
-
       document.querySelectorAll(".tree li").forEach(el => {
         const text = (el.textContent + (el.title || "")).toLowerCase();
-        el.style.display = text.includes(term) ? "" : "none";
+        el.style.display = term ? (text.includes(term) ? "" : "none") : "";
       });
     });
   </script>
