@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tàu Chở Hàng - Map Huyền Thoại Crossfire Legends</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+      color: #e0e0e0;
+      line-height: 1.6;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 50px 0 30px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border: 1px solid #ff4500;
+      box-shadow: 0 0 30px rgba(255,69,0,0.25);
+    }
+
+    .title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      color: #ff4500;
+      letter-spacing: 4px;
+      text-shadow: 0 0 20px #ff4500aa;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      color: #ffcc00;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+      background: rgba(20,20,40,0.7);
+      padding: 35px;
+      border-radius: 12px;
+      border: 1px solid #444466;
+      transition: all 0.3s ease;
+    }
+
+    .section:hover {
+      border-color: #ff4500;
+      box-shadow: 0 0 25px rgba(255,69,0,0.3);
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: #ff4500;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #ff4500;
+      display: inline-block;
+      padding-bottom: 8px;
+      letter-spacing: 2px;
+    }
+
+    .content {
+      font-size: 1.1rem;
+      color: #d0d0d0;
+    }
+
+    .highlight {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin: 25px 0;
+    }
+
+    .feature-list li {
+      margin: 18px 0;
+      padding-left: 35px;
+      position: relative;
+      font-size: 1.1rem;
+    }
+
+    .feature-list li::before {
+      content: "»";
+      position: absolute;
+      left: 0;
+      color: #ff4500;
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+
+    .version-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .version-card {
+      background: rgba(30,30,50,0.8);
+      padding: 25px;
+      border-radius: 10px;
+      border: 1px solid #555577;
+      transition: all 0.3s;
+    }
+
+    .version-card:hover {
+      transform: translateY(-8px);
+      border-color: #ff4500;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+
+    .version-title {
+      color: #ffcc00;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 60px;
+      padding: 30px 0;
+      color: #888;
+      font-size: 0.95rem;
+      border-top: 1px solid #333355;
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 5rem; }
+      .section-title { font-size: 2.6rem; }
+      .container { padding: 20px 15px; }
+      .section { padding: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1 class="title">TÀU CHỞ HÀNG</h1>
+    <p class="subtitle">Map Huyền Thoại - Crossfire Legends</p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Tổng Quan</h2>
+    <p class="content">
+      <span class="highlight">Tàu Chở Hàng</span> là một trong những bản đồ kinh điển và được yêu thích nhất trong series Crossfire, đặc biệt cực kỳ phổ biến ở phiên bản <strong>Crossfire Legends</strong> (do VNG phát hành tại Việt Nam).
+    </p>
+    <p class="content">
+      Bối cảnh diễn ra trên một <strong>con tàu chở hàng khổng lồ</strong> giữa biển khơi. Hai phe <span class="highlight">Black List (BL)</span> và <span class="highlight">Global Risk (GR)</span> hồi sinh ở hai đầu tàu đối diện nhau. Không gian chật hẹp với hàng loạt container, thùng gỗ, công-ten-nơ làm điểm núp, tạo nên những con đường hẹp, dễ phục kích và giao tranh <strong>cận chiến khốc liệt</strong>.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Đặc Điểm Nổi Bật</h2>
+    <ul class="feature-list">
+      <li>Tiếng trực thăng tuần tra + âm thanh sóng biển đập vào mạn tàu cực kỳ chân thực</li>
+      <li>Chiến thuật cao: phối hợp đội hình, nghe bước chân, bắn xuyên thùng, parkour leo container</li>
+      <li>Giao tranh chủ yếu ở cự ly gần – trung bình, rất phù hợp chế độ cận chiến</li>
+      <li>Không khí căng thẳng, khốc liệt – cảm giác như đang chiến đấu thực sự trên biển</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Chế Độ Chơi Phổ Biến</h2>
+    <p class="content">
+      Chủ yếu xuất hiện ở các chế độ:
+    </p>
+    <ul class="feature-list">
+      <li><strong>Đấu Đội (Team Deathmatch)</strong></li>
+      <li>Đấu Máy</li>
+      <li>Loạn Đấu</li>
+      <li>Headshot</li>
+      <li>Big Head</li>
+      <li>Đặt Bom & Đào Tẩu (ở phiên bản Đại Chiến Hạm tương tự)</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Cấu Trúc Bản Đồ</h2>
+    <p class="content">
+      Từ điểm spawn, người chơi có 2 lựa chọn chiến thuật chính:
+    </p>
+    <ul class="feature-list">
+      <li>Lao thẳng ra <strong>giữa map</strong> dùng thùng container làm điểm núp bắn</li>
+      <li>Rẽ phải qua <strong>lối phụ</strong> để bất ngờ "chọc thủng" căn cứ địch</li>
+    </ul>
+    <p class="content">
+      Khu vực <strong>trung tâm map</strong> có nhiều thùng container cao dễ leo, tạo điều kiện cho các pha parkour và bắn từ trên cao.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">So Sánh Phiên Bản Cũ & Mới</h2>
+    <div class="version-box">
+
+      <div class="version-card">
+        <div class="version-title">Phiên bản Cũ</div>
+        <ul class="feature-list">
+          <li>Rộng rãi hơn</li>
+          <li>Có địa đạo hai bên tàu</li>
+          <li>Dễ dàng flank và war tổ đội</li>
+          <li>Nhiều lựa chọn di chuyển</li>
+        </ul>
+      </div>
+
+      <div class="version-card">
+        <div class="version-title">Phiên bản Mới (Hiện tại)</div>
+        <ul class="feature-list">
+          <li>Thu hẹp không gian, tập trung giao tranh</li>
+          <li>Phoong tỏa lối phải, đẩy combat sang trái & giữa</li>
+          <li>Bỏ địa đạo hai bên để cân bằng</li>
+          <li>Khó hơn cho war tổ đội, thiên về cá nhân & phản xạ</li>
+          <li>Hạn chế nhảy qua thùng của phe Kẻ Ẩn Náu</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Hiện Diện Ở Các Phiên Bản</h2>
+    <p class="content">
+      Map huyền thoại này xuất hiện ở:
+    </p>
+    <ul class="feature-list">
+      <li>Crossfire PC Việt Nam</li>
+      <li>Crossfire HD</li>
+      <li><strong>Crossfire Legends</strong> (mobile) – cùng các map kinh điển khác như Bão Sa Mạc, Trạm Phát Sóng...</li>
+    </ul>
+  </div>
+
+  <div class="footer-note">
+    Nguồn tham khảo: 2game.vn • crossfirelegends.fandom.com • cfl.vnggames.com • download.com.vn
+    <br>© 2026 - Crossfire Legends - Tàu Chở Hàng vẫn luôn là huyền thoại!
+  </div>
+
+</div>
+
+</body>
+</html>
