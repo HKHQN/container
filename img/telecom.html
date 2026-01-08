@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>China Telecom Global (CTG) - Cánh tay quốc tế của China Telecom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #005BAC;        /* Màu xanh dương chủ đạo China Telecom */
+      --primary-dark: #004080;
+      --secondary: #00AEEF;       /* Xanh nhạt accent */
+      --text: #1A1A1A;
+      --text-light: #4A4A4A;
+      --bg: #F8FAFC;
+      --white: #FFFFFF;
+      --gray: #E2E8F0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    header .subtitle {
+      font-size: 1.4rem;
+      font-weight: 300;
+      opacity: 0.95;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 40px;
+      margin-bottom: 40px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    .card h2 {
+      color: var(--primary);
+      font-size: 2.1rem;
+      margin-bottom: 24px;
+      position: relative;
+      padding-bottom: 12px;
+    }
+
+    .card h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--secondary);
+      border-radius: 2px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      margin-top: 32px;
+    }
+
+    .service-item {
+      background: rgba(0, 91, 172, 0.04);
+      border: 1px solid var(--gray);
+      border-radius: 10px;
+      padding: 28px;
+      transition: all 0.3s ease;
+    }
+
+    .service-item:hover {
+      background: rgba(0, 91, 172, 0.08);
+      border-color: var(--primary);
+    }
+
+    .service-item h3 {
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      font-size: 1.35rem;
+    }
+
+    .highlight {
+      background: var(--primary);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+      margin: 40px 0;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    footer {
+      background: var(--primary-dark);
+      color: white;
+      text-align: center;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+
+    .website-link {
+      color: var(--secondary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .website-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.6rem; }
+      header { padding: 60px 0 40px; }
+      .section { padding: 60px 0; }
+      .card { padding: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>China Telecom Global (CTG)</h1>
+      <p class="subtitle">Cánh tay quốc tế của China Telecom – Nhà cung cấp dịch vụ viễn thông hàng đầu thế giới</p>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <section class="section">
+      <div class="card">
+        <h2>Giới thiệu</h2>
+        <p><strong>China Telecom Global Limited (CTG)</strong> là công ty con sở hữu 100% của <strong>China Telecom Corporation Limited</strong> – một trong những nhà cung cấp dịch vụ viễn thông lớn nhất thế giới (thuộc top Fortune Global 500).</p>
+        <p>Công ty được thành lập vào năm <strong>2012</strong>, đặt trụ sở chính tại <strong>Hong Kong</strong>, và chuyên trách mảng kinh doanh quốc tế của tập đoàn China Telecom.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Dịch vụ chính</h2>
+        <div class="services-grid">
+          <div class="service-item">
+            <h3>Kết nối Internet quốc tế</h3>
+            <p>Internet Direct Access, Transit</p>
+          </div>
+          <div class="service-item">
+            <h3>Dịch vụ dữ liệu & đường truyền</h3>
+            <p>Băng rộng quốc tế, đường truyền chuyên dụng</p>
+          </div>
+          <div class="service-item">
+            <h3>Trung tâm dữ liệu & Đám mây</h3>
+            <p>IDC, điện toán đám mây, Cloud Exchange, Cloud Storage</p>
+          </div>
+          <div class="service-item">
+            <h3>Giải pháp truyền thông tích hợp</h3>
+            <p>ICT, Unified Communications, SD-WAN, SIP Trunk</p>
+          </div>
+          <div class="service-item">
+            <h3>Mạng chuyên biệt cho doanh nghiệp</h3>
+            <p>Dành cho MNC, nhà mạng khác và cộng đồng người Hoa ở nước ngoài</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Mạng lưới nổi bật</h2>
+        <p>CTG sở hữu và vận hành các mạng Tier 1 toàn cầu quan trọng của China Telecom:</p>
+        <ul style="margin: 20px 0 20px 24px; font-size: 1.1rem;">
+          <li><strong>ChinaNet</strong> – Mạng Internet quốc tế chủ lực</li>
+          <li><strong>CN2</strong> – Mạng chất lượng cao, độ trễ thấp</li>
+          <li><strong>CTG Net</strong> – Mạng kết nối toàn cầu chuyên dụng</li>
+        </ul>
+        <p>Giúp cung cấp kết nối ổn định, tốc độ cao giữa Trung Quốc và thế giới.</p>
+      </div>
+    </section>
+
+    <div class="highlight">
+      Nói đơn giản: Nếu China Telecom là "nhà mạng lớn nhất Trung Quốc" (cả cố định lẫn di động), thì <strong>China Telecom Global</strong> chính là <strong>"cánh tay quốc tế"</strong> của họ, tập trung phục vụ khách hàng doanh nghiệp và cá nhân ở nước ngoài – đặc biệt là các công ty đa quốc gia cần kết nối tốt với Trung Quốc.
+    </div>
+
+    <section class="section">
+      <div class="card" style="text-align:center;">
+        <h2>Website chính thức</h2>
+        <p style="font-size: 1.3rem; margin: 24px 0;">
+          <a href="https://www.chinatelecomglobal.com/" target="_blank" class="website-link">
+            https://www.chinatelecomglobal.com/
+          </a>
+        </p>
+        <p style="color: #666;">(Trang riêng cho mảng kinh doanh quốc tế – khác với trang niêm yết Hong Kong của công ty mẹ)</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>China Telecom Global – Kết nối Trung Quốc với Thế giới • 2026</p>
+  </footer>
+
+</body>
+</html>
