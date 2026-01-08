@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tập đoàn CJ - CJ Group tại Việt Nam</title>
+  <style>
+    :root {
+      --primary-red: #d32f2f;
+      --primary-blue: #1976d2;
+      --green: #388e3c;
+      --orange: #f57c00;
+      --pink: #d81b60;
+      --light-bg: #f8f9fa;
+      --text: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: #fff;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      color: var(--primary-red);
+      border-bottom: 4px solid var(--primary-red);
+      padding-bottom: 12px;
+      margin-bottom: 32px;
+      font-size: 2.4rem;
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--primary-blue);
+      margin: 48px 0 24px;
+      font-size: 1.8rem;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--primary-blue);
+      border-radius: 2px;
+    }
+
+    .intro {
+      font-size: 1.15rem;
+      margin-bottom: 32px;
+      text-align: justify;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: var(--light-bg);
+      padding: 28px;
+      border-radius: 12px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      border-left: 6px solid;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+
+    .card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .card li {
+      margin: 10px 0;
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .card li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--primary-red);
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    .vietnam-list {
+      font-size: 1.08rem;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .vietnam-list li {
+      margin: 20px 0;
+      padding: 16px;
+      background: rgba(25, 118, 210, 0.05);
+      border-radius: 10px;
+      border-left: 5px solid var(--primary-blue);
+    }
+
+    .highlight {
+      font-weight: bold;
+    }
+
+    .address-box {
+      background: #e3f2fd;
+      padding: 28px;
+      border-radius: 12px;
+      margin: 40px 0;
+      border-left: 6px solid var(--primary-blue);
+      font-size: 1.1rem;
+    }
+
+    .address-box strong {
+      color: #0d47a1;
+    }
+
+    .question {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--primary-red);
+      margin: 48px 0 24px;
+      padding: 20px;
+      background: rgba(211, 47, 47, 0.08);
+      border-radius: 12px;
+    }
+
+    .note {
+      font-style: italic;
+      color: #555;
+      text-align: center;
+      margin: 40px 0;
+      font-size: 1.05rem;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 20px; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Tập đoàn CJ (CJ Group / CheilJedang)</h1>
+
+  <p class="intro">
+    Tập đoàn CJ là một trong những chaebol lớn nhất Hàn Quốc, đứng sau Samsung, Hyundai, LG... 
+    Ban đầu là công ty con của Samsung chuyên sản xuất đường (CheilJedang), đến năm 1993 đã tách ra độc lập và phát triển thành tập đoàn đa ngành khổng lồ như ngày nay.
+  </p>
+
+  <h2>Các lĩnh vực kinh doanh chính</h2>
+
+  <div class="grid">
+    <div class="card" style="border-left-color: var(--primary-red);">
+      <h3 style="color: var(--primary-red);">Thực phẩm & Dịch vụ ăn uống</h3>
+      <ul>
+        <li>CJ CheilJedang</li>
+        <li>Bibigo</li>
+        <li>Tous les Jours</li>
+        <li>Gia vị Hàn Quốc (gochujang, tương đậu...)</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left-color: var(--primary-blue);">
+      <h3 style="color: var(--primary-blue);">Giải trí & Truyền thông</h3>
+      <ul>
+        <li>CGV Cinemas</li>
+        <li>tvN</li>
+        <li>Studio Dragon (sản xuất K-drama nổi tiếng)</li>
+        <li>Phim ảnh, âm nhạc</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left-color: var(--green);">
+      <h3 style="color: var(--green);">Công nghệ sinh học & Dược</h3>
+      <ul>
+        <li>Axit amin</li>
+        <li>Nguyên liệu thức ăn chăn nuôi</li>
+        <li>Dược phẩm</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left-color: var(--orange);">
+      <h3 style="color: var(--orange);">Logistics & Bán lẻ</h3>
+      <ul>
+        <li>CJ Logistics</li>
+        <li>CJ OliveNetworks</li>
+        <li>Bất động sản & các lĩnh vực khác</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>CJ tại Việt Nam</h2>
+
+  <p>Tập đoàn CJ đầu tư vào Việt Nam từ cuối thập niên 1990 và hiện rất mạnh ở nhiều lĩnh vực:</p>
+
+  <ul class="vietnam-list">
+    <li><span class="highlight" style="color: var(--pink);">Thức ăn chăn nuôi</span> → <strong>CJ Vina Agri</strong> (rất lớn trong ngành chăn nuôi Việt Nam)</li>
+    <li><span class="highlight">Thực phẩm</span> → Bibigo, thịt đông lạnh, bánh mì <strong style="color: var(--green);">Tous les Jours</strong></li>
+    <li><span class="highlight">Rạp chiếu phim</span> → <strong style="color: var(--primary-red);">CGV</strong> (chuỗi rạp lớn nhất Việt Nam)</li>
+    <li><span class="highlight">Logistics</span> → CJ Logistics</li>
+    <li><span class="highlight">Giải trí</span> → Phân phối phim Hàn, K-drama...</li>
+  </ul>
+
+  <div class="address-box">
+    <strong>Trụ sở chính tại Việt Nam:</strong><br>
+    Tòa nhà CJ, 2Bis-4-6 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh
+  </div>
+
+  <p class="note">
+    Khi người Việt nhắc đến "công ty CJ" thì thường đang nói đến Tập đoàn CJ Hàn Quốc hoặc các công ty con tại Việt Nam (đặc biệt là CJ Vina Agri và CGV).
+  </p>
+
+  <div class="question">
+    Bạn đang quan tâm đến mảng nào của CJ?<br>
+    (Thực phẩm, CGV, tuyển dụng, đầu tư, hay lĩnh vực khác?)
+  </div>
+</div>
+
+</body>
+</html>
