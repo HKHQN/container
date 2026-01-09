@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuyển Lao Động Phổ Thông - Công Ty Bao Bì Sài Đồng</title>
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --primary-dark: #c0392b;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 35px 30px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        .info-box {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .info-box .icon {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .info-box h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+        .salary {
+            font-size: 2.1rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+        .highlight {
+            background: #fff3f3;
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+        }
+        .contact {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f9f9f9, #f0f0f0);
+            border-radius: 12px;
+        }
+        .contact .phone {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 15px 0;
+            letter-spacing: 2px;
+        }
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(231,76,60,0.3);
+        }
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231,76,60,0.4);
+        }
+        .footer-note {
+            text-align: center;
+            color: var(--gray);
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8rem; }
+            .header p { font-size: 1.1rem; }
+            .content { padding: 25px 20px; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <!-- Font Awesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>TUYỂN LAO ĐỘNG PHỔ THÔNG</h1>
+                <p>CÔNG TY SẢN XUẤT BAO BÌ - KCN SÀI ĐỒNG B, LONG BIÊN, HÀ NỘI</p>
+            </div>
+
+            <div class="content">
+                <h2 style="text-align:center; color:var(--primary); margin-bottom:25px;">Thông tin tuyển dụng</h2>
+                
+                <div class="info-grid">
+                    <div class="info-box">
+                        <div class="icon"><i class="fas fa-clock"></i></div>
+                        <h3>Ca làm việc</h3>
+                        <p>7:00 - 19:00 (Ngày)</p>
+                        <p>19:00 - 07:00 (Đêm)</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <div class="icon"><i class="fas fa-sync-alt"></i></div>
+                        <h3>Hình thức</h3>
+                        <p>Luân phiên</p>
+                        <p>1 tuần ngày - 1 tuần đêm</p>
+                    </div>
+                    
+                    <div class="info-box">
+                        <div class="icon"><i class="fas fa-utensils"></i></div>
+                        <h3>Phúc lợi</h3>
+                        <p>Ăn cơm miễn phí tại công ty</p>
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    <h3 style="margin-bottom:15px;">LƯƠNG TUẦN</h3>
+                    <p class="salary">Ca Ngày: 510.000đ</p>
+                    <p class="salary" style="color:#27ae60;">Ca Đêm: 619.000đ</p>
+                </div>
+
+                <div class="contact">
+                    <h2>Liên hệ ngay hôm nay!</h2>
+                    <p style="font-size:1.3rem; margin:20px 0;">Chị Bùi Trinh</p>
+                    <div class="phone">0369 507 563</div>
+                    <a href="tel:0369507563" class="btn">GỌI NGAY</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="footer-note">Địa chỉ: Khu công nghiệp Sài Đồng B, phường Sài Đồng, quận Long Biên, Hà Nội</p>
+    </div>
+
+</body>
+</html>
