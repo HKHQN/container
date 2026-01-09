@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Honda City 2026 - Sedan Hạng B Bán Chạy Nhất Việt Nam</title>
+  <style>
+    :root {
+      --primary: #d32f2f;       /* Honda đỏ đặc trưng */
+      --primary-dark: #b71c1c;
+      --text: #1a1a1a;
+      --light-bg: #f8f9fa;
+      --gray: #555;
+      --border: #ddd;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--light-bg);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      text-align: center;
+      padding: 3rem 1rem;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+      padding-bottom: 0.6rem;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .price-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .price-card {
+      background: #fff;
+      border: 2px solid #eee;
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .price-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 25px rgba(211,47,47,0.15);
+      transform: translateY(-5px);
+    }
+
+    .price-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #111;
+    }
+
+    .note {
+      font-size: 0.95rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0;
+    }
+
+    .gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .highlight {
+      background: #fff3f3;
+      border-left: 5px solid var(--primary);
+      padding: 1.2rem;
+      margin: 1.5rem 0;
+      border-radius: 6px;
+    }
+
+    .cta {
+      text-align: center;
+      margin: 3rem 0 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(211,47,47,0.3);
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      h2 { font-size: 1.6rem; }
+      .price { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>Honda City 2026</h1>
+      <p>Sedan hạng B bán chạy nhất - Thiết kế thể thao • An toàn đỉnh cao • Giá trị vượt trội</p>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- GIỚI THIỆU -->
+    <div class="section">
+      <h2>Giới thiệu</h2>
+      <p>Honda City là một trong những mẫu sedan hạng B <strong>phổ biến và bán chạy nhất</strong> tại Việt Nam, nổi tiếng với thiết kế thể thao, không gian rộng rãi, vận hành êm ái và trang bị an toàn hàng đầu phân khúc.</p>
+      <p><strong>Hiện tại (tháng 1/2026)</strong>: Honda City đang ở thế hệ thứ 5 (facelift 2023-2025), với phiên bản nâng cấp nhẹ được gọi là Honda City 2026 tại một số đại lý (thực chất là bản nâng cấp giữa vòng đời).</p>
+    </div>
+
+    <!-- GIÁ BÁN -->
+    <div class="section">
+      <h2>Giá bán niêm yết mới nhất (tháng 1/2026)</h2>
+      <p>Tất cả phiên bản sử dụng động cơ 1.5L i-VTEC + hộp số CVT, lắp ráp trong nước.</p>
+
+      <div class="price-list">
+        <div class="price-card">
+          <h3>City G</h3>
+          <div class="price">499 triệu đồng</div>
+        </div>
+        <div class="price-card">
+          <h3>City L</h3>
+          <div class="price">539 triệu đồng</div>
+          <div class="note">(giảm từ 589 triệu ở một số chương trình)</div>
+        </div>
+        <div class="price-card">
+          <h3>City RS</h3>
+          <div class="price">569 triệu đồng</div>
+          <div class="note">(giảm từ 609 triệu ở một số ưu đãi)</div>
+        </div>
+      </div>
+
+      <p class="note highlight">Giá trên là niêm yết, chưa bao gồm phí lăn bánh (~+10-12% tùy tỉnh). Hiện có nhiều ưu đãi lớn: giảm tiền mặt, tặng 100% thuế trước bạ, phụ kiện... Liên hệ đại lý để nhận báo giá tốt nhất!</p>
+    </div>
+
+    <!-- THIẾT KẾ NGOẠI THẤT -->
+    <div class="section">
+      <h2>Thiết kế ngoại thất</h2>
+      <p>Honda City 2026 mang phong cách thể thao, cá tính với ngôn ngữ "đôi cánh" đặc trưng của Honda. Phiên bản mới có lưới tản nhiệt mới, cản trước thể thao hơn, đèn LED hiện đại (full LED ở bản RS).</p>
+
+      <div class="gallery">
+        <!-- Thay bằng link ảnh thực tế của bạn -->
+        <div class="gallery-item">
+          <img src="https://img.zigwheels.ph/images/2025/honda/city/exterior.jpg" alt="Honda City 2026 ngoại thất chính diện">
+        </div>
+        <div class="gallery-item">
+          <img src="https://img.zigwheels.my/images/2025/honda/city/side-profile.jpg" alt="Honda City 2026 góc nghiêng">
+        </div>
+        <div class="gallery-item">
+          <img src="https://www.hondacarindia.com/-/media/honda/city/2025/exterior/back.jpg" alt="Honda City 2026 phía sau">
+        </div>
+      </div>
+    </div>
+
+    <!-- NỘI THẤT -->
+    <div class="section">
+      <h2>Nội thất & Tiện nghi</h2>
+      <p>Khoang cabin rộng rãi nhất phân khúc, chất liệu cao cấp, màn hình cảm ứng, Apple CarPlay/Android Auto, Honda Connect (bản cao cấp). Bản RS có ghế da, vô lăng thể thao.</p>
+
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="https://www.pcauto.com/images/honda-city-2025-interior-dashboard.jpg" alt="Nội thất Honda City 2026">
+        </div>
+      </div>
+    </div>
+
+    <!-- ĐỘNG CƠ & AN TOÀN -->
+    <div class="section">
+      <h2>Động cơ - Vận hành - An toàn</h2>
+      <ul>
+        <li><strong>Động cơ</strong>: 1.5L DOHC i-VTEC, 119 mã lực, 145 Nm</li>
+        <li><strong>Hộp số</strong>: CVT mượt mà, tiêu thụ ~5-6L/100km</li>
+        <li><strong>Cảm giác lái</strong>: Phấn khích, chắc chắn – đặc trưng Honda</li>
+        <li><strong>An toàn</strong>: Gói Honda Sensing tiêu chuẩn trên mọi phiên bản (phanh giảm thiểu va chạm, giữ làn, kiểm soát hành trình thích ứng, đèn pha tự động...)</li>
+      </ul>
+    </div>
+
+    <!-- TỔNG KẾT & CTA -->
+    <div class="section highlight">
+      <h2>Tổng kết</h2>
+      <p>Honda City 2026 vẫn là lựa chọn hàng đầu trong tầm 500-600 triệu nếu bạn cần xe đẹp, lái hay, bền bỉ, an toàn cao và giá trị bán lại tốt.</p>
+      <p><strong>Đây là thời điểm rất tốt để mua</strong> (nhiều ưu đãi lớn, đặc biệt trước Tết Âm lịch 2026).</p>
+
+      <div class="cta">
+        <a href="https://www.honda.com.vn/" target="_blank" class="btn">Tìm đại lý Honda gần nhất →</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
