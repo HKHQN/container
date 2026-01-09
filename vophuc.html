@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Khu Công Nghiệp Quang Châu - Bắc Giang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@600;700&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #004d99;
+      --primary-dark: #003366;
+      --accent: #e67e22;
+      --light-blue: #e6f0ff;
+      --gold: #d4a017;
+      --text: #1a2a44;
+      --bg: #f8fafc;
+      --gray: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 20px 15px;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(0,77,153,0.08) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(230,126,34,0.06) 0%, transparent 60%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      border: 1px solid rgba(0,77,153,0.12);
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 70px 35px 55px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: "QUANG CHÂU";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      font-size: 8rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.09);
+      pointer-events: none;
+      font-family: 'Playfair Display', serif;
+      white-space: nowrap;
+    }
+
+    .title-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      letter-spacing: 1.5px;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.5);
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      font-weight: 400;
+      letter-spacing: 0.8px;
+    }
+
+    .content {
+      padding: 45px 40px;
+    }
+
+    h2 {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: var(--primary);
+      font-size: 1.85rem;
+      margin: 50px 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--accent);
+      display: inline-block;
+    }
+
+    .info-card {
+      background: var(--light-blue);
+      border-radius: 12px;
+      padding: 28px;
+      margin: 30px 0;
+      border-left: 6px solid var(--primary);
+      box-shadow: 0 4px 15px rgba(0,77,153,0.08);
+    }
+
+    .highlight {
+      background: linear-gradient(90deg, #fef8e8, #fff5d9);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin: 35px 0;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #8b5e00;
+      box-shadow: 0 5px 18px rgba(212,160,23,0.15);
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 50px auto;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      background: var(--primary);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+    }
+
+    .timeline-item {
+      padding: 20px 40px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      right: -17px;
+      background-color: white;
+      border: 4px solid var(--accent);
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .left {
+      left: 0;
+    }
+
+    .right {
+      left: 50%;
+    }
+
+    .right::after {
+      left: -16px;
+    }
+
+    .content-item {
+      padding: 20px 30px;
+      background-color: white;
+      position: relative;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .note {
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 30px 0;
+      font-size: 0.98rem;
+      border-left: 5px solid var(--gray);
+    }
+
+    .strong {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .timeline::after { left: 31px; }
+      .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+      .timeline-item::after { left: 15px; }
+      .left::after, .right::after { left: 15px !important; }
+      .right { left: 0%; }
+      .title-main { font-size: 2.4rem; }
+      .content { padding: 35px 25px; }
+      .header { padding: 60px 25px 45px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1 class="title-main">KHU CÔNG NGHIỆP QUANG CHÂU</h1>
+    <p class="subtitle">Huyện Việt Yên – Tỉnh Bắc Giang<br>Một trong những KCN FDI hàng đầu miền Bắc</p>
+  </div>
+
+  <div class="content">
+    <div class="highlight">
+      Tổng quy mô hiện tại: <span style="font-size:1.6em">516 ha</span><br>
+      (426 ha phần chính + 90 ha mở rộng)
+    </div>
+
+    <h2>Lịch sử hình thành & Phát triển</h2>
+
+    <div class="timeline">
+      <div class="timeline-item left">
+        <div class="content-item">
+          <h3>2006</h3>
+          <p>Thành lập theo Quyết định Thủ tướng Chính phủ<br>Quy mô ban đầu: 426 ha</p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content-item">
+          <h3>2006–2020</h3>
+          <p>Hoạt động ổn định, lấp đầy gần 100%<br>Thu hút hơn 50 dự án FDI lớn (Foxconn, Luxshare, JA Solar...)</p>
+        </div>
+      </div>
+
+      <div class="timeline-item left">
+        <div class="content-item">
+          <h3>2021–2022</h3>
+          <p>Phê duyệt mở rộng 90,59 ha<br>Chủ trương đầu tư cho KBC (996 tỷ đồng)</p>
+        </div>
+      </div>
+
+      <div class="timeline-item right">
+        <div class="content-item">
+          <h3>2023–nay</h3>
+          <p>Phê duyệt quy hoạch 1/500<br>Thu hút dự án công nghệ cao: Fulian, Foxconn...<br>Tiến độ xây dựng hạ tầng nhanh chóng</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <strong>Điểm nổi bật hiện tại (đầu năm 2026):</strong><br><br>
+      • Phần chính 426 ha: <strong>lấp đầy 97–100%</strong>, hoạt động hiệu quả<br>
+      • Phần mở rộng 90 ha: Đang xây dựng hạ tầng, đã thu hút nhiều dự án lớn<br>
+      • Tập trung công nghệ cao, sạch, ít ô nhiễm<br>
+      • Thời hạn dự án hạ tầng mở rộng: đến <strong>05/02/2057</strong>
+    </div>
+
+    <div class="note">
+      <strong>Khu công nghiệp Quang Châu</strong> là KCN hoạt động lâu dài, không có thời điểm "kết thúc" cố định.<br>
+      Sau năm 2057, các doanh nghiệp vẫn tiếp tục hoạt động theo hợp đồng thuê đất (thường 50 năm+).<br>
+      Vẫn đang trong giai đoạn <strong>phát triển mạnh mẽ</strong>, đặc biệt với phần mở rộng.
+    </div>
+
+    <h2 style="text-align:center; margin:60px 0 30px; border-bottom:none;">
+      Một trong những KCN hút FDI hàng đầu miền Bắc!
+    </h2>
+  </div>
+</div>
+
+</body>
+</html>
