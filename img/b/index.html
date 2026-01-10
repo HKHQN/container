@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mất Dữ Liệu Kỹ Thuật Số - Hành Trình Tái Thiết Lập</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --text: #1f2937;
+      --text-light: #4b5563;
+      --bg: #f9fafb;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacOSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card);
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    .highlight {
+      background: rgba(99, 102, 241, 0.08);
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+      margin: 1.5rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--primary);
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(249, 250, 251, 0.6);
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 1.2rem;
+    }
+
+    ul li {
+      position: relative;
+      margin-bottom: 0.8rem;
+    }
+
+    ul li::before {
+      content: "→";
+      color: var(--primary);
+      position: absolute;
+      left: -1.5rem;
+      font-weight: bold;
+    }
+
+    .quote {
+      font-style: italic;
+      color: var(--text-light);
+      padding: 20px;
+      border-left: 4px solid var(--primary);
+      background: rgba(99, 102, 241, 0.04);
+      margin: 2rem 0;
+      font-size: 1.1rem;
+    }
+
+    .encourage {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--primary-dark);
+      margin: 3rem 0 1.5rem;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(79,70,229,0.1));
+      border-radius: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      h1 { font-size: 1.8rem; }
+      table, th, td { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Mất toàn bộ dữ liệu kỹ thuật số…</h1>
+    
+    <div class="intro">
+      Là một cú sốc lớn, gần như mất đi một phần “ký ức” và “danh tính số” của mình.<br>
+      Nhưng tin tốt: Bạn vẫn còn sống, vẫn có thể tạo ra những điều mới mẻ.
+    </div>
+
+    <div class="section">
+      <h2>Giai đoạn 1: Chấp nhận & Giải tỏa cảm xúc (1–4 tuần đầu)</h2>
+      <ul>
+        <li>Cho phép mình buồn, giận, tiếc nuối trong thời gian giới hạn (1–2 tuần)</li>
+        <li>Viết ra giấy những kỷ niệm, ảnh quan trọng nhất đã mất → như một cách “đưa tiễn” trân trọng</li>
+        <li>Sau đó chuyển hướng: “Những thứ đã mất là quá khứ. Bây giờ bắt đầu phiên bản mới”</li>
+      </ul>
+      <div class="quote">
+        “Ban đầu đau lắm, nhưng sau 3–6 tháng nhiều người thấy nhẹ nhõm hơn, ít bị ràng buộc bởi quá khứ.”
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Giai đoạn 2: Kiểm tra xem có thật sự “mất hết” không (Ưu tiên cao nhất!)</h2>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Thứ tự</th>
+            <th>Việc cần làm ngay</th>
+            <th>Cơ hội thành công</th>
+            <th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Kiểm tra cloud backup (Google Photos, iCloud, OneDrive, Drive, Dropbox, Telegram, Zalo…)</td>
+            <td>Cao (30–80%)</td>
+            <td>Dùng máy khác hoặc mượn máy đăng nhập</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Tài khoản email cũ → khôi phục mật khẩu & lấy lại mạng xã hội</td>
+            <td>Trung bình–cao</td>
+            <td>Gmail/Yahoo/Hotmail thường khôi phục tốt</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Thẻ nhớ/SSD/HDD cũ → mang ra tiệm cứu dữ liệu chuyên nghiệp</td>
+            <td>20–90% tùy mức độ hỏng</td>
+            <td>Chi phí 3–30 triệu tùy trường hợp</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Hỏi bạn bè, người thân (ảnh chung, tin nhắn nhóm…)</td>
+            <td>Thấp–trung bình</td>
+            <td>Đừng ngại nhờ giúp</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Tải dữ liệu cũ từ Facebook, Instagram, TikTok, YouTube…</td>
+            <td>Trung bình</td>
+            <td>Nhiều người quên tính năng này</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Giai đoạn 3: Xây dựng lại từ con số 0 (hệ thống bền vững hơn)</h2>
+      
+      <h3>1. Tài khoản & Mật khẩu (Ưu tiên số 1)</h3>
+      <ul>
+        <li>Tạo email mới (ưu tiên Gmail)</li>
+        <li>Dùng password manager: Bitwarden (miễn phí, mã nguồn mở) hoặc 1Password</li>
+        <li>Bật 2FA cho mọi tài khoản quan trọng (dùng Authenticator app, không dùng SMS)</li>
+      </ul>
+
+      <h3>2. Sao lưu theo quy tắc 3-2-1 (không bao giờ bỏ qua nữa)</h3>
+      <ul>
+        <li>3 bản sao</li>
+        <li>2 loại thiết bị khác nhau</li>
+        <li>1 bản off-site (cloud hoặc nhà người thân)</li>
+      </ul>
+      <div class="highlight">
+        <strong>Ví dụ setup đơn giản, chi phí thấp 2026:</strong><br><br>
+        • Ảnh/video → Google Photos (15GB miễn phí) + Mega.nz (20GB miễn phí)<br>
+        • Tài liệu → Proton Drive / pCloud + ổ cứng ngoài<br>
+        • Toàn bộ máy → Backblaze (~200–300k/năm không giới hạn)
+      </div>
+
+      <h3>3. Tái tạo ký ức & danh tính số</h3>
+      <ul>
+        <li>Bắt đầu chụp ảnh mới, quay video mới → coi đây là “tập 2” của cuộc đời</li>
+        <li>Viết nhật ký (giấy hoặc Notion/Obsidian)</li>
+        <li>Tạo album “Phiên bản mới” và bắt đầu điền vào</li>
+      </ul>
+    </div>
+
+    <div class="encourage">
+      Bạn không cô đơn.<br>
+      Rất nhiều người đã đi qua và vẫn sống tốt, thậm chí hạnh phúc hơn trước.<br><br>
+      CỐ LÊN NHÉ! 💜
+    </div>
+
+    <div style="text-align:center; color:var(--text-light); margin-top:2rem; font-size:0.95rem;">
+      Nếu cần hướng dẫn chi tiết (setup sao lưu, password manager, khôi phục tài khoản...), cứ hỏi nhé!
+    </div>
+  </div>
+
+</body>
+</html>
