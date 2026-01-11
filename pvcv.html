@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn Phỏng Vấn Công Nhân KCN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f7fafc;
+            border-bottom: 3px solid #e2e8f0;
+            overflow-x: auto;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 1em;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.3s;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            background: #edf2f7;
+            color: #2d3748;
+        }
+
+        .nav-tab.active {
+            color: #667eea;
+            background: white;
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #667eea;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #2d3748;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #4a5568;
+            font-size: 1.5em;
+            margin: 30px 0 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        h3::before {
+            content: '';
+            width: 5px;
+            height: 25px;
+            background: #667eea;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+        h4 {
+            color: #718096;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        .card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateX(5px);
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+
+        .question-list {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .question-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f7fafc;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .question-list li:hover {
+            background: #edf2f7;
+            padding-left: 15px;
+        }
+
+        .alert {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .alert h4 {
+            color: #c53030;
+            margin-bottom: 10px;
+        }
+
+        .tips-box {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tips-box h4 {
+            color: #2f855a;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 5px 5px 5px 0;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .nav-tab {
+                font-size: 0.9em;
+                padding: 12px 15px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        .progress-indicator {
+            height: 4px;
+            background: #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-indicator">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>📋 Hướng Dẫn Phỏng Vấn</h1>
+            <p>Công Nhân và Nhân Viên Khu Công Nghiệp</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection(0)">Chuẩn Bị</button>
+            <button class="nav-tab" onclick="showSection(1)">Thời Gian</button>
+            <button class="nav-tab" onclick="showSection(2)">Hợp Đồng</button>
+            <button class="nav-tab" onclick="showSection(3)">Bổ Sung</button>
+            <button class="nav-tab" onclick="showSection(4)">Kỹ Thuật</button>
+            <button class="nav-tab" onclick="showSection(5)">Sau PV</button>
+        </nav>
+
+        <div class="content">
+            <!-- Section 1: Chuẩn Bị -->
+            <div class="section active">
+                <h2>I. CHUẨN BỊ PHỎNG VẤN</h2>
+
+                <div class="card">
+                    <h3>1. Mục tiêu nghiên cứu</h3>
+                    <ul>
+                        <li>Tìm hiểu điều kiện làm việc thực tế</li>
+                        <li>Thu thập thông tin về thời gian làm việc và hợp đồng lao động</li>
+                        <li>Đánh giá mức độ hài lòng của người lao động</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>2. Lựa chọn đối tượng</h3>
+                    <div style="margin-top: 15px;">
+                        <span class="badge">Công nhân sản xuất trực tiếp</span>
+                        <span class="badge">Nhân viên văn phòng</span>
+                        <span class="badge">Tổ trưởng, giám sát</span>
+                        <span class="badge">Đại diện công đoàn</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>3. Chuẩn bị công cụ</h3>
+                    <ul>
+                        <li>✓ Bảng câu hỏi có cấu trúc</li>
+                        <li>✓ Máy ghi âm (xin phép trước)</li>
+                        <li>✓ Giấy bút ghi chép</li>
+                        <li>✓ Đảm bảo tính bảo mật thông tin</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 2: Thời Gian Làm Việc -->
+            <div class="section">
+                <h2>II. CÂU HỎI VỀ THỜI GIAN LÀM VIỆC</h2>
+
+                <div class="card">
+                    <h3>A. Giờ làm việc cơ bản</h3>
+                    <div class="question-list">
+                        <ol>
+                            <li>Anh/chị làm việc theo ca nào? (sáng/chiều/tối/đêm)</li>
+                            <li>Mỗi ca làm việc bao nhiêu giờ?</li>
+                            <li>Có được nghỉ giải lao trong ca không? Bao lâu?</li>
+                            <li>Trong tuần anh/chị làm việc bao nhiêu ngày?</li>
+                            <li>Thời gian làm việc có thay đổi theo mùa vụ không?</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>B. Làm thêm giờ</h3>
+                    <div class="question-list">
+                        <ol>
+                            <li>Anh/chị có phải làm thêm giờ không? Thường xuyên như thế nào?</li>
+                            <li>Làm thêm giờ có tự nguyện hay bắt buộc?</li>
+                            <li>Mỗi tháng anh/chị làm thêm trung bình bao nhiêu giờ?</li>
+                            <li>Công ty có trả lương làm thêm giờ không? Tính như thế nào?</li>
+                            <li>Có được nghỉ bù sau khi làm thêm giờ không?</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>C. Ngày nghỉ và phép năm</h3>
+                    <div class="question-list">
+                        <ol>
+                            <li>Anh/chị được nghỉ những ngày nào trong tuần?</li>
+                            <li>Mỗi năm có bao nhiêu ngày phép?</li>
+                            <li>Có được nghỉ các ngày lễ, Tết không?</li>
+                            <li>Việc xin nghỉ phép có dễ dàng không?</li>
+                            <li>Nếu nghỉ đột xuất (ốm, việc gia đình) thì xử lý như thế nào?</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Hợp Đồng -->
+            <div class="section">
+                <h2>III. CÂU HỎI VỀ HỢP ĐỒNG LAO ĐỘNG</h2>
+
+                <div class="card">
+                    <h3>A. Loại hợp đồng</h3>
+                    <div class="question-list">
+                        <ol>
+                            <li>Anh/chị đang làm việc theo hợp đồng gì? (thử việc/có thời hạn/không thời hạn)</li>
+                            <li>Hợp đồng ký trong bao lâu? (1 năm, 2 năm, vô thời hạn...)</li>
+                            <li>Đã ký hợp đồng bao lâu rồi?</li>
+                            <li>Trước đó có ký hợp đồng loại khác không?</li>
+                            <li>Công ty có giải thích rõ nội dung hợp đồng không?</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>B. Nội dung hợp đồng</h3>
+                    <h4>Trong hợp đồng có ghi rõ về:</h4>
+                    <ul>
+                        <li>Mức lương cơ bản?</li>
+                        <li>Các khoản phụ cấp?</li>
+                        <li>Thời gian làm việc?</li>
+                        <li>Chế độ bảo hiểm?</li>
+                    </ul>
+                    <div class="question-list">
+                        <ol start="2">
+                            <li>Anh/chị có được giữ bản hợp đồng không?</li>
+                            <li>Các điều khoản trong hợp đồng có được thực hiện đúng không?</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>C. Quyền lợi và nghĩa vụ</h3>
+                    <div class="question-list">
+                        <ol>
+                            <li>Công ty có đóng đầy đủ bảo hiểm (xã hội, y tế, thất nghiệp) không?</li>
+                            <li>Có được hưởng các chế độ phúc lợi gì? (ăn ca, đi lại, nhà ở...)</li>
+                            <li>Nếu muốn nghỉ việc thì phải báo trước bao lâu?</li>
+                            <li>Có điều khoản nào trong hợp đồng anh/chị thấy chưa hợp lý?</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Câu Hỏi Bổ Sung -->
+            <div class="section">
+                <h2>IV. CÂU HỎI BỔ SUNG</h2>
+
+                <div class="card">
+                    <h3>1. Điều kiện làm việc</h3>
+                    <ul>
+                        <li>Môi trường làm việc có an toàn, vệ sinh không?</li>
+                        <li>Có được trang bị đầy đủ bảo hộ lao động không?</li>
+                        <li>Áp lực công việc như thế nào?</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>2. Thu nhập</h3>
+                    <ul>
+                        <li>Mức lương có đủ sống không?</li>
+                        <li>Lương có được trả đúng hạn không?</li>
+                        <li>Thu nhập thực tế so với cam kết ban đầu?</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>3. Mức độ hài lòng</h3>
+                    <ul>
+                        <li>Anh/chị có hài lòng với công việc hiện tại không?</li>
+                        <li>Điều gì anh/chị mong muốn cải thiện nhất?</li>
+                        <li>Có dự định làm việc lâu dài ở đây không?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 5: Kỹ Thuật -->
+            <div class="section">
+                <h2>V. KỸ THUẬT PHỎNG VẤN</h2>
+
+                <div class="tips-box">
+                    <h3>1. Tạo không khí thoải mái</h3>
+                    <ul>
+                        <li>Giới thiệu rõ mục đích nghiên cứu</li>
+                        <li>Cam kết bảo mật thông tin</li>
+                        <li>Sử dụng ngôn ngữ gần gũi, dễ hiểu</li>
+                    </ul>
+                </div>
+
+                <div class="tips-box">
+                    <h3>2. Trong quá trình phỏng vấn</h3>
+                    <ul>
+                        <li>Lắng nghe tích cực</li>
+                        <li>Không áp đặt quan điểm</li>
+                        <li>Đặt câu hỏi mở để người được phỏng vấn chia sẻ nhiều hơn</li>
+                        <li>Quan sát ngôn ngữ cơ thể</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>3. Xử lý tình huống</h3>
+                    <ul>
+                        <li><strong>Nếu họ ngại trả lời:</strong> giải thích thêm, đảm bảo tính bảo mật</li>
+                        <li><strong>Nếu câu trả lời mơ hồ:</strong> hỏi thêm chi tiết, ví dụ cụ thể</li>
+                        <li><strong>Nếu có mâu thuẫn:</strong> kiểm chứng lại một cách khéo léo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 6: Sau Phỏng Vấn -->
+            <div class="section">
+                <h2>VI. SAU PHỎNG VẤN</h2>
+
+                <div class="card">
+                    <h3>1. Tổng hợp dữ liệu ngay</h3>
+                    <p>Ghi chép đầy đủ trong khi còn nhớ</p>
+                </div>
+
+                <div class="card">
+                    <h3>2. Phân loại thông tin</h3>
+                    <p>Theo chủ đề, theo nhóm đối tượng</p>
+                </div>
+
+                <div class="card">
+                    <h3>3. Bảo mật</h3>
+                    <p>Mã hóa danh tính người được phỏng vấn</p>
+                </div>
+
+                <div class="card">
+                    <h3>4. Phân tích</h3>
+                    <p>Tìm điểm chung, khác biệt, vấn đề nổi bật</p>
+                </div>
+
+                <div class="card">
+                    <h3>5. Báo cáo</h3>
+                    <p>Trình bày khách quan, có dẫn chứng cụ thể</p>
+                </div>
+
+                <div class="alert">
+                    <h4>⚠️ Lưu ý quan trọng:</h4>
+                    <ul>
+                        <li>Tuân thủ quy định pháp luật về lao động</li>
+                        <li>Tôn trọng quyền riêng tư của người lao động</li>
+                        <li>Không tác động tiêu cực đến công việc của họ</li>
+                        <li>Xin phép Ban quản lý khu công nghiệp/nhà máy nếu cần thiết</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 Hướng Dẫn Phỏng Vấn Công Nhân Khu Công Nghiệp</p>
+        </footer>
+    </div>
+
+    <script>
+        function showSection(index) {
+            const sections = document.querySelectorAll('.section');
+            const tabs = document.querySelectorAll('.nav-tab');
+            const progressBar = document.getElementById('progressBar');
+            
+            sections.forEach(section => section.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            sections[index].classList.add('active');
+            tabs[index].classList.add('active');
+            
+            const progress = ((index + 1) / sections.length) * 100;
+            progressBar.style.width = progress + '%';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
