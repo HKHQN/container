@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPT và Các Đối Tác Chiến Lược</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f093fb;
+            display: inline-block;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 4px solid #f5576c;
+        }
+
+        .partner-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .partner-name {
+            font-weight: bold;
+            color: #c94b4b;
+            font-size: 1.1em;
+        }
+
+        .partner-description {
+            margin-top: 8px;
+            color: #555;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #f5576c;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section h2 {
+                font-size: 1.5em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 FPT và Các Đối Tác Chiến Lược</h1>
+            <p>Tổng hợp hệ sinh thái đối tác toàn cầu tại Việt Nam</p>
+        </header>
+
+        <div class="content">
+            <div class="section">
+                <h2>🌐 Đối Tác Công Nghệ Quốc Tế</h2>
+                
+                <h3>Đối tác hạ tầng và giải pháp công nghệ</h3>
+                
+                <div class="partner-card">
+                    <div class="partner-name">SAP</div>
+                    <div class="partner-description">FPT là đối tác Việt Nam đầu tiên tham gia chương trình Đối tác dịch vụ chiến lược cấp khu vực (RSSP) tại châu Á - Thái Bình Dương và Nhật Bản, cũng là Gold Partner cấp cao nhất tại Việt Nam</div>
+                </div>
+
+                <div class="partner-card">
+                    <div class="partner-name">Dell Technologies</div>
+                    <div class="partner-description">FPT là Titanium Partner cấp cao nhất tại Việt Nam, nhận nhiều giải thưởng như The Best Performance Solution Provider of the Year FY23</div>
+                </div>
+
+                <div class="partner-card">
+                    <div class="partner-name">Cisco</div>
+                    <div class="partner-description">FPT hiện là Gold Partner</div>
+                </div>
+
+                <div class="partner-card">
+                    <div class="partner-name">Check Point</div>
+                    <div class="partner-description">FPT là 5-Star partner (mức cao nhất)</div>
+                </div>
+
+                <div class="partner-card">
+                    <div class="partner-name">Red Hat, VMWare</div>
+                    <div class="partner-description">Đối tác công nghệ</div>
+                </div>
+
+                <h3>Đối tác công nghệ ô tô và bán dẫn</h3>
+                
+                <div class="partner-card">
+                    <div class="partner-name">Honda, Hyundai, Volvo, VinFast, Ford, Yazaki, LG, Panasonic, NXP</div>
+                    <div class="partner-description">Hợp tác phát triển công nghệ xe thông minh, lĩnh vực phần mềm, AI, IoT và chip bán dẫn</div>
+                </div>
+
+                <div class="partner-card">
+                    <div class="partner-name">ABOV Semiconductor (Hàn Quốc)</div>
+                    <div class="partner-description">Hợp tác nghiên cứu, thiết kế và phát triển chip bán dẫn thế hệ mới</div>
+                </div>
+
+                <div class="partner-card">
+                    <div class="partner-name">Đại học Gachon (Hàn Quốc)</div>
+                    <div class="partner-description">Hợp tác đào tạo nhân lực bán dẫn</div>
+                </div>
+
+                <h3>Đối tác AI và công nghệ mới</h3>
+                
+                <div class="partner-card">
+                    <div class="partner-name">Landing AI</div>
+                    <div class="partner-description">Top 10 start-up ấn tượng nhất Mỹ, hợp tác xây dựng giải pháp Large Vision Model (LVM)</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🇻🇳 Đối Tác Trong Nước</h2>
+                
+                <h3>Chính phủ và các dự án quốc gia</h3>
+                
+                <div class="highlight-box">
+                    <ul>
+                        <li>Thành lập <strong>Liên minh Nhân lực Chiến lược</strong> thực thi Nghị quyết 57-NQ/TW</li>
+                        <li>Thành lập <strong>Liên minh AI Âu Lạc</strong> cùng hơn 20 tổ chức và doanh nghiệp</li>
+                    </ul>
+                </div>
+
+                <h3>Đối tác tài chính và thương mại</h3>
+                
+                <div class="partner-card">
+                    <div class="partner-name">MB (Ngân hàng Quân Đội), MBV, HURC1</div>
+                    <div class="partner-description">Tối ưu hóa tiện ích và trải nghiệm số cho hành khách tuyến Metro số 1 TP.HCM</div>
+                </div>
+
+                <h3>Đối tác thể thao điện tử</h3>
+                
+                <div class="partner-card">
+                    <div class="partner-name">FPT Flash (Team Flash)</div>
+                    <div class="partner-description">Hợp tác chiến lược với FPT Play từ năm 2025, phát triển thể thao điện tử Việt Nam</div>
+                </div>
+
+                <h3>Đối tác quốc tế khác</h3>
+                
+                <div class="partner-card">
+                    <div class="partner-name">UNICEF</div>
+                    <div class="partner-description">Ứng dụng công nghệ chuyển đổi xanh, dữ liệu và AI để bảo vệ trẻ em</div>
+                </div>
+
+                <div class="partner-card">
+                    <div class="partner-name">ANA Systems (Nhật Bản)</div>
+                    <div class="partner-description">Hợp tác toàn diện thúc đẩy đổi mới ngành hàng không</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 Thị Trường Trọng Điểm</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">~2,000</div>
+                        <div class="stat-label">Nhân sự tại Hàn Quốc</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$1B</div>
+                        <div class="stat-label">Mục tiêu doanh thu Nhật Bản năm 2027</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Tổ chức trong Liên minh AI Âu Lạc</div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3 style="margin: 0 0 15px 0; padding: 0; border: none;">Khách hàng lớn tại Hàn Quốc:</h3>
+                    <ul>
+                        <li>LG Electronics</li>
+                        <li>LG CNS</li>
+                        <li>Shinhan Bank</li>
+                        <li>Daegu Bank</li>
+                        <li>Shinsegae I&C</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                    <p style="font-size: 1.1em; text-align: center; color: #c94b4b; font-weight: bold;">
+                        FPT đang tích cực mở rộng hợp tác với các đối tác lớn trên toàn cầu nhằm nâng cao năng lực công nghệ và đạt mục tiêu trở thành tập đoàn công nghệ số tầm cỡ thế giới.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 FPT Corporation | Thông tin tổng hợp về hệ sinh thái đối tác</p>
+        </footer>
+    </div>
+</body>
+</html>
