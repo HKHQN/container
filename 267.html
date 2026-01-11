@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sổ Bàn Giao / Ghi Chép Ca Trực Bảo Vệ - JA Solar Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #005BAC;       /* JA Solar blue đậm */
+      --accent: #009FE3;         /* JA Solar blue sáng */
+      --light-bg: #F5F8FA;
+      --dark-text: #1A1A1A;
+      --solar-yellow: #FFD700;
+      --border: #DDE5EE;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 91, 172, 0.12);
+      border: 1px solid var(--border);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 15px;
+    }
+
+    .header h1 {
+      color: var(--primary);
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .header .slogan {
+      font-size: 1.1rem;
+      color: #444;
+      font-weight: 300;
+    }
+
+    .section-title {
+      color: var(--primary);
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 25px 0 12px;
+      border-left: 5px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 500;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(0, 159, 227, 0.05);
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 25px;
+      margin: 15px 0;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .note {
+      background-color: #E6F0FA;
+      border-left: 4px solid var(--accent);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .signature {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .sig-box {
+      flex: 1;
+      min-width: 280px;
+      text-align: center;
+      border-top: 1px solid #666;
+      padding-top: 50px;
+      position: relative;
+    }
+
+    .sig-box span {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .highlight {
+      color: var(--solar-yellow);
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 20px; }
+      .header h1 { font-size: 1.6rem; }
+      .checkbox-group { flex-direction: column; gap: 10px; }
+      .signature { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h1>
+    <p class="slogan">Độc lập - Tự do - Hạnh phúc</p>
+    <h2 style="margin-top:20px; color:var(--primary);">SỔ BÀN GIAO / GHI CHÉP CA TRỰC BẢO VỆ</h2>
+  </div>
+
+  <div style="text-align:center; margin-bottom:25px; font-weight:500;">
+    Mục tiêu bảo vệ: .................................................................<br>
+    Địa điểm: .................................................................<br>
+    Số thứ tự sổ: ................................................................. 
+  </div>
+
+  <div class="checkbox-group">
+    <label><input type="checkbox"> Sáng (06:00 – 18:00)</label>
+    <label><input type="checkbox"> Chiều (18:00 – 06:00)</label>
+    <label><input type="checkbox"> Đêm (22:00 – 06:00)</label>
+  </div>
+
+  <p style="text-align:center; font-weight:500; margin:15px 0;">Ngày: …… tháng …… năm …………</p>
+
+  <div class="section-title">1. Nhân sự ca trực</div>
+  <p><strong>Người bàn giao (ca trước):</strong> Họ tên ............................................. Chức vụ: .................<br>
+     <strong>Người nhận bàn giao (ca sau):</strong> Họ tên ............................................. Chức vụ: .................</p>
+
+  <div class="section-title">2. Trang thiết bị, công cụ hỗ trợ bàn giao</div>
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Trang thiết bị / công cụ</th>
+        <th>Tình trạng (√ tốt / × hỏng)</th>
+        <th>Ghi chú (hỏng, mất, số seri...)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Bộ đàm</td><td></td><td></td></tr>
+      <tr><td>2</td><td>Rùi cui / gậy tự vệ</td><td></td><td></td></tr>
+      <tr><td>3</td><td>Đèn pin / đèn soi</td><td></td><td></td></tr>
+      <tr><td>4</td><td>Chìa khóa / remote cổng</td><td></td><td></td></tr>
+      <tr><td>5</td><td>Gương cầu lồi / camera cầm tay</td><td></td><td></td></tr>
+      <tr><td>6</td><td>Áo phản quang / mũ bảo hộ</td><td></td><td></td></tr>
+      <tr><td>7</td><td>Sổ sách (sổ ra vào, sổ khách, sổ xuất nhập...)</td><td></td><td></td></tr>
+      <tr><td>8</td><td>Khác: ....................................</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">3. Tình hình chung khi nhận ca</div>
+  <p><strong>Tình trạng an ninh, trật tự:</strong> .........................................................................................<br>
+     <strong>Vệ sinh khu vực chốt trực / khu vực bảo vệ:</strong> ..............................................................<br>
+     <strong>Tình trạng tài sản, hàng hóa, phương tiện:</strong> ...................................................................</p>
+
+  <div class="section-title">4. Diễn biến / Nhật ký sự việc trong ca trực (ghi theo thứ tự thời gian)</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Thời gian</th>
+        <th>Nội dung sự việc / hoạt động đã thực hiện</th>
+        <th>Người xử lý</th>
+        <th>Kết quả / biện pháp xử lý</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>06:30</td><td>Tuần tra toàn bộ khu vực nhà máy, kiểm tra cửa ra vào</td><td>Anh A</td><td>Bình thường</td></tr>
+      <tr><td>08:15</td><td>Có xe tải vào giao hàng (biển số 51H-12345), kiểm tra giấy tờ, niêm phong kho</td><td>Anh A</td><td>Đã cho vào, ghi sổ xuất nhập</td></tr>
+      <!-- Bạn có thể copy thêm hàng để sử dụng -->
+    </tbody>
+  </table>
+
+  <div class="section-title">5. Nhận xét chung của ca trực</div>
+  <p>..............................................................................................................................................<br>
+     ..............................................................................................................................................</p>
+
+  <div class="section-title">6. Công việc còn tồn đọng cần bàn giao cho ca sau</div>
+  <p>..............................................................................................................................................</p>
+
+  <div class="section-title">7. Ký xác nhận bàn giao</div>
+  <div class="signature">
+    <div class="sig-box">
+      <span>Người bàn giao (ký, ghi rõ họ tên)</span>
+      ……………………………………
+    </div>
+    <div class="sig-box">
+      <span>Người nhận bàn giao (ký, ghi rõ họ tên)</span>
+      ……………………………………
+    </div>
+  </div>
+
+  <div style="margin-top:40px; text-align:center;">
+    <p><strong>Kiểm tra của ca trưởng / chỉ huy khu vực (nếu có)</strong></p>
+    <p>Ý kiến: .............................................................................<br>
+       Ký, ghi rõ họ tên: ............................................. Ngày: ................
+    </p>
+  </div>
+
+  <div class="note">
+    <strong>Lưu ý khi ghi chép sổ:</strong><br>
+    Ghi ngắn gọn, rõ ràng, đúng sự thật, ghi theo thứ tự thời gian.<br>
+    Mọi sự cố, tai nạn, khách lạ, mất mát phải ghi chi tiết.<br>
+    Không tẩy xóa, nếu sai thì gạch ngang và ghi lại.<br>
+    Cả hai bên phải ký xác nhận sau khi kiểm tra xong (rất quan trọng về mặt pháp lý).
+  </div>
+
+</div>
+
+</body>
+</html>
