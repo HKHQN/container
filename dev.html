@@ -26,11 +26,7 @@
       --danger: #ef4444;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
@@ -40,6 +36,79 @@
       overflow-x: hidden;
     }
 
+    /* ── Loading Overlay ── */
+    #global-loading {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.8rem;
+      transition: opacity 0.6s ease;
+      opacity: 1;
+    }
+
+    #global-loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader {
+      position: relative;
+      width: 64px;
+      height: 64px;
+    }
+
+    .loader::before,
+    .loader::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 4px solid transparent;
+    }
+
+    .loader::before {
+      border-top-color: var(--accent);
+      border-right-color: var(--accent-secondary);
+      animation: spin 1.4s linear infinite;
+    }
+
+    .loader::after {
+      border-top-color: var(--accent-secondary);
+      border-left-color: var(--accent);
+      animation: spin 1.4s linear infinite reverse;
+    }
+
+    .loading-text {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-secondary);
+      font-size: 1.1rem;
+      letter-spacing: 1.5px;
+      position: relative;
+    }
+
+    .loading-text::after {
+      content: "...";
+      display: inline-block;
+      animation: dots 1.8s infinite steps(4);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes dots {
+      0%, 25% { content: "."; }
+      25.1%, 50% { content: ".."; }
+      50.1%, 75% { content: "..."; }
+      75.1%, 100% { content: ""; }
+    }
+
+    /* ── Các style còn lại giữ nguyên ── */
     .header {
       background: linear-gradient(135deg, #0a0e17 0%, #0f1626 100%);
       padding: 0.9rem 1.2rem;
@@ -61,13 +130,7 @@
       letter-spacing: -0.8px;
     }
 
-    .stats {
-      display: flex;
-      gap: 1rem;
-      font-size: 0.82rem;
-      white-space: nowrap;
-    }
-
+    .stats { display: flex; gap: 1rem; font-size: 0.82rem; white-space: nowrap; }
     .stat-item strong { color: var(--accent); }
 
     .main-layout {
@@ -85,9 +148,7 @@
     }
 
     @media (min-width: 960px) {
-      .main-layout {
-        flex-direction: row;
-      }
+      .main-layout { flex-direction: row; }
       .sidebar {
         width: 340px;
         border-bottom: none;
@@ -102,7 +163,6 @@
       background: linear-gradient(to bottom, var(--bg), #0c1321);
     }
 
-    /* Search */
     .search {
       width: 100%;
       padding: 0.8rem 1rem;
@@ -122,8 +182,9 @@
       box-shadow: 0 0 0 3px var(--accent-glow);
     }
 
-    /* Tree view */
-    .tree { padding: 0 0.5rem; }
+    .tree { padding: 0 0.5rem; opacity: 0; transition: opacity 0.6s ease; }
+    .tree.loaded { opacity: 1; }
+
     .tree ul { list-style: none; padding-left: 1.2rem; }
     .tree li {
       padding: 0.45rem 0.8rem;
@@ -160,32 +221,18 @@
       margin-right: 0.25rem;
     }
 
-    /* Loading spinner */
-    .loading-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 50vh;
-      color: var(--accent-secondary);
-      gap: 1rem;
+    .tree .file-title {
+      color: var(--text);
+      font-weight: 500;
     }
 
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 5px solid rgba(124,58,237,0.2);
-      border-top: 5px solid var(--accent);
-      border-radius: 50%;
-      animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    .tree .file-title-secondary {
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      margin-left: 0.4rem;
+      opacity: 0.7;
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Real-time panels */
     .realtime-panel {
       background: rgba(17,24,39,0.7);
       backdrop-filter: blur(10px);
@@ -194,6 +241,13 @@
       padding: 1.1rem;
       margin-bottom: 1.5rem;
       transition: transform 0.25s ease;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .realtime-panel.loaded {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .realtime-panel:hover { transform: translateY(-1px); }
@@ -248,7 +302,6 @@
       white-space: nowrap;
     }
 
-    /* Bottom fixed info */
     .status-bar {
       position: fixed;
       bottom: 0;
@@ -273,14 +326,15 @@
       font-weight: 700;
       box-shadow: 0 3px 10px rgba(16,185,129,0.35);
     }
-
-    @media (max-width: 480px) {
-      .content { padding: 0.9rem; }
-      .realtime-panel { padding: 0.9rem; }
-    }
   </style>
 </head>
 <body>
+
+  <!-- Global Loading Overlay -->
+  <div id="global-loading">
+    <div class="loader"></div>
+    <div class="loading-text">Đang đồng bộ Container Chain</div>
+  </div>
 
   <div class="header">
     <h1>Container Chain</h1>
@@ -292,30 +346,27 @@
 
   <div class="main-layout">
     <div class="sidebar">
-      <input type="text" class="search" id="search" placeholder="Tìm file / hash / path..."/>
+      <input type="text" class="search" id="search" placeholder="Tìm file / hash / path / title..."/>
       <div class="tree" id="tree">
-        <div class="loading-container">
-          <div class="spinner"></div>
-          <div>Đang đồng bộ chain...</div>
-        </div>
+        <!-- Nội dung sẽ được render sau khi load -->
       </div>
     </div>
 
     <div class="content">
-      <div class="realtime-panel">
+      <div class="realtime-panel" id="latest-blocks-panel">
         <div class="panel-title">
           <span class="pulse"></span>
           Latest Blocks
         </div>
-        <div id="latest-blocks">Đang tải...</div>
+        <div id="latest-blocks">Đang tải dữ liệu...</div>
       </div>
 
-      <div class="realtime-panel">
+      <div class="realtime-panel" id="latest-txs-panel">
         <div class="panel-title">
           <span class="pulse"></span>
           Latest Uploads
         </div>
-        <div id="latest-txs">Đang tải...</div>
+        <div id="latest-txs">Đang tải dữ liệu...</div>
       </div>
     </div>
   </div>
@@ -332,9 +383,37 @@
     const HIDDEN_FILES = ['dev.html', 'index.html', 'CNAME', 'README.md', 'LICENSE'];
 
     let allFiles = [];
+    const titleCache = new Map();
 
-    async function loadData() {
-      const treeEl = document.getElementById("tree");
+    const globalLoading = document.getElementById("global-loading");
+    const treeEl = document.getElementById("tree");
+    const blocksPanel = document.getElementById("latest-blocks-panel");
+    const txsPanel = document.getElementById("latest-txs-panel");
+
+    async function fetchFileTitle(path) {
+      if (titleCache.has(path)) return titleCache.get(path);
+      try {
+        const url = RAW_BASE + path;
+        const res = await fetch(url, { cache: "force-cache" });
+        if (!res.ok) throw new Error("Fetch failed");
+        const text = await res.text();
+        const match = text.match(/<title[^>]*>(.*?)<\/title>/is);
+        const title = match ? match[1].trim() : null;
+        titleCache.set(path, title);
+        return title;
+      } catch {
+        titleCache.set(path, null);
+        return null;
+      }
+    }
+
+    async function loadData(isInitial = false) {
+      if (isInitial) {
+        treeEl.innerHTML = '';
+        blocksPanel.classList.remove("loaded");
+        txsPanel.classList.remove("loaded");
+      }
+
       try {
         const res = await fetch(API_URL);
         if (!res.ok) throw new Error(`GitHub API: ${res.status}`);
@@ -347,22 +426,42 @@
           .filter(f => !HIDDEN_FILES.includes(f.path.split('/').pop()));
 
         const onlineCount = allFiles.filter(f => f.path.startsWith("online/")).length;
-
         document.getElementById("online").textContent = onlineCount;
         document.getElementById("online2").textContent = onlineCount;
 
-        renderTree(allFiles);
+        // Load titles cho html files
+        const htmlFiles = allFiles.filter(f => /\.(html|htm)$/i.test(f.path));
+        await Promise.all(htmlFiles.map(f => fetchFileTitle(f.path)));
+
+        // Render
+        await renderTreeWithTitles(allFiles);
         renderRealTimePanels(allFiles);
         updateTime();
 
+        // Hiệu ứng hoàn thành loading
+        treeEl.classList.add("loaded");
+        setTimeout(() => {
+          blocksPanel.classList.add("loaded");
+          txsPanel.classList.add("loaded");
+        }, 150);
+
+        if (isInitial) {
+          setTimeout(() => {
+            globalLoading.classList.add("hidden");
+          }, 600);
+        }
+
       } catch (e) {
-        treeEl.innerHTML = `<div style="color:var(--danger);padding:1.5rem;text-align:center;">
-          Lỗi: ${e.message}<br><small>Thử lại sau 30s</small>
+        treeEl.innerHTML = `<div style="color:var(--danger);padding:2rem;text-align:center;">
+          Lỗi: ${e.message}<br><small>Thử lại sau 30s...</small>
         </div>`;
+        if (isInitial) {
+          setTimeout(() => globalLoading.classList.add("hidden"), 800);
+        }
       }
     }
 
-    function renderTree(files) {
+    async function renderTreeWithTitles(files) {
       const container = document.getElementById("tree");
       container.innerHTML = "";
 
@@ -394,8 +493,18 @@
 
         const li = document.createElement("li");
         li.className = "file";
-        li.textContent = filename;
         li.title = file.path;
+
+        const displayName = /\.(html|htm)$/i.test(filename) 
+          ? (titleCache.get(file.path) || filename)
+          : filename;
+
+        li.innerHTML = `<span class="file-title">${displayName}</span>`;
+        
+        if (titleCache.has(file.path) && titleCache.get(file.path) && titleCache.get(file.path) !== filename) {
+          li.innerHTML += `<span class="file-title-secondary">(${filename})</span>`;
+        }
+
         li.onclick = () => openFile(file.path);
         current.appendChild(li);
       });
@@ -431,7 +540,7 @@
           <span><span class="hash">${f.path.split('/').pop().slice(0,16)}${f.path.length>16?'...':''}</span></span>
           <span class="time">${getFakeRelativeTime()} trước</span>
         </div>
-      `).join('') || "Chưa có block";
+      `).join('') || "Chưa có block mới";
 
       document.getElementById("latest-txs").innerHTML = sorted.slice(8, 16).map(f => `
         <div class="event-item">
@@ -447,13 +556,13 @@
     }
 
     // Khởi chạy
-    loadData();
-    setInterval(loadData, 30000);
+    loadData(true);           // lần đầu - full loading
+    setInterval(() => loadData(false), 30000); // sync sau mỗi 30s - loading nhẹ
 
     // Tìm kiếm
     document.getElementById("search").addEventListener("input", (e) => {
       const term = e.target.value.toLowerCase().trim();
-      document.querySelectorAll(".tree li").forEach(el => {
+      document.querySelectorAll(".tree li.file").forEach(el => {
         const text = (el.textContent + (el.title || "")).toLowerCase();
         el.style.display = term ? (text.includes(term) ? "" : "none") : "";
       });
