@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Làm Rõ Ngữ Cảnh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .notice-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .notice-box p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .option-card .number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .option-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .option-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .cta-section p {
+            margin-bottom: 20px;
+            font-size: 1.05em;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #f5576c;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Cần Làm Rõ Ngữ Cảnh</h1>
+            <p>Hãy cùng tìm hiểu chính xác điều bạn quan tâm</p>
+        </div>
+
+        <div class="content">
+            <div class="notice-box">
+                <p>Tôi nhận thấy tin nhắn của bạn có vẻ chưa đầy đủ hoặc thiếu ngữ cảnh. <strong>"Các mối quan hệ ngoài luồng khác"</strong> có thể đề cập đến nhiều chủ đề khác nhau:</p>
+            </div>
+
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="number">1</div>
+                    <h3>💻 Công nghệ/Lập trình</h3>
+                    <p>Quan hệ giữa các đối tượng, entities trong database, hoặc các luồng xử lý bất đồng bộ</p>
+                </div>
+
+                <div class="option-card">
+                    <div class="number">2</div>
+                    <h3>🧠 Tâm lý học/Xã hội</h3>
+                    <p>Các mối quan hệ ngoài hôn nhân hoặc ngoài mối quan hệ chính thức</p>
+                </div>
+
+                <div class="option-card">
+                    <div class="number">3</div>
+                    <h3>💼 Kinh doanh</h3>
+                    <p>Các mối quan hệ đối tác không chính thức, giao dịch ngoài hợp đồng chính</p>
+                </div>
+
+                <div class="option-card">
+                    <div class="number">4</div>
+                    <h3>🔬 Nghiên cứu khoa học</h3>
+                    <p>Các biến số hoặc yếu tố nằm ngoài phạm vi nghiên cứu chính</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <h2>Cần Hỗ Trợ Cụ Thể Hơn?</h2>
+                <p>Bạn có thể cho tôi biết rõ hơn bạn đang quan tâm đến lĩnh vực nào không? Hoặc bạn muốn trao đổi về khía cạnh cụ thể nào của chủ đề này?</p>
+                <button class="btn" onclick="showMessage()">📧 Gửi Câu Hỏi Chi Tiết</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showMessage() {
+            alert('Hãy mô tả chi tiết câu hỏi của bạn để tôi có thể cung cấp thông tin chính xác và hữu ích nhất!');
+        }
+
+        // Add click animation to option cards
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.background = '#f8f9fa';
+                setTimeout(() => {
+                    this.style.background = 'white';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
