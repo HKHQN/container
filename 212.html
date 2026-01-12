@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chrome Update • Tháng 1/2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --card: #1a1a1a;
+      --text: #e0e0e0;
+      --text-secondary: #aaaaaa;
+      --accent: #8ab4f8;
+      --accent-dark: #669df6;
+      --border: #333;
+    }
+    
+    [data-theme="light"] {
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #1f1f1f;
+      --text-secondary: #5f6368;
+      --accent: #1a73e8;
+      --accent-dark: #0d65d9;
+      --border: #dadce0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Google Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--accent), #c58af9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .date-badge {
+      display: inline-block;
+      background: rgba(138,180,248,0.15);
+      color: var(--accent);
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+    
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.8rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    }
+    
+    h2 {
+      color: var(--accent);
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    
+    .version {
+      font-family: 'Courier New', monospace;
+      background: rgba(0,0,0,0.2);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 1.05rem;
+    }
+    
+    .toggle-theme {
+      position: fixed;
+      top: 1.5rem;
+      right: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.7rem 1.1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+    
+    .toggle-theme:hover {
+      background: var(--accent);
+      color: white;
+      transform: rotate(30deg);
+    }
+    
+    .tips {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-top: 2rem;
+      text-align: center;
+    }
+    
+    @media (max-width: 600px) {
+      h1 { font-size: 2.2rem; }
+      .card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="toggle-theme" onclick="toggleTheme()">☀️</button>
+
+  <div class="container">
+    <header>
+      <h1>Google Chrome Update</h1>
+      <div class="date-badge">Tháng 1 • 2026</div>
+    </header>
+
+    <div class="card">
+      <h2>Tình trạng hiện tại (12/01/2026)</h2>
+      <p>
+        Trình duyệt phổ biến nhất thế giới đang triển khai cập nhật mới.<br>
+        Phiên bản <span class="version">ổn định mới nhất: Chrome 143</span><br>
+        (143.0.7499.192/.193 cho Windows/macOS • 143.0.7499.192 cho Linux/Android)
+      </p>
+      <p>Phát hành: ~6–7/01/2026</p>
+    </div>
+
+    <div class="card">
+      <h2>Bản vá bảo mật quan trọng</h2>
+      <p>
+        Google đã khắc phục lỗ hổng <span class="highlight">CVE-2026-0628</span> (nghiêm trọng cao) trong thành phần <strong>WebView</strong>.<br>
+        Nguyên nhân: Thiếu thực thi chính sách.<br>
+        Người báo cáo: <strong>Gal Weizman</strong>.<br>
+        <strong>Chưa bị khai thác thực tế</strong>.
+      </p>
+      <p class="tips">
+        → Nếu chưa tự cập nhật: Vào <strong>Trợ giúp → Giới thiệu về Google Chrome</strong> để update ngay!
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Sắp tới</h2>
+      <ul style="padding-left:1.5rem;">
+        <li><strong>Chrome 144</strong> → <strong>13/01/2026</strong> (ngày mai!)</li>
+        <li>New Tab Page sạch hơn, ít phân tâm</li>
+        <li>Bắt đầu rollout <strong>Multi-tab context</strong> cho AI/Lens</li>
+        <li><strong>Chrome 145</strong> (đầu tháng 2) → thay đổi lịch Early Stable</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Tính năng AI đang hot</h2>
+      <ul style="padding-left:1.5rem;">
+        <li>Chế độ AI ngay trong thanh địa chỉ & New Tab</li>
+        <li>Hỏi đáp phức tạp, tóm tắt, so sánh đa tab (từ 144)</li>
+      </ul>
+      <p style="margin-top:1rem;">
+        <strong>Cảnh báo:</strong> Một số extension độc hại đã bị gỡ (đánh cắp dữ liệu ChatGPT). Hãy kiểm tra extension ngay hôm nay!
+      </p>
+    </div>
+
+    <div class="tips">
+      Bạn cần hướng dẫn chi tiết, so sánh trình duyệt hay mẹo tối ưu Chrome? Cứ hỏi nhé! 🚀
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>
