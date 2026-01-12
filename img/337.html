@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Android Development Stack 2026</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --text: #1a1a1a;
+      --card: #ffffff;
+      --accent: #3b82f6;
+      --accent-dark: #2563eb;
+      --border: #e5e7eb;
+      --star: #facc15;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --card: #1e293b;
+      --border: #334155;
+      --star: #fef08a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 2rem 1rem;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+      border-radius: 12px;
+    }
+
+    h1, h2, h3 {
+      margin-bottom: 1rem;
+    }
+
+    .container {
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #eff6ff;
+      font-weight: 600;
+      color: #1e40af;
+    }
+
+    [data-theme="dark"] th {
+      background: #1e293b;
+      color: #93c5fd;
+    }
+
+    tr:hover {
+      background: rgba(59,130,246,0.08);
+    }
+
+    .stars {
+      color: var(--star);
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+    }
+
+    .section {
+      padding: 2rem;
+    }
+
+    .highlight {
+      background: rgba(59,130,246,0.1);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+      border-left: 4px solid var(--accent);
+    }
+
+    .list-modern {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .list-modern li {
+      margin-bottom: 0.8rem;
+      padding-left: 1.8rem;
+      position: relative;
+    }
+
+    .list-modern li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 500;
+      z-index: 100;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      
+      thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      tr {
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+
+      td {
+        border: none;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+        padding-left: 50%;
+      }
+
+      td:before {
+        position: absolute;
+        top: 14px;
+        left: 16px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        content: attr(data-label);
+        color: var(--accent);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+
+  <header>
+    <h1>Các kỹ thuật build app Android phổ biến & hiện đại nhất 2026</h1>
+    <p>Thời điểm Android 15/16 ổn định – Jetpack Compose chiếm ưu thế lớn</p>
+  </header>
+
+  <div class="container">
+    <div class="section">
+      <table>
+        <thead>
+          <tr>
+            <th>Kỹ thuật / Approach</th>
+            <th>Mức độ phổ biến 2026</th>
+            <th>Khi nào nên dùng</th>
+            <th>Ưu điểm chính</th>
+            <th>Nhược điểm chính</th>
+            <th>Ngôn ngữ chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Native Android + Jetpack Compose</td>
+            <td><span class="stars">★★★★★</span> (Chính thống)</td>
+            <td>App cần performance cao, UX mượt, Google app</td>
+            <td>Hiệu suất tốt nhất, cập nhật nhanh nhất</td>
+            <td>Phải học Compose + Kotlin hiện đại</td>
+            <td>Kotlin (99%)</td>
+          </tr>
+          <tr>
+            <td>2. Kotlin Multiplatform (KMP)</td>
+            <td><span class="stars">★★★★½</span> (Đang bùng nổ)</td>
+            <td>Muốn share business logic với iOS/Web/Desktop</td>
+            <td>Share ~70-90% code, UI vẫn native</td>
+            <td>Compose Multiplatform cho iOS còn đang hoàn thiện</td>
+            <td>Kotlin</td>
+          </tr>
+          <tr>
+            <td>3. Flutter</td>
+            <td><span class="stars">★★★★</span></td>
+            <td>Startup, MVP nhanh, team nhỏ, design đẹp</td>
+            <td>Hot-reload cực nhanh, UI đẹp nhất</td>
+            <td>App size lớn hơn, performance ~85-90% native</td>
+            <td>Dart</td>
+          </tr>
+          <tr>
+            <td>4. React Native (với New Architecture)</td>
+            <td><span class="stars">★★★</span></td>
+            <td>Team đã có kinh nghiệm React/Web</td>
+            <td>Share code với web, cộng đồng lớn</td>
+            <td>Bridge vẫn chậm ở một số trường hợp</td>
+            <td>JS/TS</td>
+          </tr>
+          <tr>
+            <td>5. .NET MAUI</td>
+            <td><span class="stars">★★½</span></td>
+            <td>Team .NET/C#, doanh nghiệp Windows nặng</td>
+            <td>Share code với Windows/macOS</td>
+            <td>Hiệu suất & kích thước app chưa bằng top 3</td>
+            <td>C#</td>
+          </tr>
+          <tr>
+            <td>6. XML + View system cũ (truyền thống)</td>
+            <td><span class="stars">★★</span> (giảm mạnh)</td>
+            <td>Bảo trì app cũ, legacy code</td>
+            <td>Rất nhiều dev biết, tài liệu đầy</td>
+            <td>Chậm phát triển, khó maintain dài hạn</td>
+            <td>Kotlin/Java</td>
+          </tr>
+          <tr>
+            <td>7. Hybrid WebView (PWA/Cordova/Ionic/Capacitor)</td>
+            <td><span class="stars">★★</span></td>
+            <td>App đơn giản, web-first, ngân sách thấp</td>
+            <td>Phát triển cực nhanh, chi phí rẻ</td>
+            <td>UX kém, performance thấp, khó native feature</td>
+            <td>JS/TS + HTML/CSS</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <h2>Stack hiện đại được recommend nhất năm 2026</h2>
+      <p class="highlight">(gần như chuẩn Google & doanh nghiệp lớn)</p>
+
+      <ul class="list-modern">
+        <li><strong>Ngôn ngữ</strong>          : Kotlin 100% (Java gần như không còn được dùng cho dự án mới)</li>
+        <li><strong>UI</strong>                : Jetpack Compose 1.8+ / 1.9 (XML chỉ dùng cho legacy hoặc một vài màn rất đặc thù)</li>
+        <li><strong>Architecture</strong>      : MVI / Unidirectional Data Flow (ưu tiên) hoặc MVVM</li>
+        <li><strong>State management</strong>  : StateFlow / Compose State + ViewModel</li>
+        <li><strong>Dependency Injection</strong> : Hilt (dễ dùng nhất) hoặc Koin (nhẹ hơn)</li>
+        <li><strong>Networking</strong>        : Ktor hoặc Retrofit + Kotlinx Serialization</li>
+        <li><strong>Coroutines</strong>        : Flow + StateFlow + SharedFlow (chuẩn)</li>
+        <li><strong>Paging 3</strong>          : Dùng cho danh sách dài vô hạn (infinite scroll)</li>
+        <li><strong>Room</strong>              : Database local (hoặc DataStore cho preference)</li>
+        <li><strong>Navigation</strong>        : Navigation Compose (Navigation 3 đang rất ổn định)</li>
+        <li><strong>Testing</strong>           : Kotest / JUnit5 + Turbine + MockK + Robolectric + Compose Testing</li>
+        <li><strong>CI/CD</strong>             : GitHub Actions / Bitrise / Fastlane</li>
+        <li><strong>Quality</strong>           : Detekt + KtLint + Gradle Version Catalog + Baseline Profiles</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <h2>Các xu hướng & kỹ thuật đang rất hot năm 2026</h2>
+      <ul class="list-modern">
+        <li><strong>AI tích hợp native</strong>  Gemini Nano / ML Kit on-device  · TensorFlow Lite / MediaPipe  · AI code generation (vibe coding, prompt → code)</li>
+        <li><strong>Performance cực đoan</strong>  Baseline Profiles (giảm thời gian khởi động 30-50%)  · Macrobenchmark + Microbenchmark  · App Startup + App Initialization optimization</li>
+        <li><strong>Material 3 Expressive</strong> (Dynamic Color + Personalization)  MaterialTheme + dynamic color từ wallpaper</li>
+        <li><strong>Adaptive & Responsive UI</strong>  Window Size Class + Compact/Medium/Expanded  · Adaptive Navigation (Bottom nav → Navigation rail → Permanent nav)</li>
+        <li><strong>Instant App / Play Feature Delivery</strong> (Dynamic Feature Module)</li>
+        <li><strong>Security & Privacy</strong>  App Set ID thay thế Advertising ID  · Photo Picker + Partial Photo Access  · Protected Intent</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <h2>Lộ trình học nhanh để build app Android chất lượng 2026</h2>
+      <p>(cho người mới → trung cấp)</p>
+      <ul class="list-modern">
+        <li>Kotlin cơ bản → nâng cao (coroutines, flow, context receivers)</li>
+        <li>Jetpack Compose cơ bản → nâng cao (custom layout, gesture, animation)</li>
+        <li>Hilt + Navigation Compose + Room</li>
+        <li>Clean Architecture / MVI + StateFlow</li>
+        <li>Ktor/Retrofit + Kotlinx Serialization + Paging 3</li>
+        <li>Baseline Profiles + Macrobenchmark</li>
+        <li>Unit test + UI test (Compose Testing)</li>
+        <li>Tùy chọn nâng cao: KMP, Gemini Nano, Baseline Profiles</li>
+      </ul>
+
+      <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(59,130,246,0.1); border-radius: 10px;">
+        <strong>Câu hỏi cho bạn:</strong><br><br>
+        Bạn đang ở trình độ nào và muốn tập trung build app kiểu gì (startup nhanh, app doanh nghiệp lớn, game, app cần performance cực cao...)?<br>
+        Mình sẽ gợi ý lộ trình chi tiết hơn nhé!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute('data-theme');
+      const btn = document.querySelector('.theme-toggle');
+      
+      if (current === 'dark') {
+        body.removeAttribute('data-theme');
+        btn.textContent = '🌙 Dark Mode';
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        btn.textContent = '☀️ Light Mode';
+      }
+    }
+  </script>
+</body>
+</html>
