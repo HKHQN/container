@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chúc Mừng Ngày 8/3 - Quốc Tế Phụ Nữ 🌸</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      padding: 30px;
+      max-width: 90%;
+    }
+
+    h1 {
+      font-size: 4.5rem;
+      margin: 0;
+      text-shadow: 0 0 20px rgba(255,105,180,0.8);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .year {
+      font-size: 5.5rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 30px #ff69b4;
+      margin: 10px 0;
+    }
+
+    .message {
+      font-size: 1.8rem;
+      margin: 20px 0;
+      opacity: 0;
+      animation: fadeIn 3s forwards 1s;
+      line-height: 1.5;
+    }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 2rem;
+      animation: fall linear infinite;
+      color: #ff69b4;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100vh) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(720deg); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff69b4; }
+      to   { text-shadow: 0 0 40px #ff1493, 0 0 60px #ff69b4; }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 3.5rem; }
+      .year { font-size: 4.5rem; }
+      .message { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts" id="hearts"></div>
+
+  <div class="container">
+    <h1>CHÚC MỪNG</h1>
+    <div class="year" id="year"></div>
+    <p class="message" id="message"></p>
+  </div>
+
+  <script>
+    const year = new Date().getFullYear();
+    document.getElementById('year').textContent = year;
+
+    // Lời chúc thay đổi theo năm (bạn có thể thêm nhiều năm hơn)
+    const wishes = {
+      2025: "Chúc các chị em luôn xinh đẹp, mạnh mẽ, thành công rực rỡ và được yêu thương thật nhiều trong năm 2025! 🌹💖",
+      2026: "Năm 2026 – chúc phái đẹp mãi là nguồn cảm hứng, tỏa sáng theo cách riêng và hạnh phúc ngập tràn nhé! 🌸✨",
+      2027: "Chúc mừng 8/3/2027! Mong mọi phụ nữ đều tự tin, bản lĩnh, và luôn được trân trọng như những nữ hoàng thực thụ! 👑💕",
+      default: `Chúc mừng Ngày Quốc tế Phụ nữ 8/3/${year}! Chúc bạn và tất cả những người phụ nữ tuyệt vời luôn vui vẻ, khỏe mạnh, xinh đẹp và hạnh phúc bên người thân yêu! 🌷❤️`
+    };
+
+    const wishText = wishes[year] || wishes.default;
+    document.getElementById('message').textContent = wishText;
+
+    // Tạo trái tim rơi ngẫu nhiên
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 5) + 's'; // 5-8 giây rơi
+      heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+
+      document.getElementById('hearts').appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+    // Tạo trái tim liên tục
+    setInterval(createHeart, 400);
+
+    // Tạo ngay vài trái tim đầu tiên
+    for(let i = 0; i < 15; i++) {
+      createHeart();
+    }
+  </script>
+</body>
+</html>
