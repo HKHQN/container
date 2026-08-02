@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ĐẠI TIỆC</title>
+  
+  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1161/1161388.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #4cc9f0;
+      --danger: #f72585;
+      --success: #4ad66d;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --radius: 10px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Roboto', sans-serif; background: #f0f2f5; color: var(--dark); line-height: 1.6; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 20px; }
+
+    /* Overlay Loader toàn trang */
+    #pageLoader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.9); z-index: 9999;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      transition: opacity 0.3s ease;
+    }
+    .spinner {
+      width: 48px; height: 48px; border: 5px solid #e5e7eb;
+      border-top-color: var(--primary); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Auth */
+    .auth-container {
+      max-width: 440px; margin: 80px auto; padding: 40px 30px;
+      text-align: center; background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .auth-container h2 { color: var(--primary); margin-bottom: 12px; font-size: 22px; }
+    .btn-google {
+      background: #ea4335; color: white; width: 100%; justify-content: center;
+      margin-top: 20px; padding: 14px; font-size: 16px;
+    }
+    .btn-google:hover { background: #d33426; }
+
+    /* Dashboard */
+    #dashboardSection { display: none; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e5e7eb;
+    }
+    h1 { color: var(--primary); font-size: 22px; display: flex; align-items: center; gap: 10px; }
+    .user-profile {
+      display: flex; align-items: center; gap: 12px;
+      background: white; padding: 6px 16px; border-radius: 50px; box-shadow: var(--shadow);
+    }
+    .user-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .user-name { font-weight: 500; font-size: 14px; }
+    .btn-logout { background: none; color: var(--danger); padding: 6px 10px; font-size: 14px; }
+    .btn-logout:hover { background: #fff0f6; }
+
+    .status-bar { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+    .status-card {
+      background: white; padding: 14px 20px; border-radius: var(--radius);
+      box-shadow: var(--shadow); flex: 1; min-width: 180px;
+      display: flex; align-items: center; gap: 10px; font-weight: 500;
+    }
+    .data-count { color: var(--success); }
+
+    .panel {
+      background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 22px; margin-bottom: 20px;
+    }
+    .panel-title {
+      font-size: 17px; margin-bottom: 16px; color: var(--primary);
+      display: flex; align-items: center; gap: 8px; font-weight: 600;
+    }
+
+    .input-group { display: flex; gap: 10px; margin-bottom: 12px; }
+    input[type="text"], input[type="password"], input[type="file"] {
+      flex: 1; padding: 12px 16px; border: 1px solid #ddd; border-radius: var(--radius);
+      font-size: 15px; transition: 0.2s;
+    }
+    input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(67,97,238,0.15); }
+
+    button {
+      padding: 12px 18px; border: none; border-radius: var(--radius);
+      background: var(--primary); color: white; font-weight: 500;
+      cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    button:hover { background: var(--secondary); transform: translateY(-1px); }
+    button.secondary { background: #e9ecef; color: var(--dark); }
+    button.secondary:hover { background: #dee2e6; }
+    button.danger { background: var(--danger); padding: 8px 12px; font-size: 13px; }
+    button.danger:hover { background: #d1146a; }
+
+    .file-group { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .file-input-wrapper { flex: 1; position: relative; min-width: 200px; }
+    .file-input-wrapper input[type="file"] {
+      width: 100%; padding: 12px; opacity: 0; position: absolute; left: 0; top: 0; cursor: pointer;
+    }
+    .file-input-label {
+      display: block; padding: 12px 16px; border: 1.5px dashed #ccc;
+      border-radius: var(--radius); text-align: center; color: var(--gray); cursor: pointer;
+    }
+
+    /* Table */
+    .table-container { overflow-x: auto; margin-top: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: var(--primary); color: white; padding: 14px 16px;
+      text-align: left; font-weight: 500; font-size: 14px;
+    }
+    td { padding: 14px 16px; border-bottom: 1px solid #eee; vertical-align: top; }
+    .original-cell { font-weight: 600; color: #1e293b; word-break: break-word; }
+    .hash-cell { font-family: 'Courier New', monospace; font-size: 13px; word-break: break-all; }
+    .meta-info { font-size: 12px; color: var(--gray); margin-top: 6px; }
+    .empty-state { text-align: center; padding: 50px 20px; color: var(--gray); }
+    .empty-state i { font-size: 48px; margin-bottom: 12px; color: #ddd; }
+    .search-highlight { background: #fff3bf; padding: 1px 3px; border-radius: 3px; }
+
+    /* Infinite Scroll Loader & Skeleton */
+    #infiniteLoader {
+      text-align: center; padding: 16px; display: none; color: var(--gray); font-size: 14px;
+    }
+    .skeleton-box {
+      height: 18px; background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%; animation: skeleton-loading 1.5s infinite; border-radius: 4px; margin-bottom: 6px;
+    }
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Modal */
+    .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.45); }
+    .modal-content {
+      background: white; margin: 12% auto; padding: 28px;
+      border-radius: var(--radius); box-shadow: var(--shadow); width: 420px; max-width: 92%;
+    }
+    .modal-title { margin-bottom: 16px; color: var(--primary); font-size: 18px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+
+    @media (max-width: 768px) {
+      .input-group, .file-group { flex-direction: column; }
+      header { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .user-profile { width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Overlay Loader -->
+  <div id="pageLoader">
+    <div class="spinner"></div>
+    <p style="margin-top: 12px; color: var(--gray); font-weight: 500;">Đang khởi tạo hệ thống...</p>
+  </div>
+
+  <!-- Đăng nhập -->
+  <div id="authSection" class="auth-container">
+    <i class="fas fa-shield-alt" style="font-size: 52px; color: var(--primary); margin-bottom: 16px;"></i>
+    <h2>TECH</h2>
+    <p style="color: var(--gray); font-size: 15px;">
+      Đăng nhập Google để quản lý cơ sở dữ liệu điều tra bảo mật cá nhân.
+    </p>
+    <button onclick="loginGoogle()" class="btn-google">
+      <i class="fab fa-google"></i> Đăng nhập bằng Google
+    </button>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboardSection" class="container">
+    <header>
+      <h1><i class="fas fa-search"></i> MÈO MÉO MEO MÈO MEO</h1>
+      <div class="user-profile">
+        <img id="userAvatar" class="user-avatar" src="" alt="Avatar">
+        <span id="userName" class="user-name">Đang tải...</span>
+        <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </header>
+
+    <div class="status-bar">
+      <div class="status-card data-count">
+        <i class="fas fa-database"></i>
+        Tổng dữ liệu: <span id="dataCount">0</span>
+      </div>
+      <div class="status-card">
+        <i class="fas fa-eye"></i>
+        Đã hiển thị: <span id="renderedCount">0</span>
+      </div>
+    </div>
+
+    <!-- Thêm dữ liệu -->
+    <div class="panel">
+      <h2 class="panel-title"><i class="fas fa-plus-circle"></i> Thêm dữ liệu mới</h2>
+      <div class="input-group">
+        <input type="text" id="dataInput" placeholder="Nhập thông tin cần bảo mật / điều tra...">
+        <button onclick="addData()"><i class="fas fa-plus"></i> Thêm</button>
+      </div>
+    </div>
+
+    <!-- Tìm kiếm -->
+    <div class="panel">
+      <h2 class="panel-title"><i class="fas fa-search"></i> Tìm kiếm dữ liệu</h2>
+      <div class="input-group">
+        <input type="text" id="searchInput" placeholder="Tìm theo văn bản gốc, hash SHA / MD5..." onkeyup="searchData()">
+      </div>
+    </div>
+
+    <!-- Import / Backup -->
+    <div class="panel">
+      <h2 class="panel-title"><i class="fas fa-file-import"></i> Quản lý dữ liệu (Mã hóa AES)</h2>
+      <div class="file-group">
+        <div class="file-input-wrapper">
+          <input type="file" id="fileInput" accept=".json">
+          <label for="fileInput" class="file-input-label">
+            <i class="fas fa-cloud-upload-alt"></i> Chọn file JSON để nhập
+          </label>
+        </div>
+        <button onclick="showModal('importModal')" class="secondary">
+          <i class="fas fa-file-import"></i> Nhập
+        </button>
+        <button onclick="showModal('backupModal')" class="secondary">
+          <i class="fas fa-file-export"></i> Backup
+        </button>
+      </div>
+    </div>
+
+    <!-- Bảng dữ liệu (Cuộn vô hạn) -->
+    <div class="panel">
+      <h2 class="panel-title"><i class="fas fa-table"></i> Danh sách dữ liệu đã lưu</h2>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:30%">Dữ liệu nguyên bản</th>
+              <th style="width:35%">SHA-256 & SHA-512</th>
+              <th style="width:23%">MD5 (Khóa tham chiếu)</th>
+              <th style="width:12%">Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="dataTable">
+            <!-- Loader Skeleton khi đang tải dữ liệu -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Cuộn vô hạn Loading Indicator -->
+      <div id="infiniteLoader">
+        <i class="fas fa-spinner fa-spin"></i> Đang tải thêm dữ liệu...
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Backup -->
+  <div id="backupModal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title"><i class="fas fa-file-export"></i> Backup dữ liệu</h3>
+      <p style="margin-bottom:12px;color:var(--gray)">Nhập mật khẩu để mã hóa tệp xuất:</p>
+      <input type="password" id="backupPassword" placeholder="Mật khẩu mã hóa">
+      <div class="modal-actions">
+        <button onclick="hideModal('backupModal')" class="secondary">Hủy</button>
+        <button onclick="performBackup()">Backup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Import -->
+  <div id="importModal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title"><i class="fas fa-file-import"></i> Nhập dữ liệu</h3>
+      <p style="margin-bottom:12px;color:var(--gray)">Nhập mật khẩu để giải mã tệp:</p>
+      <input type="password" id="importPassword" placeholder="Mật khẩu giải mã">
+      <div class="modal-actions">
+        <button onclick="hideModal('importModal')" class="secondary">Hủy</button>
+        <button onclick="performImport()">Nhập</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // ===== CẤU HÌNH FIREBASE =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7lia7Q2SN79kZYlRCiR0swc8oZUoUenY",
+      authDomain: "day-dg.firebaseapp.com",
+      databaseURL: "https://day-dg-default-rtdb.firebaseio.com",
+      projectId: "day-dg",
+      storageBucket: "day-dg.appspot.com",
+      messagingSenderId: "268157993796",
+      appId: "1:268157993796:web:a0d74a8100749f7f6dcd11",
+      measurementId: "G-GCH6G4LJD3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+    const provider = new GoogleAuthProvider();
+
+    let currentUser = null;
+    let userSnapshot = null;
+    let filteredData = [];       // Dữ liệu đã lọc theo ô tìm kiếm
+    let displayedCount = 0;      // Số lượng bản ghi đã vẽ lên DOM
+    const BATCH_SIZE = 15;       // Số bản ghi tải thêm mỗi đợt cuộn
+    let isLoadingMore = false;
+
+    // Helpers
+    const hidePageLoader = () => {
+      const loader = document.getElementById("pageLoader");
+      if (loader) {
+        loader.style.opacity = "0";
+        setTimeout(() => loader.style.display = "none", 300);
+      }
+    };
+
+    const getUserIP = async () => {
+      try {
+        const res = await fetch("https://api64.ipify.org?format=json");
+        const d = await res.json();
+        return d.ip;
+      } catch { return "Ẩn danh"; }
+    };
+
+    const getTime = (tz) => new Date().toLocaleString(
+      tz === "VN" ? "vi-VN" : "ko-KR",
+      { timeZone: tz === "VN" ? "Asia/Ho_Chi_Minh" : "Asia/Seoul" }
+    );
+
+    const highlightText = (text, search) =>
+      search ? text.replace(new RegExp(`(${search})`, 'gi'), '<span class="search-highlight">$1</span>') : text;
+
+    // Levenshtein similarity
+    const calculateSimilarity = (str1, str2) => {
+      const s1 = str1.toLowerCase().trim();
+      const s2 = str2.toLowerCase().trim();
+      if (s1 === s2) return 1.0;
+      const len1 = s1.length, len2 = s2.length;
+      if (len1 === 0 || len2 === 0) return 0.0;
+
+      const track = Array(len2 + 1).fill(null).map(() => Array(len1 + 1).fill(null));
+      for (let i = 0; i <= len1; i++) track[0][i] = i;
+      for (let j = 0; j <= len2; j++) track[j][0] = j;
+
+      for (let j = 1; j <= len2; j++) {
+        for (let i = 1; i <= len1; i++) {
+          const indicator = s1[i - 1] === s2[j - 1] ? 0 : 1;
+          track[j][i] = Math.min(
+            track[j][i - 1] + 1,
+            track[j - 1][i] + 1,
+            track[j - 1][i - 1] + indicator
+          );
+        }
+      }
+      const distance = track[len2][len1];
+      return (Math.max(len1, len2) - distance) / Math.max(len1, len2);
+    };
+
+    // Render Skeleton khi đang tải dữ liệu
+    const showTableSkeleton = () => {
+      const tbody = document.getElementById("dataTable");
+      let skeletonHtml = "";
+      for (let i = 0; i < 5; i++) {
+        skeletonHtml += `
+          <tr>
+            <td><div class="skeleton-box" style="width: 80%;"></div></td>
+            <td><div class="skeleton-box" style="width: 95%;"></div><div class="skeleton-box" style="width: 90%;"></div></td>
+            <td><div class="skeleton-box" style="width: 70%;"></div></td>
+            <td><div class="skeleton-box" style="width: 50px; height: 30px;"></div></td>
+          </tr>`;
+      }
+      tbody.innerHTML = skeletonHtml;
+    };
+
+    // Auth state
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUser = user;
+        document.getElementById("authSection").style.display = "none";
+        document.getElementById("dashboardSection").style.display = "block";
+        document.getElementById("userName").textContent = user.displayName || "Người dùng";
+        document.getElementById("userAvatar").src = user.photoURL || "https://via.placeholder.com/36";
+
+        showTableSkeleton();
+        const userQueryRef = ref(db, `dieuTra/users/${user.uid}/data`);
+        
+        onValue(userQueryRef, (snapshot) => {
+          userSnapshot = snapshot;
+          const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+          document.getElementById("dataCount").textContent = count;
+          
+          resetAndRenderTable();
+          hidePageLoader();
+        });
+      } else {
+        currentUser = null;
+        userSnapshot = null;
+        document.getElementById("authSection").style.display = "block";
+        document.getElementById("dashboardSection").style.display = "none";
+        hidePageLoader();
+      }
+    });
+
+    window.loginGoogle = () => {
+      signInWithPopup(auth, provider).catch(err => alert("Đăng nhập thất bại: " + err.message));
+    };
+    window.logout = () => {
+      signOut(auth).catch(err => alert("Lỗi đăng xuất: " + err.message));
+    };
+
+    // ===== RENDER DỮ LIỆU & CUỘN VÔ HẠN =====
+    const resetAndRenderTable = () => {
+      const search = document.getElementById("searchInput").value.toLowerCase().trim();
+      const tbody = document.getElementById("dataTable");
+
+      if (!userSnapshot || !userSnapshot.exists()) {
+        tbody.innerHTML = `
+          <tr><td colspan="4" class="empty-state">
+            <i class="fas fa-database"></i><p>Không có dữ liệu nào</p>
+          </td></tr>`;
+        document.getElementById("renderedCount").textContent = "0";
+        return;
+      }
+
+      // Lọc dữ liệu
+      filteredData = Object.entries(userSnapshot.val())
+        .map(([key, val]) => ({ key, ...val }))
+        .filter(d => !search ||
+          (d.original && d.original.toLowerCase().includes(search)) ||
+          (d.sha && d.sha.toLowerCase().includes(search)) ||
+          (d.sha512 && d.sha512.toLowerCase().includes(search)) ||
+          (d.hashedKey && d.hashedKey.toLowerCase().includes(search))
+        );
+
+      tbody.innerHTML = "";
+      displayedCount = 0;
+
+      if (filteredData.length === 0) {
+        tbody.innerHTML = `
+          <tr><td colspan="4" class="empty-state">
+            <i class="fas fa-search"></i><p>Không tìm thấy kết quả phù hợp</p>
+          </td></tr>`;
+        document.getElementById("renderedCount").textContent = "0";
+        return;
+      }
+
+      loadMoreData();
+    };
+
+    const loadMoreData = () => {
+      if (isLoadingMore || displayedCount >= filteredData.length) return;
+      isLoadingMore = true;
+
+      const search = document.getElementById("searchInput").value.toLowerCase().trim();
+      const tbody = document.getElementById("dataTable");
+      const nextBatch = filteredData.slice(displayedCount, displayedCount + BATCH_SIZE);
+
+      const html = nextBatch.map(d => `
+        <tr>
+          <td class="original-cell">
+            ${highlightText(d.original || "N/A", search)}
+          </td>
+          <td class="hash-cell">
+            <div><strong>SHA-256:</strong> ${highlightText(d.sha || "N/A", search)}</div>
+            <div style="margin-top:4px;"><strong>SHA-512:</strong> ${highlightText(d.sha512 || "N/A", search)}</div>
+            <div class="meta-info">
+              <div><i class="far fa-clock"></i> VN: ${d.timeVN || "—"}</div>
+              <div><i class="far fa-clock"></i> KR: ${d.timeKR || "—"}</div>
+            </div>
+          </td>
+          <td class="hash-cell">
+            ${highlightText(d.hashedKey || "N/A", search)}
+            <div class="meta-info"><i class="fas fa-globe"></i> IP: ${d.ip || "Unknown"}</div>
+          </td>
+          <td>
+            <button class="danger" onclick="deleteData('${d.key}')">
+              <i class="fas fa-trash-alt"></i> Xóa
+            </button>
+          </td>
+        </tr>
+      `).join("");
+
+      tbody.insertAdjacentHTML("beforeend", html);
+      displayedCount += nextBatch.length;
+      document.getElementById("renderedCount").textContent = displayedCount;
+      isLoadingMore = false;
+    };
+
+    // Sự kiện cuộn vô hạn (Infinite Scroll Event)
+    window.addEventListener("scroll", () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight - 150) {
+        if (displayedCount < filteredData.length) {
+          const loader = document.getElementById("infiniteLoader");
+          loader.style.display = "block";
+          setTimeout(() => {
+            loadMoreData();
+            loader.style.display = "none";
+          }, 300);
+        }
+      }
+    });
+
+    window.searchData = () => {
+      resetAndRenderTable();
+    };
+
+    // Thêm dữ liệu
+    window.addData = async () => {
+      if (!currentUser) return;
+      const input = document.getElementById("dataInput");
+      const data = input.value.trim();
+      if (!data) return alert("Vui lòng nhập dữ liệu!"), input.focus();
+
+      // Kiểm tra trùng lặp > 68%
+      if (userSnapshot && userSnapshot.exists()) {
+        const existing = userSnapshot.val();
+        for (const k in existing) {
+          if (existing[k].original) {
+            const sim = calculateSimilarity(data, existing[k].original);
+            if (sim > 0.68) {
+              alert(`Dữ liệu trùng lặp ${(sim * 100).toFixed(1)}% với bản ghi đã có!\nHệ thống từ chối nhập (ngưỡng > 68%).`);
+              return;
+            }
+          }
+        }
+      }
+
+      const md5Key = CryptoJS.MD5(data).toString();
+      const userRef = ref(db, `dieuTra/users/${currentUser.uid}/data/${md5Key}`);
+
+      await set(userRef, {
+        sha: CryptoJS.SHA256(data).toString(),
+        sha512: CryptoJS.SHA512(data).toString(),
+        original: data,
+        hashedKey: md5Key,
+        ip: await getUserIP(),
+        timeVN: getTime("VN"),
+        timeKR: getTime("KR")
+      });
+
+      input.value = "";
+      input.focus();
+    };
+
+    window.deleteData = (key) => {
+      if (!currentUser) return;
+      if (confirm("Bạn có chắc chắn muốn xóa bản ghi này?")) {
+        remove(ref(db, `dieuTra/users/${currentUser.uid}/data/${key}`));
+      }
+    };
+
+    // Modal helpers
+    window.showModal = id => document.getElementById(id).style.display = "block";
+    window.hideModal = id => {
+      document.getElementById(id).style.display = "none";
+      document.getElementById(id === "backupModal" ? "backupPassword" : "importPassword").value = "";
+    };
+
+    // Backup
+    window.performBackup = () => {
+      const pwd = document.getElementById("backupPassword").value;
+      if (!pwd) return alert("Vui lòng nhập mật khẩu mã hóa!");
+      if (!userSnapshot || !userSnapshot.exists()) {
+        hideModal("backupModal");
+        return alert("Bạn chưa có dữ liệu để sao lưu!");
+      }
+
+      try {
+        const raw = userSnapshot.val();
+        const encrypted = {};
+        Object.keys(raw).forEach(key => {
+          const item = raw[key];
+          encrypted[key] = {
+            ...item,
+            original: CryptoJS.AES.encrypt(String(item.original || ""), pwd).toString()
+          };
+        });
+
+        const blob = new Blob([JSON.stringify(encrypted, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `UserDB-Backup-${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        hideModal("backupModal");
+        alert("Xuất dữ liệu sao lưu thành công!");
+      } catch (err) {
+        alert("Lỗi mã hóa: " + err.message);
+      }
+    };
+
+    // Import
+    window.performImport = () => {
+      const pwd = document.getElementById("importPassword").value;
+      const file = document.getElementById("fileInput").files[0];
+      if (!pwd || !file) return alert("Vui lòng nhập mật khẩu và chọn file JSON!");
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          let success = 0, skipped = 0;
+          const currentList = [];
+
+          if (userSnapshot && userSnapshot.exists()) {
+            Object.values(userSnapshot.val()).forEach(v => {
+              if (v.original) currentList.push(v.original);
+            });
+          }
+
+          for (const key of Object.keys(imported)) {
+            const item = imported[key];
+            const decrypted = CryptoJS.AES.decrypt(item.original, pwd).toString(CryptoJS.enc.Utf8);
+            if (!decrypted) continue;
+
+            let isDup = false;
+            for (const exist of currentList) {
+              if (calculateSimilarity(decrypted, exist) > 0.68) {
+                isDup = true;
+                break;
+              }
+            }
+
+            if (!isDup) {
+              const md5Key = item.hashedKey || CryptoJS.MD5(decrypted).toString();
+              await set(ref(db, `dieuTra/users/${currentUser.uid}/data/${md5Key}`), {
+                ...item,
+                sha512: item.sha512 || CryptoJS.SHA512(decrypted).toString(),
+                original: decrypted
+              });
+              currentList.push(decrypted);
+              success++;
+            } else {
+              skipped++;
+            }
+          }
+
+          if (success > 0 || skipped > 0) {
+            alert(`Nhập thành công ${success} bản ghi` + (skipped ? ` (bỏ qua ${skipped} bản trùng > 68%)` : "") + "!");
+            hideModal("importModal");
+            document.getElementById("fileInput").value = "";
+          } else {
+            alert("Mật khẩu sai hoặc file không hợp lệ!");
+          }
+        } catch {
+          alert("Lỗi cấu trúc file JSON hoặc file bị hỏng!");
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    // Events
+    document.getElementById("dataInput").addEventListener("keypress", e => {
+      if (e.key === "Enter") addData();
+    });
+    window.onclick = e => {
+      if (e.target.className === "modal") hideModal(e.target.id);
+    };
+  </script>
+</body>
+</html>
