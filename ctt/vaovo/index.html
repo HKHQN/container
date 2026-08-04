@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ĐẠI TIỆC - READ ONLY</title>
+  <title>ÂM THANH TỪ NGOÀI TRÁI ĐẤT</title>
   
   <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1161/1161388.png">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -21,6 +21,8 @@
       --light-gray: #f1f5f9;
       --radius: 12px;
       --shadow: 0 4px 12px rgba(0,0,0,0.05);
+      --link-color: #2563eb;
+      --link-hover: #1d4ed8;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { font-family: 'Roboto', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.5; }
@@ -61,11 +63,12 @@
       background: rgba(248, 250, 252, 0.95); backdrop-filter: blur(8px);
       padding-bottom: 8px;
     }
-    .status-bar { display: flex; gap: 8px; margin-bottom: 8px; }
+    .status-bar { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
     .status-card {
       background: white; padding: 10px 14px; border-radius: var(--radius);
       box-shadow: var(--shadow); flex: 1; display: flex; align-items: center;
       justify-content: space-between; font-size: 13px; font-weight: 500;
+      min-width: 120px;
     }
     .data-count { color: var(--primary); font-weight: 700; }
 
@@ -96,7 +99,7 @@
     }
     td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top; font-size: 14px; }
 
-    /* Mobile Card Layout (Auto Activated on Mobile) */
+    /* Mobile Card Layout */
     .mobile-cards { display: none; flex-direction: column; gap: 10px; }
     .data-card {
       background: white; border-radius: var(--radius); padding: 14px;
@@ -121,6 +124,23 @@
     .empty-state { text-align: center; padding: 40px 16px; color: var(--gray); background: white; border-radius: var(--radius); }
     .empty-state i { font-size: 36px; margin-bottom: 8px; color: #cbd5e1; }
 
+    /* Link styles */
+    .link-detected {
+      color: var(--link-color);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+    .link-detected:hover {
+      color: var(--link-hover);
+    }
+    .link-detected i {
+      font-size: 12px;
+      margin-left: 4px;
+      opacity: 0.7;
+    }
+
     /* Infinite Loader & Skeleton */
     #infiniteLoader { text-align: center; padding: 16px; display: none; color: var(--gray); font-size: 13px; }
     .skeleton-box {
@@ -136,7 +156,35 @@
       .container { padding: 8px; }
       header { padding: 10px 12px; }
       h1 { font-size: 16px; }
-      .user-name { display: none; } /* Tránh tràn header di động */
+      .user-name { display: none; }
+      .status-card { min-width: 80px; font-size: 12px; padding: 8px 12px; }
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--dark);
+      color: white;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      z-index: 999;
+      opacity: 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      pointer-events: none;
+      max-width: 90%;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .toast i {
+      margin-right: 8px;
     }
   </style>
 </head>
@@ -146,6 +194,12 @@
   <div id="pageLoader">
     <div class="spinner"></div>
     <p style="margin-top: 10px; color: var(--gray); font-size: 13px;">Đang đồng bộ dữ liệu...</p>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Đã mở link</span>
   </div>
 
   <div class="container">
@@ -169,6 +223,10 @@
         <div class="status-card">
           <span><i class="fas fa-list-ul"></i> Hiển thị:</span>
           <span id="renderedCount" class="data-count" style="color: var(--secondary);">0</span>
+        </div>
+        <div class="status-card" style="flex: 0.5; min-width: 80px;">
+          <span><i class="fas fa-link"></i> Links:</span>
+          <span id="linkCount" class="data-count" style="color: var(--success);">0</span>
         </div>
       </div>
 
@@ -249,8 +307,67 @@
       }
     };
 
-    const highlightText = (text, search) =>
-      search ? text.replace(new RegExp(`(${search})`, 'gi'), '<span class="search-highlight">$1</span>') : text;
+    // Toast notification
+    const showToast = (message, isSuccess = true) => {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const icon = toast.querySelector('i');
+      
+      toastMessage.textContent = message;
+      icon.className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+      toast.style.background = isSuccess ? 'var(--dark)' : '#dc2626';
+      
+      toast.classList.add('show');
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    };
+
+    // Kiểm tra và xử lý link trong text
+    const processLinks = (text) => {
+      if (!text) return text;
+      
+      // Regex để phát hiện URL
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const parts = text.split(urlRegex);
+      
+      let linkCount = 0;
+      const result = parts.map((part, index) => {
+        if (part.match(urlRegex)) {
+          linkCount++;
+          const url = part;
+          // Tạo thẻ a với sự kiện click
+          return `<span class="link-detected" data-url="${url}" onclick="handleLinkClick('${url}')">
+            ${url} <i class="fas fa-external-link-alt"></i>
+          </span>`;
+        }
+        return part;
+      }).join('');
+      
+      return { html: result, count: linkCount };
+    };
+
+    // Hàm xử lý click vào link (exposed to window)
+    window.handleLinkClick = (url) => {
+      if (url) {
+        // Kiểm tra nếu là link hợp lệ
+        try {
+          const urlObj = new URL(url);
+          // Mở link trong tab mới
+          window.open(url, '_blank');
+          showToast(`Đã mở: ${urlObj.hostname}`, true);
+        } catch (e) {
+          showToast('Link không hợp lệ', false);
+        }
+      }
+    };
+
+    const highlightText = (text, search) => {
+      if (!text || !search) return text;
+      const regex = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, '<span class="search-highlight">$1</span>');
+    };
 
     // Hiển thị Skeleton Loading
     const showSkeleton = () => {
@@ -296,7 +413,6 @@
           hidePageLoader();
         });
       } else {
-        // Chế độ xem vắng mặt / Chưa xác thực
         document.getElementById("userName").textContent = "Khách";
         hidePageLoader();
       }
@@ -311,9 +427,11 @@
         document.getElementById("mobileCardsContainer").innerHTML = "";
         emptyView.style.display = "block";
         document.getElementById("renderedCount").textContent = "0";
+        document.getElementById("linkCount").textContent = "0";
         return;
       }
 
+      // Lọc dữ liệu
       filteredData = Object.entries(userSnapshot.val())
         .map(([key, val]) => ({ key, ...val }))
         .filter(d => !search ||
@@ -330,6 +448,7 @@
       if (filteredData.length === 0) {
         emptyView.style.display = "block";
         document.getElementById("renderedCount").textContent = "0";
+        document.getElementById("linkCount").textContent = "0";
         return;
       }
 
@@ -348,18 +467,31 @@
 
       let desktopRows = "";
       let mobileCards = "";
+      let totalLinks = 0;
 
       nextBatch.forEach(d => {
+        const originalText = d.original || "N/A";
+        
+        // Xử lý link trong văn bản gốc
+        const processedOriginal = processLinks(originalText);
+        totalLinks += processedOriginal.count;
+        
+        // Highlight text nếu có tìm kiếm
+        const highlightedOriginal = highlightText(processedOriginal.html, search);
+        const highlightedSha = highlightText(d.sha || "N/A", search);
+        const highlightedSha512 = highlightText(d.sha512 || "N/A", search);
+        const highlightedMd5 = highlightText(d.hashedKey || "N/A", search);
+
         // Render Desktop Row
         desktopRows += `
           <tr>
-            <td class="original-text">${highlightText(d.original || "N/A", search)}</td>
+            <td class="original-text">${highlightedOriginal}</td>
             <td>
-              <div class="hash-text"><strong>SHA-256:</strong> ${highlightText(d.sha || "N/A", search)}</div>
-              <div class="hash-text" style="margin-top:4px;"><strong>SHA-512:</strong> ${highlightText(d.sha512 || "N/A", search)}</div>
+              <div class="hash-text"><strong>SHA-256:</strong> ${highlightedSha}</div>
+              <div class="hash-text" style="margin-top:4px;"><strong>SHA-512:</strong> ${highlightedSha512}</div>
             </td>
             <td>
-              <div class="hash-text"><strong>MD5:</strong> ${highlightText(d.hashedKey || "N/A", search)}</div>
+              <div class="hash-text"><strong>MD5:</strong> ${highlightedMd5}</div>
               <div style="font-size:11px; color:var(--gray); margin-top:4px;">
                 <div><i class="far fa-clock"></i> VN: ${d.timeVN || "—"}</div>
                 <div><i class="fas fa-globe"></i> IP: ${d.ip || "Unknown"}</div>
@@ -370,14 +502,14 @@
         // Render Mobile Card
         mobileCards += `
           <div class="data-card">
-            <div class="card-original">${highlightText(d.original || "N/A", search)}</div>
+            <div class="card-original">${highlightedOriginal}</div>
             <div class="card-row">
               <div class="card-label">SHA-256</div>
-              <div class="card-value">${highlightText(d.sha || "N/A", search)}</div>
+              <div class="card-value">${highlightedSha}</div>
             </div>
             <div class="card-row">
               <div class="card-label">MD5</div>
-              <div class="card-value">${highlightText(d.hashedKey || "N/A", search)}</div>
+              <div class="card-value">${highlightedMd5}</div>
             </div>
             <div class="card-meta">
               <span><i class="far fa-clock"></i> ${d.timeVN || "—"}</span>
@@ -391,6 +523,11 @@
 
       displayedCount += nextBatch.length;
       document.getElementById("renderedCount").textContent = displayedCount;
+      
+      // Cập nhật tổng số link
+      const currentLinkCount = parseInt(document.getElementById("linkCount").textContent) || 0;
+      document.getElementById("linkCount").textContent = currentLinkCount + totalLinks;
+      
       isLoadingMore = false;
     };
 
@@ -410,8 +547,21 @@
     });
 
     window.searchData = () => {
+      // Reset link count khi tìm kiếm mới
+      document.getElementById("linkCount").textContent = "0";
       resetAndRender();
     };
+
+    // Export handleLinkClick to window
+    window.handleLinkClick = window.handleLinkClick || ((url) => {
+      try {
+        const urlObj = new URL(url);
+        window.open(url, '_blank');
+        showToast(`Đã mở: ${urlObj.hostname}`, true);
+      } catch (e) {
+        showToast('Link không hợp lệ', false);
+      }
+    });
   </script>
 </body>
 </html>
