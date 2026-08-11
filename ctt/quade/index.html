@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>HÌNH ẢNH KHÔNG GIAN</title>
+  
+  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1161/1161388.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #4cc9f0;
+      --success: #2ec4b6;
+      --light: #f8f9fa;
+      --dark: #1e293b;
+      --gray: #64748b;
+      --light-gray: #f1f5f9;
+      --radius: 12px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.05);
+      --link-color: #2563eb;
+      --link-hover: #1d4ed8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Roboto', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.5; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 12px; }
+
+    /* Overlay Loader */
+    #pageLoader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.95); z-index: 9999;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      transition: opacity 0.3s ease;
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 4px solid #e2e8f0;
+      border-top-color: var(--primary); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Header Mobile Optimized */
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow); margin-bottom: 12px;
+    }
+    h1 { color: var(--primary); font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .user-profile { display: flex; align-items: center; gap: 8px; }
+    .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+    .user-name { font-weight: 500; font-size: 13px; max-width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .read-only-badge {
+      background: #e0e7ff; color: var(--primary); font-size: 11px;
+      padding: 2px 8px; border-radius: 20px; font-weight: 600;
+    }
+
+    /* Sticky Search & Status Bar */
+    .sticky-top-panel {
+      position: sticky; top: 8px; z-index: 10;
+      background: rgba(248, 250, 252, 0.95); backdrop-filter: blur(8px);
+      padding-bottom: 8px;
+    }
+    
+    /* Anonymous UID Input Control Bar */
+    .anon-uid-panel {
+      display: none; background: white; padding: 10px 14px; border-radius: var(--radius);
+      box-shadow: var(--shadow); margin-bottom: 8px; border: 1px solid #e0e7ff;
+    }
+    .anon-uid-panel.active { display: flex; flex-direction: column; gap: 6px; }
+    .anon-uid-label { font-size: 12px; font-weight: 600; color: var(--secondary); display: flex; align-items: center; gap: 6px; }
+    .anon-uid-input-group { display: flex; gap: 6px; }
+    .anon-uid-input-group input {
+      flex: 1; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px;
+      font-size: 13px; font-family: 'Courier New', monospace; outline: none;
+    }
+    .anon-uid-input-group input:focus { border-color: var(--primary); }
+    .anon-uid-input-group button {
+      background: var(--primary); color: white; border: none; padding: 8px 14px;
+      border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; transition: 0.2s;
+    }
+    .anon-uid-input-group button:hover { background: var(--secondary); }
+
+    .status-bar { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+    .status-card {
+      background: white; padding: 10px 14px; border-radius: var(--radius);
+      box-shadow: var(--shadow); flex: 1; display: flex; align-items: center;
+      justify-content: space-between; font-size: 13px; font-weight: 500;
+      min-width: 120px;
+    }
+    .data-count { color: var(--primary); font-weight: 700; }
+
+    /* Search Input Mobile */
+    .search-box { position: relative; width: 100%; }
+    .search-box i {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray); font-size: 14px;
+    }
+    .search-box input {
+      width: 100%; padding: 12px 14px 12px 40px; border: 1px solid #e2e8f0;
+      border-radius: var(--radius); font-size: 14px; background: white;
+      box-shadow: var(--shadow); outline: none; transition: 0.2s;
+    }
+    .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(67,97,238,0.15); }
+
+    /* View Mode: Desktop Table vs Mobile Cards */
+    .data-container { margin-top: 8px; }
+
+    /* Desktop Table View */
+    .desktop-table-wrapper { display: block; overflow-x: auto; background: white; border-radius: var(--radius); box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: var(--light-gray); color: var(--gray); padding: 12px 16px;
+      text-align: left; font-weight: 600; font-size: 13px; border-bottom: 1px solid #e2e8f0;
+    }
+    td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top; font-size: 14px; }
+
+    /* Mobile Card Layout */
+    .mobile-cards { display: none; flex-direction: column; gap: 10px; }
+    .data-card {
+      background: white; border-radius: var(--radius); padding: 14px;
+      box-shadow: var(--shadow); border: 1px solid #f1f5f9;
+    }
+    .card-original {
+      font-weight: 600; color: var(--dark); font-size: 15px; margin-bottom: 8px;
+      padding-bottom: 8px; border-bottom: 1px dashed #e2e8f0; word-break: break-word;
+    }
+    .card-row { margin-bottom: 6px; font-size: 12px; }
+    .card-label { color: var(--gray); font-weight: 500; font-size: 11px; text-transform: uppercase; margin-bottom: 2px; }
+    .card-value { font-family: 'Courier New', monospace; word-break: break-all; color: #334155; }
+    .card-meta {
+      display: flex; justify-content: space-between; gap: 8px; margin-top: 8px;
+      padding-top: 6px; font-size: 11px; color: var(--gray); background: var(--light-gray);
+      padding: 6px 10px; border-radius: 6px;
+    }
+
+    .original-text { font-weight: 600; color: var(--dark); word-break: break-word; }
+    .hash-text { font-family: 'Courier New', monospace; font-size: 12px; color: #475569; word-break: break-all; }
+    .search-highlight { background: #fef08a; padding: 0 2px; border-radius: 2px; }
+    .empty-state { text-align: center; padding: 40px 16px; color: var(--gray); background: white; border-radius: var(--radius); }
+    .empty-state i { font-size: 36px; margin-bottom: 8px; color: #cbd5e1; }
+
+    /* Link styles */
+    .link-detected {
+      color: var(--link-color);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+    .link-detected:hover { color: var(--link-hover); }
+    .link-detected i { font-size: 12px; margin-left: 4px; opacity: 0.7; }
+
+    /* Infinite Loader & Skeleton */
+    #infiniteLoader { text-align: center; padding: 16px; display: none; color: var(--gray); font-size: 13px; }
+    .skeleton-box {
+      height: 16px; background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%; animation: skeleton-loading 1.5s infinite; border-radius: 4px; margin-bottom: 6px;
+    }
+    @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* Media Query for Responsive Mobile Switch */
+    @media (max-width: 768px) {
+      .desktop-table-wrapper { display: none; }
+      .mobile-cards { display: flex; }
+      .container { padding: 8px; }
+      header { padding: 10px 12px; }
+      h1 { font-size: 16px; }
+      .user-name { display: none; }
+      .status-card { min-width: 80px; font-size: 12px; padding: 8px 12px; }
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed; bottom: 20px; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--dark); color: white; padding: 12px 24px;
+      border-radius: var(--radius); font-size: 14px; z-index: 999;
+      opacity: 0; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      pointer-events: none; max-width: 90%;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .toast i { margin-right: 8px; }
+  </style>
+</head>
+<body>
+
+  <!-- Overlay Loader -->
+  <div id="pageLoader">
+    <div class="spinner"></div>
+    <p style="margin-top: 10px; color: var(--gray); font-size: 13px;">Đang đồng bộ dữ liệu...</p>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage">Đã mở link</span>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1><i class="fas fa-eye"></i> TRA CỨU DỮ LIỆU</h1>
+      <div class="user-profile">
+        <span class="read-only-badge"><i class="fas fa-lock"></i> Chỉ đọc</span>
+        <img id="userAvatar" class="user-avatar" src="https://via.placeholder.com/32" alt="Avatar">
+        <span id="userName" class="user-name">Đang tải...</span>
+      </div>
+    </header>
+
+    <!-- Sticky Panel: Status & Search -->
+    <div class="sticky-top-panel">
+      <!-- Tra cứu cho tài khoản Anonymous -->
+      <div id="anonUidPanel" class="anon-uid-panel">
+        <div class="anon-uid-label">
+          <i class="fas fa-user-secret"></i> Nhập UID người dùng cần tra cứu (Anonymous):
+        </div>
+        <div class="anon-uid-input-group">
+          <input type="text" id="targetUidInput" placeholder="Dán UID vào đây..." />
+          <button id="btnLoadUid"><i class="fas fa-sync-alt"></i> Tải dữ liệu</button>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <div class="status-card">
+          <span><i class="fas fa-database"></i> Tổng cộng:</span>
+          <span id="dataCount" class="data-count">0</span>
+        </div>
+        <div class="status-card">
+          <span><i class="fas fa-list-ul"></i> Hiển thị:</span>
+          <span id="renderedCount" class="data-count" style="color: var(--secondary);">0</span>
+        </div>
+        <div class="status-card" style="flex: 0.5; min-width: 80px;">
+          <span><i class="fas fa-link"></i> Links:</span>
+          <span id="linkCount" class="data-count" style="color: var(--success);">0</span>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Tìm kiếm văn bản gốc, SHA, MD5..." onkeyup="searchData()">
+      </div>
+    </div>
+
+    <!-- Data Section -->
+    <div class="data-container">
+      
+      <!-- Layout Desktop (Table) -->
+      <div class="desktop-table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30%;">Văn bản nguyên bản</th>
+              <th style="width: 45%;">Mã Hash (SHA-256 / SHA-512)</th>
+              <th style="width: 25%;">MD5 & Metadata</th>
+            </tr>
+          </thead>
+          <tbody id="desktopTableBody">
+            <!-- Render Data or Skeleton -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Layout Mobile (Cards) -->
+      <div class="mobile-cards" id="mobileCardsContainer">
+        <!-- Render Mobile Cards -->
+      </div>
+
+      <div id="emptyView" class="empty-state" style="display: none;">
+        <i class="fas fa-folder-open"></i>
+        <p>Không có dữ liệu phù hợp</p>
+      </div>
+
+      <!-- Infinite Scroll Indicator -->
+      <div id="infiniteLoader">
+        <i class="fas fa-spinner fa-spin"></i> Đang tải thêm dữ liệu...
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, onValue, off } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7lia7Q2SN79kZYlRCiR0swc8oZUoUenY",
+      authDomain: "day-dg.firebaseapp.com",
+      databaseURL: "https://day-dg-default-rtdb.firebaseio.com",
+      projectId: "day-dg",
+      storageBucket: "day-dg.appspot.com",
+      messagingSenderId: "268157993796",
+      appId: "1:268157993796:web:a0d74a8100749f7f6dcd11",
+      measurementId: "G-GCH6G4LJD3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let currentDbRef = null;
+    let userSnapshot = null;
+    let filteredData = [];
+    let displayedCount = 0;
+    const BATCH_SIZE = 12;
+    let isLoadingMore = false;
+
+    const hidePageLoader = () => {
+      const loader = document.getElementById("pageLoader");
+      if (loader) {
+        loader.style.opacity = "0";
+        setTimeout(() => loader.style.display = "none", 300);
+      }
+    };
+
+    const showToast = (message, isSuccess = true) => {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const icon = toast.querySelector('i');
+      
+      toastMessage.textContent = message;
+      icon.className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+      toast.style.background = isSuccess ? 'var(--dark)' : '#dc2626';
+      
+      toast.classList.add('show');
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    };
+
+    const processLinks = (text) => {
+      if (!text) return text;
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const parts = text.split(urlRegex);
+      
+      let linkCount = 0;
+      const result = parts.map((part) => {
+        if (part.match(urlRegex)) {
+          linkCount++;
+          const url = part;
+          return `<span class="link-detected" onclick="handleLinkClick('${url}')">
+            ${url} <i class="fas fa-external-link-alt"></i>
+          </span>`;
+        }
+        return part;
+      }).join('');
+      
+      return { html: result, count: linkCount };
+    };
+
+    window.handleLinkClick = (url) => {
+      if (url) {
+        try {
+          const urlObj = new URL(url);
+          window.open(url, '_blank');
+          showToast(`Đã mở: ${urlObj.hostname}`, true);
+        } catch (e) {
+          showToast('Link không hợp lệ', false);
+        }
+      }
+    };
+
+    const highlightText = (text, search) => {
+      if (!text || !search) return text;
+      const regex = new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(regex, '<span class="search-highlight">$1</span>');
+    };
+
+    const showSkeleton = () => {
+      const desktopTbody = document.getElementById("desktopTableBody");
+      const mobileContainer = document.getElementById("mobileCardsContainer");
+      let desktopHtml = "";
+      let mobileHtml = "";
+
+      for (let i = 0; i < 4; i++) {
+        desktopHtml += `
+          <tr>
+            <td><div class="skeleton-box" style="width: 80%;"></div></td>
+            <td><div class="skeleton-box" style="width: 95%;"></div><div class="skeleton-box" style="width: 90%;"></div></td>
+            <td><div class="skeleton-box" style="width: 70%;"></div></td>
+          </tr>`;
+        
+        mobileHtml += `
+          <div class="data-card">
+            <div class="skeleton-box" style="width: 60%; height: 20px;"></div>
+            <div class="skeleton-box" style="width: 90%;"></div>
+            <div class="skeleton-box" style="width: 80%;"></div>
+          </div>`;
+      }
+      desktopTbody.innerHTML = desktopHtml;
+      mobileContainer.innerHTML = mobileHtml;
+    };
+
+    // Hàm gắn kết nối lắng nghe dữ liệu từ UID cụ thể
+    const subscribeToUserData = (targetUid) => {
+      if (!targetUid) {
+        showToast("Vui lòng nhập UID hợp lệ", false);
+        return;
+      }
+
+      showSkeleton();
+
+      // Hủy lắng nghe dữ liệu từ kết nối cũ nếu có
+      if (currentDbRef) {
+        off(currentDbRef);
+      }
+
+      currentDbRef = ref(db, `dieuTra/users/${targetUid}/data`);
+      
+      onValue(currentDbRef, (snapshot) => {
+        userSnapshot = snapshot;
+        const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+        document.getElementById("dataCount").textContent = count;
+        
+        resetAndRender();
+        hidePageLoader();
+      }, (error) => {
+        console.error("Lỗi đọc dữ liệu:", error);
+        showToast("Không thể tải dữ liệu của UID này", false);
+        hidePageLoader();
+      });
+    };
+
+    // Theo dõi trạng thái Auth & Tải dữ liệu
+    onAuthStateChanged(auth, (user) => {
+      showSkeleton();
+      const anonPanel = document.getElementById("anonUidPanel");
+      const targetUidInput = document.getElementById("targetUidInput");
+
+      if (user) {
+        const isAnonymous = user.isAnonymous;
+        
+        if (isAnonymous) {
+          document.getElementById("userName").textContent = "Vô danh";
+          document.getElementById("userAvatar").src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+          
+          // Bật bảng nhập UID riêng cho Anonymous
+          anonPanel.classList.add("active");
+
+          // Lấy UID đã lưu từ localStorage hoặc lấy UID vô danh hiện tại làm mặc định
+          const savedUid = localStorage.getItem("last_anon_uid") || user.uid;
+          targetUidInput.value = savedUid;
+
+          subscribeToUserData(savedUid);
+        } else {
+          // Tài khoản thường
+          anonPanel.classList.remove("active");
+          document.getElementById("userName").textContent = user.displayName || "Người dùng";
+          document.getElementById("userAvatar").src = user.photoURL || "https://via.placeholder.com/32";
+
+          subscribeToUserData(user.uid);
+        }
+      } else {
+        document.getElementById("userName").textContent = "Khách";
+        anonPanel.classList.remove("active");
+        hidePageLoader();
+      }
+    });
+
+    // Sự kiện bấm nút tải UID (Dành cho tài khoản Anonymous)
+    document.getElementById("btnLoadUid").addEventListener("click", () => {
+      const uid = document.getElementById("targetUidInput").value.trim();
+      if (uid) {
+        localStorage.setItem("last_anon_uid", uid);
+        showToast("Đang tải dữ liệu UID mới...", true);
+        subscribeToUserData(uid);
+      } else {
+        showToast("Chưa nhập UID", false);
+      }
+    });
+
+    const resetAndRender = () => {
+      const search = document.getElementById("searchInput").value.toLowerCase().trim();
+      const emptyView = document.getElementById("emptyView");
+
+      if (!userSnapshot || !userSnapshot.exists()) {
+        document.getElementById("desktopTableBody").innerHTML = "";
+        document.getElementById("mobileCardsContainer").innerHTML = "";
+        emptyView.style.display = "block";
+        document.getElementById("renderedCount").textContent = "0";
+        document.getElementById("linkCount").textContent = "0";
+        return;
+      }
+
+      // Lọc dữ liệu
+      filteredData = Object.entries(userSnapshot.val())
+        .map(([key, val]) => ({ key, ...val }))
+        .filter(d => !search ||
+          (d.original && d.original.toLowerCase().includes(search)) ||
+          (d.sha && d.sha.toLowerCase().includes(search)) ||
+          (d.sha512 && d.sha512.toLowerCase().includes(search)) ||
+          (d.hashedKey && d.hashedKey.toLowerCase().includes(search))
+        );
+
+      document.getElementById("desktopTableBody").innerHTML = "";
+      document.getElementById("mobileCardsContainer").innerHTML = "";
+      displayedCount = 0;
+
+      if (filteredData.length === 0) {
+        emptyView.style.display = "block";
+        document.getElementById("renderedCount").textContent = "0";
+        document.getElementById("linkCount").textContent = "0";
+        return;
+      }
+
+      emptyView.style.display = "none";
+      loadMoreData();
+    };
+
+    const loadMoreData = () => {
+      if (isLoadingMore || displayedCount >= filteredData.length) return;
+      isLoadingMore = true;
+
+      const search = document.getElementById("searchInput").value.toLowerCase().trim();
+      const desktopTbody = document.getElementById("desktopTableBody");
+      const mobileContainer = document.getElementById("mobileCardsContainer");
+      const nextBatch = filteredData.slice(displayedCount, displayedCount + BATCH_SIZE);
+
+      let desktopRows = "";
+      let mobileCards = "";
+      let totalLinks = 0;
+
+      nextBatch.forEach(d => {
+        const originalText = d.original || "N/A";
+        
+        // Xử lý link
+        const processedOriginal = processLinks(originalText);
+        totalLinks += processedOriginal.count;
+        
+        // Highlight text
+        const highlightedOriginal = highlightText(processedOriginal.html, search);
+        const highlightedSha = highlightText(d.sha || "N/A", search);
+        const highlightedSha512 = highlightText(d.sha512 || "N/A", search);
+        const highlightedMd5 = highlightText(d.hashedKey || "N/A", search);
+
+        // Desktop Row
+        desktopRows += `
+          <tr>
+            <td class="original-text">${highlightedOriginal}</td>
+            <td>
+              <div class="hash-text"><strong>SHA-256:</strong> ${highlightedSha}</div>
+              <div class="hash-text" style="margin-top:4px;"><strong>SHA-512:</strong> ${highlightedSha512}</div>
+            </td>
+            <td>
+              <div class="hash-text"><strong>MD5:</strong> ${highlightedMd5}</div>
+              <div style="font-size:11px; color:var(--gray); margin-top:4px;">
+                <div><i class="far fa-clock"></i> VN: ${d.timeVN || "—"}</div>
+                <div><i class="fas fa-globe"></i> IP: ${d.ip || "Unknown"}</div>
+              </div>
+            </td>
+          </tr>`;
+
+        // Mobile Card
+        mobileCards += `
+          <div class="data-card">
+            <div class="card-original">${highlightedOriginal}</div>
+            <div class="card-row">
+              <div class="card-label">SHA-256</div>
+              <div class="card-value">${highlightedSha}</div>
+            </div>
+            <div class="card-row">
+              <div class="card-label">MD5</div>
+              <div class="card-value">${highlightedMd5}</div>
+            </div>
+            <div class="card-meta">
+              <span><i class="far fa-clock"></i> ${d.timeVN || "—"}</span>
+              <span><i class="fas fa-network-wired"></i> ${d.ip || "Unknown"}</span>
+            </div>
+          </div>`;
+      });
+
+      desktopTbody.insertAdjacentHTML("beforeend", desktopRows);
+      mobileContainer.insertAdjacentHTML("beforeend", mobileCards);
+
+      displayedCount += nextBatch.length;
+      document.getElementById("renderedCount").textContent = displayedCount;
+      
+      const currentLinkCount = parseInt(document.getElementById("linkCount").textContent) || 0;
+      document.getElementById("linkCount").textContent = currentLinkCount + totalLinks;
+      
+      isLoadingMore = false;
+    };
+
+    // Cuộn vô hạn
+    window.addEventListener("scroll", () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight - 120) {
+        if (displayedCount < filteredData.length) {
+          const loader = document.getElementById("infiniteLoader");
+          loader.style.display = "block";
+          setTimeout(() => {
+            loadMoreData();
+            loader.style.display = "none";
+          }, 250);
+        }
+      }
+    });
+
+    window.searchData = () => {
+      document.getElementById("linkCount").textContent = "0";
+      resetAndRender();
+    };
+  </script>
+</body>
+</html>
