@@ -2,207 +2,521 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ĂN ĐÊ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ĂN RỒI</title>
+  
+  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1161/1161388.png">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-sub: #64748b;
-      --primary: #2563eb;
-      --primary-light: #eff6ff;
-      --border: #e2e8f0;
-      --code-bg: #f1f5f9;
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #4cc9f0;
+      --success: #2ec4b6;
+      --light: #f8f9fa;
+      --dark: #1e293b;
+      --gray: #64748b;
+      --light-gray: #f1f5f9;
       --radius: 12px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Roboto', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.5; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 12px; }
+
+    /* Overlay Loader */
+    #pageLoader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.95); z-index: 9999;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      transition: opacity 0.3s ease;
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 4px solid #e2e8f0;
+      border-top-color: var(--primary); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Header */
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow); margin-bottom: 12px;
+    }
+    h1 { color: var(--primary); font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .user-profile { display: flex; align-items: center; gap: 8px; }
+    .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+    .user-name { font-weight: 500; font-size: 13px; max-width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .read-only-badge {
+      background: #e0e7ff; color: var(--primary); font-size: 11px;
+      padding: 2px 8px; border-radius: 20px; font-weight: 600;
     }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      padding: 16px;
-      margin: 0;
+    /* Sticky Search & Status Bar */
+    .sticky-top-panel {
+      position: sticky; top: 8px; z-index: 10;
+      background: rgba(248, 250, 252, 0.95); backdrop-filter: blur(8px);
+      padding-bottom: 8px;
+    }
+    .status-bar { display: flex; gap: 8px; margin-bottom: 8px; }
+    .status-card {
+      background: white; padding: 10px 14px; border-radius: var(--radius);
+      box-shadow: var(--shadow); flex: 1; display: flex; align-items: center;
+      justify-content: space-between; font-size: 13px; font-weight: 500;
+    }
+    .data-count { color: var(--primary); font-weight: 700; }
+
+    /* Control Bar: View Switcher & Search */
+    .control-row {
+      display: flex; gap: 8px; align-items: center;
+    }
+    .search-box {
+      position: relative; flex: 1;
+    }
+    .search-box i {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray); font-size: 14px;
+    }
+    .search-box input {
+      width: 100%; padding: 12px 14px 12px 40px; border: 1px solid #e2e8f0;
+      border-radius: var(--radius); font-size: 14px; background: white;
+      box-shadow: var(--shadow); outline: none; transition: 0.2s;
+    }
+    .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(67,97,238,0.15); }
+
+    /* Switcher Mode Toggle */
+    .view-switcher {
+      display: flex; background: #e2e8f0; padding: 3px; border-radius: var(--radius); height: 45px;
+    }
+    .view-btn {
+      border: none; background: transparent; padding: 0 12px; font-size: 13px;
+      font-weight: 500; color: var(--gray); border-radius: 9px; cursor: pointer;
+      display: flex; align-items: center; gap: 6px; transition: 0.2s;
+    }
+    .view-btn.active {
+      background: white; color: var(--primary); font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
-    .data-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+    /* Container Modes */
+    .data-container { margin-top: 8px; }
 
-    /* Thẻ dữ liệu có cấu trúc */
+    /* Mode 1: Standard Table / Cards */
+    .desktop-table-wrapper { display: block; overflow-x: auto; background: white; border-radius: var(--radius); box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: var(--light-gray); color: var(--gray); padding: 12px 16px;
+      text-align: left; font-weight: 600; font-size: 13px; border-bottom: 1px solid #e2e8f0;
+    }
+    td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top; font-size: 14px; }
+    .mobile-cards { display: none; flex-direction: column; gap: 10px; }
+
+    /* Standard Card Style */
     .data-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      background: white; border-radius: var(--radius); padding: 14px;
+      box-shadow: var(--shadow); border: 1px solid #f1f5f9;
+    }
+    .card-original {
+      font-weight: 600; color: var(--dark); font-size: 15px; margin-bottom: 8px;
+      padding-bottom: 8px; border-bottom: 1px dashed #e2e8f0; word-break: break-word;
     }
 
-    /* Header của Card */
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 12px;
+    /* Mode 2: STRUCTURED CARD VIEW (HIỂN THỊ CẤU TRÚC MỚI) */
+    .structured-grid { display: none; flex-direction: column; gap: 12px; }
+    .struct-card {
+      background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+      border: 1px solid #e2e8f0; overflow: hidden; transition: 0.2s;
     }
-
-    .original-title {
-      font-weight: 600;
-      font-size: 15px;
-      word-break: break-word;
+    .struct-card-header {
+      background: #f8fafc; padding: 10px 14px; border-bottom: 1px solid #e2e8f0;
+      display: flex; justify-content: space-between; align-items: center;
     }
-
-    .badge {
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 6px;
-      white-space: nowrap;
+    .type-badge {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px;
     }
+    .type-text { background: #e2e8f0; color: #475569; }
+    .type-email { background: #dbeafe; color: #1e40af; }
+    .type-url { background: #dcfce7; color: #166534; }
+    .type-ip { background: #fef3c7; color: #92400e; }
+    .type-json { background: #f3e8ff; color: #6b21a8; }
 
-    /* Khối chứa thông tin Key - Value */
-    .kv-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .struct-card-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+    .struct-field { display: flex; flex-direction: column; gap: 3px; }
+    .struct-label { font-size: 11px; font-weight: 600; color: var(--gray); text-transform: uppercase; display: flex; justify-content: space-between; }
+    .struct-value {
+      font-size: 14px; font-weight: 500; color: var(--dark);
+      background: #f8fafc; padding: 8px 10px; border-radius: 8px;
+      border: 1px solid #f1f5f9; word-break: break-all;
     }
-
-    .kv-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    .struct-hash-box {
+      background: #f8fafc; border-radius: 8px; padding: 10px; border: 1px solid #f1f5f9;
+      font-family: 'Courier New', monospace; font-size: 12px; display: flex; flex-direction: column; gap: 6px;
     }
-
-    .kv-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-sub);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .copy-btn {
+      cursor: pointer; color: var(--primary); font-size: 11px; float: right; border: none; background: none;
     }
+    .copy-btn:hover { text-decoration: underline; }
 
-    .kv-value-wrapper {
-      display: flex;
-      align-items: center;
-      background: var(--code-bg);
-      border-radius: 6px;
-      padding: 6px 10px;
-      justify-content: space-between;
+    .original-text { font-weight: 600; color: var(--dark); word-break: break-word; }
+    .hash-text { font-family: 'Courier New', monospace; font-size: 12px; color: #475569; word-break: break-all; }
+    .search-highlight { background: #fef08a; padding: 0 2px; border-radius: 2px; }
+    .empty-state { text-align: center; padding: 40px 16px; color: var(--gray); background: white; border-radius: var(--radius); }
+    .empty-state i { font-size: 36px; margin-bottom: 8px; color: #cbd5e1; }
+
+    /* Skeleton & Infinite Scroll */
+    #infiniteLoader { text-align: center; padding: 16px; display: none; color: var(--gray); font-size: 13px; }
+    .skeleton-box {
+      height: 16px; background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%; animation: skeleton-loading 1.5s infinite; border-radius: 4px; margin-bottom: 6px;
     }
+    @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-    .kv-value {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: #334155;
-      word-break: break-all;
-    }
-
-    .btn-copy {
-      background: none;
-      border: none;
-      color: var(--text-sub);
-      cursor: pointer;
-      padding: 4px;
-      font-size: 12px;
-    }
-    .btn-copy:hover { color: var(--primary); }
-
-    /* Phần chi tiết có thể mở rộng (Accordion) */
-    .details-toggle {
-      background: none;
-      border: none;
-      color: var(--primary);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 8px 0 0 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .details-content {
-      display: none;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--border);
-    }
-
-    .card-footer {
-      display: flex;
-      gap: 12px;
-      margin-top: 12px;
-      font-size: 11px;
-      color: var(--text-sub);
+    @media (max-width: 768px) {
+      .desktop-table-wrapper { display: none !important; }
+      .mobile-cards { display: flex; }
+      .container { padding: 8px; }
+      header { padding: 10px 12px; }
+      h1 { font-size: 16px; }
+      .user-name { display: none; }
+      .view-btn span { display: none; } /* Ẩn chữ trên di động, chỉ để Icon */
+      .view-btn { padding: 0 10px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="data-list">
-    <!-- Card Mẫu -->
-    <div class="data-card">
-      <div class="card-header">
-        <div class="original-title">Mật khẩu WiFi Tầng 1</div>
-        <span class="badge">MD5 Verified</span>
-      </div>
+  <!-- Overlay Loader -->
+  <div id="pageLoader">
+    <div class="spinner"></div>
+    <p style="margin-top: 10px; color: var(--gray); font-size: 13px;">Đang đồng bộ dữ liệu...</p>
+  </div>
 
-      <div class="kv-group">
-        <div class="kv-item">
-          <span class="kv-label">MD5 Hash</span>
-          <div class="kv-value-wrapper">
-            <span class="kv-value">e10adc3949ba59abbe56e057f20f883e</span>
-            <button class="btn-copy" onclick="copyText('e10adc3949ba59abbe56e057f20f883e')"><i class="far fa-copy"></i></button>
-          </div>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1><i class="fas fa-eye"></i> TRA CỨU DỮ LIỆU</h1>
+      <div class="user-profile">
+        <span class="read-only-badge"><i class="fas fa-lock"></i> Chỉ đọc</span>
+        <img id="userAvatar" class="user-avatar" src="https://via.placeholder.com/32" alt="Avatar">
+        <span id="userName" class="user-name">Đang tải...</span>
+      </div>
+    </header>
+
+    <!-- Sticky Panel -->
+    <div class="sticky-top-panel">
+      <div class="status-bar">
+        <div class="status-card">
+          <span><i class="fas fa-database"></i> Tổng cộng:</span>
+          <span id="dataCount" class="data-count">0</span>
+        </div>
+        <div class="status-card">
+          <span><i class="fas fa-list-ul"></i> Hiển thị:</span>
+          <span id="renderedCount" class="data-count" style="color: var(--secondary);">0</span>
         </div>
       </div>
 
-      <!-- Xem chi tiết các Hash khác -->
-      <button class="details-toggle" onclick="toggleDetails(this)">
-        <span>Xem SHA-256 & SHA-512</span> <i class="fas fa-chevron-down"></i>
-      </button>
-
-      <div class="details-content">
-        <div class="kv-group">
-          <div class="kv-item">
-            <span class="kv-label">SHA-256</span>
-            <div class="kv-value-wrapper">
-              <span class="kv-value">8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92</span>
-            </div>
-          </div>
+      <div class="control-row">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Tìm kiếm văn bản, SHA, MD5..." onkeyup="searchData()">
+        </div>
+        
+        <!-- View Switcher -->
+        <div class="view-switcher">
+          <button class="view-btn active" id="btnStandardView" onclick="switchView('standard')">
+            <i class="fas fa-list"></i> <span>Tiêu chuẩn</span>
+          </button>
+          <button class="view-btn" id="btnStructView" onclick="switchView('structured')">
+            <i class="fas fa-cubes"></i> <span>Cấu trúc</span>
+          </button>
         </div>
       </div>
+    </div>
 
-      <!-- Footer Metadata -->
-      <div class="card-footer">
-        <span><i class="far fa-clock"></i> 14:30 - 13/08/2026</span>
-        <span><i class="fas fa-network-wired"></i> 113.161.x.x</span>
+    <!-- Data Section -->
+    <div class="data-container">
+      
+      <!-- MODE 1: Standard Table (Desktop) -->
+      <div class="desktop-table-wrapper" id="standardDesktopView">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30%;">Văn bản nguyên bản</th>
+              <th style="width: 45%;">Mã Hash (SHA-256 / SHA-512)</th>
+              <th style="width: 25%;">MD5 & Metadata</th>
+            </tr>
+          </thead>
+          <tbody id="desktopTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- MODE 1: Standard Cards (Mobile) -->
+      <div class="mobile-cards" id="standardMobileView"></div>
+
+      <!-- MODE 2: STRUCTURED VIEW (THẺ CẤU TRÚC MỚI) -->
+      <div class="structured-grid" id="structuredView"></div>
+
+      <div id="emptyView" class="empty-state" style="display: none;">
+        <i class="fas fa-folder-open"></i>
+        <p>Không có dữ liệu phù hợp</p>
+      </div>
+
+      <!-- Infinite Scroll Indicator -->
+      <div id="infiniteLoader">
+        <i class="fas fa-spinner fa-spin"></i> Đang tải thêm dữ liệu...
       </div>
     </div>
   </div>
 
-  <script>
-    function toggleDetails(btn) {
-      const content = btn.nextElementSibling;
-      const isHidden = content.style.display === "none" || content.style.display === "";
-      content.style.display = isHidden ? "block" : "none";
-      btn.querySelector('i').className = isHidden ? "fas fa-chevron-up" : "fas fa-chevron-down";
-    }
+  <!-- Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    function copyText(text) {
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7lia7Q2SN79kZYlRCiR0swc8oZUoUenY",
+      authDomain: "day-dg.firebaseapp.com",
+      databaseURL: "https://day-dg-default-rtdb.firebaseio.com",
+      projectId: "day-dg",
+      storageBucket: "day-dg.appspot.com",
+      messagingSenderId: "268157993796",
+      appId: "1:268157993796:web:a0d74a8100749f7f6dcd11",
+      measurementId: "G-GCH6G4LJD3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let userSnapshot = null;
+    let filteredData = [];
+    let displayedCount = 0;
+    const BATCH_SIZE = 12;
+    let isLoadingMore = false;
+    let currentViewMode = 'standard'; // 'standard' hoặc 'structured'
+
+    const hidePageLoader = () => {
+      const loader = document.getElementById("pageLoader");
+      if (loader) {
+        loader.style.opacity = "0";
+        setTimeout(() => loader.style.display = "none", 300);
+      }
+    };
+
+    const highlightText = (text, search) =>
+      search ? text.replace(new RegExp(`(${search})`, 'gi'), '<span class="search-highlight">$1</span>') : text;
+
+    // Helper tự động nhận diện cấu trúc Dữ liệu
+    const detectDataType = (str) => {
+      if (!str) return { type: 'TEXT', badgeClass: 'type-text', icon: 'fa-align-left' };
+      const s = str.trim();
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)) return { type: 'EMAIL', badgeClass: 'type-email', icon: 'fa-envelope' };
+      if (/^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(:\d{1,5})?(\/.*)?$/i.test(s)) return { type: 'URL', badgeClass: 'type-url', icon: 'fa-link' };
+      if (/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(s)) return { type: 'IP ADDRESS', badgeClass: 'type-ip', icon: 'fa-network-wired' };
+      if ((s.startsWith('{') && s.endsWith('}')) || (s.startsWith('[') && s.endsWith(']'))) {
+        try { JSON.parse(s); return { type: 'JSON', badgeClass: 'type-json', icon: 'fa-code' }; } catch {}
+      }
+      return { type: 'TEXT', badgeClass: 'type-text', icon: 'fa-file-alt' };
+    };
+
+    // Copy to clipboard helper
+    window.copyText = (text) => {
       navigator.clipboard.writeText(text);
-      alert("Đã sao chép mã Hash!");
-    }
+      alert("Đã sao chép: " + text.substring(0, 20) + "...");
+    };
+
+    // Chuyển đổi View Mode
+    window.switchView = (mode) => {
+      currentViewMode = mode;
+      document.getElementById('btnStandardView').classList.toggle('active', mode === 'standard');
+      document.getElementById('btnStructView').classList.toggle('active', mode === 'structured');
+      
+      const isMobile = window.innerWidth <= 768;
+      document.getElementById('standardDesktopView').style.display = (mode === 'standard' && !isMobile) ? 'block' : 'none';
+      document.getElementById('standardMobileView').style.display = (mode === 'standard' && isMobile) ? 'flex' : 'none';
+      document.getElementById('structuredView').style.display = (mode === 'structured') ? 'flex' : 'none';
+
+      resetAndRender();
+    };
+
+    // Listener thay đổi kích thước màn hình
+    window.addEventListener('resize', () => {
+      if (currentViewMode === 'standard') {
+        const isMobile = window.innerWidth <= 768;
+        document.getElementById('standardDesktopView').style.display = isMobile ? 'none' : 'block';
+        document.getElementById('standardMobileView').style.display = isMobile ? 'flex' : 'none';
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("userName").textContent = user.displayName || "Người dùng";
+        document.getElementById("userAvatar").src = user.photoURL || "https://via.placeholder.com/32";
+
+        const userQueryRef = ref(db, `dieuTra/users/${user.uid}/data`);
+        onValue(userQueryRef, (snapshot) => {
+          userSnapshot = snapshot;
+          const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+          document.getElementById("dataCount").textContent = count;
+          
+          resetAndRender();
+          hidePageLoader();
+        });
+      } else {
+        document.getElementById("userName").textContent = "Khách";
+        hidePageLoader();
+      }
+    });
+
+    const resetAndRender = () => {
+      const search = document.getElementById("searchInput").value.toLowerCase().trim();
+      const emptyView = document.getElementById("emptyView");
+
+      if (!userSnapshot || !userSnapshot.exists()) {
+        document.getElementById("desktopTableBody").innerHTML = "";
+        document.getElementById("standardMobileView").innerHTML = "";
+        document.getElementById("structuredView").innerHTML = "";
+        emptyView.style.display = "block";
+        document.getElementById("renderedCount").textContent = "0";
+        return;
+      }
+
+      filteredData = Object.entries(userSnapshot.val())
+        .map(([key, val]) => ({ key, ...val }))
+        .filter(d => !search ||
+          (d.original && d.original.toLowerCase().includes(search)) ||
+          (d.sha && d.sha.toLowerCase().includes(search)) ||
+          (d.sha512 && d.sha512.toLowerCase().includes(search)) ||
+          (d.hashedKey && d.hashedKey.toLowerCase().includes(search))
+        );
+
+      document.getElementById("desktopTableBody").innerHTML = "";
+      document.getElementById("standardMobileView").innerHTML = "";
+      document.getElementById("structuredView").innerHTML = "";
+      displayedCount = 0;
+
+      if (filteredData.length === 0) {
+        emptyView.style.display = "block";
+        document.getElementById("renderedCount").textContent = "0";
+        return;
+      }
+
+      emptyView.style.display = "none";
+      loadMoreData();
+    };
+
+    const loadMoreData = () => {
+      if (isLoadingMore || displayedCount >= filteredData.length) return;
+      isLoadingMore = true;
+
+      const search = document.getElementById("searchInput").value.toLowerCase().trim();
+      const nextBatch = filteredData.slice(displayedCount, displayedCount + BATCH_SIZE);
+
+      if (currentViewMode === 'standard') {
+        const desktopTbody = document.getElementById("desktopTableBody");
+        const mobileContainer = document.getElementById("standardMobileView");
+        let desktopRows = "", mobileCards = "";
+
+        nextBatch.forEach(d => {
+          desktopRows += `
+            <tr>
+              <td class="original-text">${highlightText(d.original || "N/A", search)}</td>
+              <td>
+                <div class="hash-text"><strong>SHA-256:</strong> ${highlightText(d.sha || "N/A", search)}</div>
+                <div class="hash-text" style="margin-top:4px;"><strong>SHA-512:</strong> ${highlightText(d.sha512 || "N/A", search)}</div>
+              </td>
+              <td>
+                <div class="hash-text"><strong>MD5:</strong> ${highlightText(d.hashedKey || "N/A", search)}</div>
+                <div style="font-size:11px; color:var(--gray); margin-top:4px;">
+                  <div><i class="far fa-clock"></i> VN: ${d.timeVN || "—"}</div>
+                  <div><i class="fas fa-globe"></i> IP: ${d.ip || "Unknown"}</div>
+                </div>
+              </td>
+            </tr>`;
+
+          mobileCards += `
+            <div class="data-card">
+              <div class="card-original">${highlightText(d.original || "N/A", search)}</div>
+              <div style="font-size:12px; margin-bottom:4px;"><strong>SHA-256:</strong> <span class="hash-text">${highlightText(d.sha || "N/A", search)}</span></div>
+              <div style="font-size:12px;"><strong>MD5:</strong> <span class="hash-text">${highlightText(d.hashedKey || "N/A", search)}</span></div>
+            </div>`;
+        });
+
+        desktopTbody.insertAdjacentHTML("beforeend", desktopRows);
+        mobileContainer.insertAdjacentHTML("beforeend", mobileCards);
+      } 
+      else if (currentViewMode === 'structured') {
+        // RENDER PHIÊN BẢN CẤU TRÚC MỚI (STRUCTURED VIEW)
+        const structContainer = document.getElementById("structuredView");
+        let structCards = "";
+
+        nextBatch.forEach(d => {
+          const typeInfo = detectDataType(d.original);
+          structCards += `
+            <div class="struct-card">
+              <div class="struct-card-header">
+                <span class="type-badge ${typeInfo.badgeClass}">
+                  <i class="fas ${typeInfo.icon}"></i> ${typeInfo.type}
+                </span>
+                <span style="font-size: 11px; color: var(--gray);">
+                  <i class="far fa-clock"></i> ${d.timeVN || "—"}
+                </span>
+              </div>
+              <div class="struct-card-body">
+                <div class="struct-field">
+                  <div class="struct-label">
+                    <span>Nội dung nguyên bản</span>
+                    <button class="copy-btn" onclick="copyText('${d.original || ''}')"><i class="far fa-copy"></i> Copy</button>
+                  </div>
+                  <div class="struct-value">${highlightText(d.original || "N/A", search)}</div>
+                </div>
+
+                <div class="struct-field">
+                  <div class="struct-label">Mã HASH Cryptographic</div>
+                  <div class="struct-hash-box">
+                    <div><strong>MD5:</strong> ${highlightText(d.hashedKey || "N/A", search)}</div>
+                    <div><strong>SHA-256:</strong> ${highlightText(d.sha || "N/A", search)}</div>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--gray); background: #f8fafc; padding: 6px 10px; border-radius: 6px;">
+                  <span><i class="fas fa-network-wired"></i> IP: ${d.ip || "Unknown"}</span>
+                  <span><i class="far fa-clock"></i> KR: ${d.timeKR || "—"}</span>
+                </div>
+              </div>
+            </div>`;
+        });
+
+        structContainer.insertAdjacentHTML("beforeend", structCards);
+      }
+
+      displayedCount += nextBatch.length;
+      document.getElementById("renderedCount").textContent = displayedCount;
+      isLoadingMore = false;
+    };
+
+    // Cuộn vô hạn
+    window.addEventListener("scroll", () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight - 120) {
+        if (displayedCount < filteredData.length) {
+          const loader = document.getElementById("infiniteLoader");
+          loader.style.display = "block";
+          setTimeout(() => {
+            loadMoreData();
+            loader.style.display = "none";
+          }, 250);
+        }
+      }
+    });
+
+    window.searchData = () => {
+      resetAndRender();
+    };
   </script>
 </body>
 </html>
