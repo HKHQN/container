@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dữ liệu có cấu trúc</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --border: #e2e8f0;
+      --code-bg: #f1f5f9;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      padding: 16px;
+      margin: 0;
+    }
+
+    .data-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Thẻ dữ liệu có cấu trúc */
+    .data-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    /* Header của Card */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .original-title {
+      font-weight: 600;
+      font-size: 15px;
+      word-break: break-word;
+    }
+
+    .badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    /* Khối chứa thông tin Key - Value */
+    .kv-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kv-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .kv-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kv-value-wrapper {
+      display: flex;
+      align-items: center;
+      background: var(--code-bg);
+      border-radius: 6px;
+      padding: 6px 10px;
+      justify-content: space-between;
+    }
+
+    .kv-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #334155;
+      word-break: break-all;
+    }
+
+    .btn-copy {
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      cursor: pointer;
+      padding: 4px;
+      font-size: 12px;
+    }
+    .btn-copy:hover { color: var(--primary); }
+
+    /* Phần chi tiết có thể mở rộng (Accordion) */
+    .details-toggle {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 8px 0 0 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .details-content {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .card-footer {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="data-list">
+    <!-- Card Mẫu -->
+    <div class="data-card">
+      <div class="card-header">
+        <div class="original-title">Mật khẩu WiFi Tầng 1</div>
+        <span class="badge">MD5 Verified</span>
+      </div>
+
+      <div class="kv-group">
+        <div class="kv-item">
+          <span class="kv-label">MD5 Hash</span>
+          <div class="kv-value-wrapper">
+            <span class="kv-value">e10adc3949ba59abbe56e057f20f883e</span>
+            <button class="btn-copy" onclick="copyText('e10adc3949ba59abbe56e057f20f883e')"><i class="far fa-copy"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Xem chi tiết các Hash khác -->
+      <button class="details-toggle" onclick="toggleDetails(this)">
+        <span>Xem SHA-256 & SHA-512</span> <i class="fas fa-chevron-down"></i>
+      </button>
+
+      <div class="details-content">
+        <div class="kv-group">
+          <div class="kv-item">
+            <span class="kv-label">SHA-256</span>
+            <div class="kv-value-wrapper">
+              <span class="kv-value">8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Metadata -->
+      <div class="card-footer">
+        <span><i class="far fa-clock"></i> 14:30 - 13/08/2026</span>
+        <span><i class="fas fa-network-wired"></i> 113.161.x.x</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDetails(btn) {
+      const content = btn.nextElementSibling;
+      const isHidden = content.style.display === "none" || content.style.display === "";
+      content.style.display = isHidden ? "block" : "none";
+      btn.querySelector('i').className = isHidden ? "fas fa-chevron-up" : "fas fa-chevron-down";
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text);
+      alert("Đã sao chép mã Hash!");
+    }
+  </script>
+</body>
+</html>
